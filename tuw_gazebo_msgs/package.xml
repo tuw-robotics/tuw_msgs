@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>tuw_gazebo_msgs</name>
-  <version>1.0.0</version>
+  <version>0.0.0</version>
   <description>
     Message and service data structures.
   </description>
