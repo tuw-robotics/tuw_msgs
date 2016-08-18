@@ -13,8 +13,6 @@ add_message_files(
   JointsMeasureI4ws.msg
   JointCmd.msg
   JointsCmdI4ws.msg
-  IwsCmd_VRAT.msg
-  IwsCmd_VRAT_Vec.msg
   Measure.msg
   JointState.msg
 )
