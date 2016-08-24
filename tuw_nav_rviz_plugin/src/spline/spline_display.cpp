@@ -41,7 +41,7 @@
 #include <spline/spline_visual.h>
 #include <spline/spline_display.h>
 
-namespace tuw_spline_rviz_plugin {
+namespace tuw_nav_rviz_plugin {
 
 // The constructor must have no arguments, so we can't give the
 // constructor the parameters it needs to fully initialize.
@@ -198,9 +198,9 @@ void SplineDisplay::processMessage ( const tuw_nav_msgs::Spline::ConstPtr& msg )
     visuals_.push_back ( visual );
 }
 
-} // end namespace tuw_spline_rviz_plugin
+} // end namespace tuw_nav_rviz_plugin
 
 // Tell pluginlib about this class.  It is important to do this in
 // global scope, outside our package's namespace.
 #include <pluginlib/class_list_macros.h>
-PLUGINLIB_EXPORT_CLASS ( tuw_spline_rviz_plugin::SplineDisplay,rviz::Display )
+PLUGINLIB_EXPORT_CLASS ( tuw_nav_rviz_plugin::SplineDisplay,rviz::Display )

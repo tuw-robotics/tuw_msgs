@@ -34,7 +34,7 @@
 #include <spline/spline_visual.h>
 #include <eigen3/unsupported/Eigen/Splines>
 
-namespace tuw_spline_rviz_plugin {
+namespace tuw_nav_rviz_plugin {
 
 SplineVisual::SplineVisual ( Ogre::SceneManager* scene_manager, Ogre::SceneNode* parent_node ) {
     scene_manager_ = scene_manager;
@@ -204,5 +204,5 @@ void SplineVisual::setOrientPointsNr ( int pointsNr ) {
 }
 
 
-} // end namespace tuw_spline_rviz_plugin
+} // end namespace tuw_nav_rviz_plugin
 

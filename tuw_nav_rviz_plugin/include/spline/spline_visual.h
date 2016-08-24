@@ -46,7 +46,7 @@ namespace rviz
 class Shape;
 }
 
-namespace tuw_spline_rviz_plugin
+namespace tuw_nav_rviz_plugin
 {
 
 // Declare the visual class for this display.
@@ -119,6 +119,6 @@ private:
   size_t pointsNrOrient_;
 };
 
-} // end namespace tuw_spline_rviz_plugin
+} // end namespace tuw_nav_rviz_plugin
 
 #endif // SPLINE_VISUAL_H

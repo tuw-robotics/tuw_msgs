@@ -1,10 +1,10 @@
-<library path="lib/libtuw_spline_rviz_plugin">
-  <class name="tuw_spline_rviz_plugin/Spline"
-         type="tuw_spline_rviz_plugin::SplineDisplay"
+<library path="lib/libtuw_rviz_plugin_spline">
+  <class name="tuw_nav_rviz_plugin/Spline"
+         type="tuw_nav_rviz_plugin::SplineDisplay"
          base_class_type="rviz::Display">
     <description>
       Displays a B-Spline (up to 3d).
     </description>
-    <message_type>tuw_spline_msgs/Spline</message_type>
+    <message_type>tuw_nav_msgs/Spline</message_type>
   </class>
 </library>

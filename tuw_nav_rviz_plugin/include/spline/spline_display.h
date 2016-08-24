@@ -55,7 +55,7 @@ class IntProperty;
 
 // All the source in this plugin is in its own namespace.  This is not
 // required but is good practice.
-namespace tuw_spline_rviz_plugin
+namespace tuw_nav_rviz_plugin
 {
 
 class SplineVisual;
