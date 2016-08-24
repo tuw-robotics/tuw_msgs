@@ -31,7 +31,7 @@
 #include <OGRE/OgreSceneNode.h>
 #include <OGRE/OgreSceneManager.h>
 
-#include <spline/spline_visual.h>
+#include <Spline/visual.h>
 #include <eigen3/unsupported/Eigen/Splines>
 
 namespace tuw_nav_rviz_plugin {

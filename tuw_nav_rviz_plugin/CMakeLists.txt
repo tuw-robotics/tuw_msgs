@@ -146,11 +146,11 @@ add_definitions(-DQT_NO_KEYWORDS)
 ## Declare a C++ library
 add_library(tuw_rviz_plugin_spline
 
-  include/spline/spline_display.h
-  include/spline/spline_display.h
+  include/Spline/display.h
+  include/Spline/display.h
 
-  src/spline/spline_display.cpp
-  src/spline/spline_visual.cpp
+  src/Spline/display.cpp
+  src/Spline/visual.cpp
 )
 
 ## Add cmake target dependencies of the library

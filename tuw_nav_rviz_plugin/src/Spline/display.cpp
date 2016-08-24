@@ -38,8 +38,8 @@
 #include <rviz/properties/int_property.h>
 #include <rviz/frame_manager.h>
 
-#include <spline/spline_visual.h>
-#include <spline/spline_display.h>
+#include <Spline/visual.h>
+#include <Spline/display.h>
 
 namespace tuw_nav_rviz_plugin {
 
