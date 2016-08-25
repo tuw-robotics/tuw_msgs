@@ -143,30 +143,27 @@ endif()
 ## etc because they can conflict with boost signals, so define QT_NO_KEYWORDS here.
 add_definitions(-DQT_NO_KEYWORDS)
 
-## Declare a C++ library
-add_library(tuw_rviz_plugin_spline
-
-  include/Spline/display.h
-  include/Spline/display.h
-
-  src/Spline/display.cpp
-  src/Spline/visual.cpp
+## Here we specify the list of source files, including the output of
+## the previous command which is stored in ``${MOC_FILES}``.
+set(SOURCE_FILES
+  include/Spline/SplineVisual.h
+  include/Spline/SplineDisplay.h
+  src/Spline/SplineVisual.cpp
+  src/Spline/SplineDisplay.cpp
+  
+  include/RouteSegments/RouteSegmentsVisual.h
+  include/RouteSegments/RouteSegmentsDisplay.h
+  src/RouteSegments/RouteSegmentsVisual.cpp
+  src/RouteSegments/RouteSegmentsDisplay.cpp
 )
 
-## Add cmake target dependencies of the library
-## as an example, code may need to be generated before libraries
-## either from message generation or dynamic reconfigure
-# add_dependencies(tuw_nav_rviz_plugin ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-## Declare a C++ executable
-# add_executable(tuw_nav_rviz_plugin_node src/tuw_nav_rviz_plugin_node.cpp)
-
-## Add cmake target dependencies of the executable
-## same as for the library above
-# add_dependencies(tuw_nav_rviz_plugin_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+## Declare a C++ library
+add_library(tuw_rviz_plugin
+  ${SOURCE_FILES}
+)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(tuw_rviz_plugin_spline
+target_link_libraries(tuw_rviz_plugin
   ${QT_LIBRARIES} 
   ${catkin_LIBRARIES}
 )
@@ -187,7 +184,7 @@ target_link_libraries(tuw_rviz_plugin_spline
 
 ## Mark executables and/or libraries for installation
 install(TARGETS 
-  tuw_rviz_plugin_spline
+  tuw_rviz_plugin
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

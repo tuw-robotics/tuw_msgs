@@ -39,7 +39,17 @@
 #include <tuw_nav_msgs/RouteSegments.h>
 
 namespace tuw_nav {
-  class RouteSegments : public tuw_nav_msgs::RouteSegments {
+  
+  class RouteSegment : public tuw_nav_msgs::RouteSegment{
+  public:
+    static const unsigned int NA = 0;
+    static const unsigned int LINE = 1;
+    static const unsigned int ARC = 2;
+    static const unsigned int SPIROS = 3;
+    static const unsigned int SPLINE = 4;
+  };
+  
+  class RouteSegments : public tuw_nav_msgs::RouteSegments{
   public:
     RouteSegments();
     RouteSegments(size_t n);

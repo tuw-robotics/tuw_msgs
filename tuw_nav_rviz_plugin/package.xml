@@ -2,7 +2,7 @@
 <package>
   <name>tuw_nav_rviz_plugin</name>
   <version>0.0.0</version>
-  <description>The tuw_nav_rviz_plugin package</description>
+  <description>RViz plugins to visualize tuw_nav_msgs</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
