@@ -49,6 +49,20 @@ namespace tuw_nav_rviz_plugin {
 // The constructor must have no arguments, so we can't give the
 // constructor the parameters it needs to fully initialize.
 RouteSegmentsDisplay::RouteSegmentsDisplay() {
+  
+    
+    color_lines_ = new rviz::ColorProperty ( "Line Segment Color", QColor ( 170, 0, 170 ),
+            "Color Line Segment",  this, SLOT ( updateColorLines() ) );    
+    show_lines_property_ = new rviz::BoolProperty ( "Show lines", true,
+            "Shows line segments", this, SLOT ( updateShowLines() ) );
+    
+    color_arcs_ = new rviz::ColorProperty ( "Arc Segment Color", QColor ( 0, 170, 170 ),
+            "Color Arc Segment",  this, SLOT ( updateColorArcs() ) );
+    show_arcs_property_ = new rviz::BoolProperty ( "Show arcs", true,
+            "Shows arc segments", this, SLOT ( updateShowArcs() ) );
+    
+    show_start_point_ = new rviz::BoolProperty ( "Show Start Point", true,
+            "Shows segments start", this, SLOT ( updateShowStartPoints() ) );    
     color_start_point_ = new rviz::ColorProperty ( "Start Point Color", QColor ( 170, 0, 0 ),
             "Color to start point", this, SLOT ( updateStartPointColor() ) );
     shape_start_point_ = new rviz::EnumProperty ( "Start Point Shape", QString::fromStdString ( "Sphere" ),
@@ -57,12 +71,14 @@ RouteSegmentsDisplay::RouteSegmentsDisplay() {
     shape_start_point_->addOptionStd ( "Cube"    , rviz::Shape::Cube );
     shape_start_point_->addOptionStd ( "Cylinder", rviz::Shape::Cylinder );
     shape_start_point_->addOptionStd ( "Cone", rviz::Shape::Cone );
-    scale_start_point_ = new rviz::FloatProperty ( "Start Points Scale", 0.1,
+    scale_start_point_ = new rviz::FloatProperty ( "Start Points Scale", 0.05,
             "Scale start point",  this, SLOT ( updateStartPointScale() ) );
     scale_start_point_->setMin ( 0 );
     scale_start_point_->setMax ( 1 );
     
     
+    show_end_point_ = new rviz::BoolProperty ( "Show End Point", false,
+            "Shows segments end", this, SLOT ( updateShowEndPoints() ) );
     color_end_point_ = new rviz::ColorProperty ( "End Point Color", QColor ( 0, 170, 0 ),
             "Color to end point",  this, SLOT ( updateEndPointColor() ) );
     shape_end_point_ = new rviz::EnumProperty ( "End Point Shape", QString::fromStdString ( "Cube" ),
@@ -77,15 +93,17 @@ RouteSegmentsDisplay::RouteSegmentsDisplay() {
     scale_end_point_->setMax ( 1 );
     
     
+    show_center_point_ = new rviz::BoolProperty ( "Show Center Point", false,
+            "Shows segments center", this, SLOT ( updateShowCenterPoints() ) );
     color_center_point_ = new rviz::ColorProperty ( "Center Point Color", QColor ( 0, 0, 170 ),
             "Color to center point",  this, SLOT ( updateCenterPointColor() ) );
-    shape_center_point_ = new rviz::EnumProperty ( "Center Point Shape", QString::fromStdString ( "Cylinder" ),
+    shape_center_point_ = new rviz::EnumProperty ( "Center Point Shape", QString::fromStdString ( "Sphere" ),
             "Shape of center point",  this, SLOT ( updateCenterPointShape() ) );
     shape_center_point_->addOptionStd ( "Sphere"  , rviz::Shape::Sphere );
     shape_center_point_->addOptionStd ( "Cube"    , rviz::Shape::Cube );
     shape_center_point_->addOptionStd ( "Cylinder", rviz::Shape::Cylinder );
     shape_center_point_->addOptionStd ( "Cone", rviz::Shape::Cone );
-    scale_center_point_ = new rviz::FloatProperty ( "Center Points Scale", 0.04,
+    scale_center_point_ = new rviz::FloatProperty ( "Center Points Scale", 0.05,
             "Scale center point",  this, SLOT ( updateCenterPointScale() ) );
     scale_center_point_->setMin ( 0 );
     scale_center_point_->setMax ( 1 );
@@ -96,11 +114,6 @@ RouteSegmentsDisplay::RouteSegmentsDisplay() {
     history_length_property_->setMin ( 1 );
     history_length_property_->setMax ( 100000 );
     
-    
-    show_lines_property_ = new rviz::BoolProperty ( "Show lines", true,
-            "Shows line segments", this, SLOT ( updateShowLines() ) );
-    show_arcs_property_ = new rviz::BoolProperty ( "Show arcs", true,
-            "Shows arc segments", this, SLOT ( updateShowArcs() ) );
 }
 
 // After the top-level rviz::Display::initialize() does its own setup,
@@ -129,8 +142,7 @@ void RouteSegmentsDisplay::reset() {
 
 // Set the current color values for each visual.
 void RouteSegmentsDisplay::updateStartPointColor() {
-    Ogre::ColourValue color = color_start_point_->getOgreColor();
-    for ( auto& visualsI: visuals_ ) { visualsI->setStartPointColor ( color ); }
+    for ( auto& visualsI: visuals_ ) { visualsI->setStartPointColor ( color_start_point_->getOgreColor() ); }
 }
 
 // Set the current shape for each visual.
@@ -141,15 +153,13 @@ void RouteSegmentsDisplay::updateStartPointShape() {
 
 // Set the current scale for each visual.
 void RouteSegmentsDisplay::updateStartPointScale() {
-    float scale = scale_start_point_->getFloat();
-    for ( auto& visualsI: visuals_ ) { visualsI->setStartPointScale ( scale ); }
+    for ( auto& visualsI: visuals_ ) { visualsI->setStartPointScale ( scale_start_point_->getFloat() ); }
 }
 
 
 // Set the current color values for each visual.
 void RouteSegmentsDisplay::updateEndPointColor() {
-    Ogre::ColourValue color = color_end_point_->getOgreColor();
-    for ( auto& visualsI: visuals_ ) { visualsI->setEndPointColor ( color ); }
+    for ( auto& visualsI: visuals_ ) { visualsI->setEndPointColor ( color_end_point_->getOgreColor() ); }
 }
 
 // Set the current shape for each visual.
@@ -160,14 +170,12 @@ void RouteSegmentsDisplay::updateEndPointShape() {
 
 // Set the current scale for each visual.
 void RouteSegmentsDisplay::updateEndPointScale() {
-    float scale = scale_end_point_->getFloat();
-    for ( auto& visualsI: visuals_ ) { visualsI->setEndPointScale ( scale ); }
+    for ( auto& visualsI: visuals_ ) { visualsI->setEndPointScale ( scale_end_point_->getFloat() ); }
 }
 
 // Set the current color values for each visual.
 void RouteSegmentsDisplay::updateCenterPointColor() {
-    Ogre::ColourValue color = color_center_point_->getOgreColor();
-    for ( auto& visualsI: visuals_ ) { visualsI->setEndPointColor ( color ); }
+    for ( auto& visualsI: visuals_ ) { visualsI->setEndPointColor ( color_center_point_->getOgreColor() ); }
 }
 
 // Set the current shape for each visual.
@@ -178,8 +186,7 @@ void RouteSegmentsDisplay::updateCenterPointShape() {
 
 // Set the current scale for each visual.
 void RouteSegmentsDisplay::updateCenterPointScale() {
-    float scale = scale_center_point_->getFloat();
-    for ( auto& visualsI: visuals_ ) { visualsI->setCenterPointScale ( scale ); }
+    for ( auto& visualsI: visuals_ ) { visualsI->setCenterPointScale ( scale_center_point_->getFloat() ); }
 }
 
 
@@ -189,13 +196,38 @@ void RouteSegmentsDisplay::updateHistoryLength() {
 }
 
 
+// Set the current color values for each visual.
+void RouteSegmentsDisplay::updateColorLines() {
+    for ( auto& visualsI: visuals_ ) { visualsI->setLineColor ( color_lines_->getOgreColor() ); }
+}
+
 // Set the number of past visuals to show.
 void RouteSegmentsDisplay::updateShowLines() {
+    for ( auto& visualsI: visuals_ ) { visualsI->setShowLines ( show_lines_property_->getBool() ); }
+}
+
+// Set the current color values for each visual.
+void RouteSegmentsDisplay::updateColorArcs() {
+    for ( auto& visualsI: visuals_ ) { visualsI->setArcColor ( color_arcs_->getOgreColor() ); }
 }
 
 // Set the number of past visuals to show.
 void RouteSegmentsDisplay::updateShowArcs() {
+    for ( auto& visualsI: visuals_ ) { visualsI->setShowArcs ( show_arcs_property_->getBool() ); }
 }
+// Set the number of past visuals to show.
+void RouteSegmentsDisplay::updateShowStartPoints() {
+    for ( auto& visualsI: visuals_ ) { visualsI->setShowStartPoints ( show_start_point_->getBool() ); }
+}
+// Set the number of past visuals to show.
+void RouteSegmentsDisplay::updateShowEndPoints() {
+    for ( auto& visualsI: visuals_ ) { visualsI->setShowEndPoints ( show_end_point_->getBool() ); }
+}
+// Set the number of past visuals to show.
+void RouteSegmentsDisplay::updateShowCenterPoints() {
+    for ( auto& visualsI: visuals_ ) { visualsI->setShowCenterPoints ( show_center_point_->getBool() ); }
+}
+
 
 // This is our callback to handle an incoming message.
 void RouteSegmentsDisplay::processMessage ( const tuw_nav_msgs::RouteSegments::ConstPtr& msg ) {
@@ -230,7 +262,7 @@ void RouteSegmentsDisplay::processMessage ( const tuw_nav_msgs::RouteSegments::C
     visual->setStartPointShape     ( ( rviz::Shape::Type ) shape_start_point_->getOptionInt() );
     visual->setStartPointScale     ( scale_start_point_->getFloat() );
     
-    /*
+    
     visual->setEndPointColor     ( color_end_point_->getOgreColor() );
     visual->setEndPointShape     ( ( rviz::Shape::Type ) shape_end_point_->getOptionInt() );
     visual->setEndPointScale     ( scale_end_point_->getFloat() );
@@ -238,7 +270,9 @@ void RouteSegmentsDisplay::processMessage ( const tuw_nav_msgs::RouteSegments::C
     visual->setCenterPointColor     ( color_center_point_->getOgreColor() );
     visual->setCenterPointShape     ( ( rviz::Shape::Type ) shape_center_point_->getOptionInt() );
     visual->setCenterPointScale     ( scale_center_point_->getFloat() );
-    */
+    
+    visual->setShowArcs(show_arcs_property_->getBool());
+    visual->setShowLines(show_lines_property_->getBool());
 
     // And send it to the end of the circular buffer
     visuals_.push_back ( visual );

@@ -56,14 +56,22 @@ RouteSegmentsVisual::RouteSegmentsVisual ( Ogre::SceneManager* scene_manager, Og
     color_start_point_ = Ogre::ColourValue ( 170, 0, 0 );
     color_end_point_ = Ogre::ColourValue ( 0, 170, 0 );
     color_center_point_ = Ogre::ColourValue ( 0, 0, 170 );
-    
+    color_lines_ = Ogre::ColourValue ( 170, 0, 170 );
+    color_arcs_ = Ogre::ColourValue ( 0, 170,  170 );
+
     shape_start_point_ = rviz::Shape::Sphere;
     shape_end_point_ = rviz::Shape::Cube;
     shape_center_point_ = rviz::Shape::Sphere;
-    
-    scale_start_point_ = 0.04;
-    scale_end_point_ = 0.08;
-    scale_center_point_ = 0.01;
+
+    scale_start_point_ = 0.05;
+    scale_end_point_ = 0.04;
+    scale_center_point_ = 0.05;
+
+    show_acrs_ = true;
+    show_lines_ = true;
+    show_start_points_ = true;
+    show_end_points_ = false;
+    show_center_points_ = false;
 }
 
 RouteSegmentsVisual::~RouteSegmentsVisual() {
@@ -78,68 +86,100 @@ void RouteSegmentsVisual::setMessage ( const tuw_nav_msgs::RouteSegments::ConstP
     }
     timeOld_ = msg->header.stamp.toSec();
 
-    startPts_.resize ( msg->segments.size() );
-    endPts_.resize ( msg->segments.size() );
-    centerPts_.resize ( msg->segments.size() );
-    for ( size_t i = 0; i < msg->segments.size(); i++ ) {
-        {
-            if ( !startPts_[i] ) startPts_[i].reset ( new rviz::Shape ( shape_start_point_, scene_manager_, frame_node_ ) );
-            const geometry_msgs::Pose &p = msg->segments[i].start;
-            startPts_[i]->setColor ( color_start_point_ );
-            startPts_[i]->setPosition ( Ogre::Vector3 ( p.position.x, p.position.y, p.position.z ) );
-            startPts_[i]->setOrientation ( Ogre::Quaternion ( p.orientation.x, p.orientation.y, p.orientation.z, p.orientation.w ) );
-            startPts_[i]->setScale ( Ogre::Vector3 ( scale_start_point_, scale_start_point_, scale_start_point_ ) );
-        }
-
-        {
-            if ( !endPts_[i] ) endPts_[i].reset ( new rviz::Shape ( shape_end_point_, scene_manager_, frame_node_ ) );
-            const geometry_msgs::Pose &p = msg->segments[i].end;
-            endPts_[i]->setColor ( color_end_point_ );
-            endPts_[i]->setPosition ( Ogre::Vector3 ( p.position.x, p.position.y, p.position.z ) );
-            endPts_[i]->setOrientation ( Ogre::Quaternion ( p.orientation.x, p.orientation.y, p.orientation.z, p.orientation.w ) );
-            endPts_[i]->setScale ( Ogre::Vector3 ( scale_end_point_, scale_end_point_, scale_end_point_ ) );
-        }
-        {
-            if ( !centerPts_[i] ) centerPts_[i].reset ( new rviz::Shape ( shape_center_point_, scene_manager_, frame_node_ ) );
-            const geometry_msgs::Pose &p = msg->segments[i].center;
-            centerPts_[i]->setColor ( color_center_point_ );
-            centerPts_[i]->setPosition ( Ogre::Vector3 ( p.position.x, p.position.y, p.position.z ) );
-            centerPts_[i]->setOrientation ( Ogre::Quaternion ( p.orientation.x, p.orientation.y, p.orientation.z, p.orientation.w ) );
-            centerPts_[i]->setScale ( Ogre::Vector3 ( scale_center_point_, scale_center_point_, scale_center_point_ ) );
-        }
-
-    }
-    
+    startPts_.clear();
+    endPts_.clear();
+    centerPts_.clear();
     lines_.clear ();
+    arcs_.clear ();
     for ( size_t i = 0; i < msg->segments.size(); i++ ) {
-        if (msg->segments[i].type == tuw_nav::RouteSegment::LINE){
-          lines_.push_back( boost::shared_ptr<rviz::Line>(new rviz::Line ( scene_manager_, frame_node_ )) );
-          boost::shared_ptr<rviz::Line> line = lines_.back();
-          line->setColor ( color_center_point_ );
-            const geometry_msgs::Pose &p0 = msg->segments[i].start;
-            const geometry_msgs::Pose &p1 = msg->segments[i].end;
-            line->setPoints(Ogre::Vector3 ( p0.position.x, p0.position.y, p0.position.z ), Ogre::Vector3 ( p1.position.x, p1.position.y, p1.position.z ));
-            line->setScale ( Ogre::Vector3 ( 1, 1, 1 ) );
-          
-        /*
-        if(msg->segments.type == 
-        double p_x = (*spline_)(i / (double)pointsNrOrient_ )(0);
-        double p_y = (*spline_)(i / (double)pointsNrOrient_ )(1);
-        Eigen::SplineTraits< Eigen::Spline3d >::DerivativeType diff = spline_->derivatives(i / (double)pointsNrOrient_, 1);
-        double v_x = diff(0,1);
-        double v_y = diff(1,1);
-//      double p_z = (*spline_)(i / (double)pointsNrOrient_ )(2);
-        
-        Ogre::Quaternion rotation  = Ogre::Quaternion ( Ogre::Radian( (*spline_)(i / (double)pointsNrOrient_ )(2) + atan2(v_y, v_x) ), Ogre::Vector3::UNIT_Z );
-        Ogre::Quaternion rotation2 = Ogre::Quaternion ( Ogre::Radian( -Ogre::Math::PI/2.), Ogre::Vector3::UNIT_Y );
-        splinePtsTheta_[i].reset ( new rviz::Arrow ( scene_manager_, frame_node_ ) );
-        splinePtsTheta_[i]->setColor ( colorOrient_ );
-        splinePtsTheta_[i]->setPosition ( Ogre::Vector3 ( p_x, p_y, 0 ) );
-        splinePtsTheta_[i]->setOrientation ( rotation*rotation2 );
-        splinePtsTheta_[i]->setScale ( Ogre::Vector3 ( scaleOrient_, scaleOrient_, scaleOrient_ ) );
-        */
+        const tuw_nav_msgs::RouteSegment &segment = msg->segments[i];
+        const geometry_msgs::Pose &p0 = segment.start;
+        const geometry_msgs::Pose &pc = segment.center;
+        const geometry_msgs::Pose &p1 = segment.end;
+
+        if ( show_start_points_ ) {
+            startPts_.push_back ( boost::shared_ptr<rviz::Shape> ( new rviz::Shape ( shape_start_point_, scene_manager_, frame_node_ ) ) );
+            boost::shared_ptr<rviz::Shape> startShape = startPts_.back();
+            startShape->setColor ( color_start_point_ );
+            startShape->setPosition ( Ogre::Vector3 ( p0.position.x, p0.position.y, p0.position.z ) );
+            startShape->setOrientation ( Ogre::Quaternion ( p0.orientation.x, p0.orientation.y, p0.orientation.z, p0.orientation.w ) );
+            startShape->setScale ( Ogre::Vector3 ( scale_start_point_, scale_start_point_, scale_start_point_ ) );
         }
+
+        if ( show_end_points_ ) {
+            endPts_.push_back ( boost::shared_ptr<rviz::Shape> ( new rviz::Shape ( shape_end_point_, scene_manager_, frame_node_ ) ) );
+            boost::shared_ptr<rviz::Shape> endShape = endPts_.back();
+            endShape->setColor ( color_end_point_ );
+            endShape->setPosition ( Ogre::Vector3 ( p1.position.x, p1.position.y, p1.position.z ) );
+            endShape->setOrientation ( Ogre::Quaternion ( p1.orientation.x, p1.orientation.y, p1.orientation.z, p1.orientation.w ) );
+            endShape->setScale ( Ogre::Vector3 ( scale_end_point_, scale_end_point_, scale_end_point_ ) );
+        }
+        if ( show_center_points_ && (segment.type == tuw_nav::RouteSegment::ARC ))  {
+            centerPts_.push_back ( boost::shared_ptr<rviz::Shape> ( new rviz::Shape ( shape_center_point_, scene_manager_, frame_node_ ) ) );
+            boost::shared_ptr<rviz::Shape> centerShape = centerPts_.back();
+            centerShape->setColor ( color_center_point_ );
+            centerShape->setPosition ( Ogre::Vector3 ( pc.position.x, pc.position.y, pc.position.z ) );
+            centerShape->setOrientation ( Ogre::Quaternion ( pc.orientation.x, pc.orientation.y, pc.orientation.z, pc.orientation.w ) );
+            centerShape->setScale ( Ogre::Vector3 ( scale_center_point_, scale_center_point_, scale_center_point_ ) );
+        }
+        if ( show_lines_ && ( segment.type == tuw_nav::RouteSegment::LINE ) ) {
+            lines_.push_back ( boost::shared_ptr<rviz::Line> ( new rviz::Line ( scene_manager_, frame_node_ ) ) );
+            boost::shared_ptr<rviz::Line> line = lines_.back();
+            line->setColor ( color_lines_ );
+            line->setPoints ( Ogre::Vector3 ( p0.position.x, p0.position.y, p0.position.z ), Ogre::Vector3 ( p1.position.x, p1.position.y, p1.position.z ) );
+            line->setScale ( Ogre::Vector3 ( 1, 1, 1 ) );
+        }
+
+        if ( show_acrs_ && ( segment.type == tuw_nav::RouteSegment::ARC ) ) {
+            double angle_resolution = M_PI/45.;
+            static const double LEFT = -1.;
+            static const double RIGHT = +1.;
+            double direction = LEFT;
+            if ( segment.orientation == tuw_nav::RouteSegment::CLOCKWISE ) direction = LEFT;
+            else if ( segment.orientation == tuw_nav::RouteSegment::COUNTER_CLOCKWISE ) direction = RIGHT;
+            else throw 0;
+
+            double dx0 = p0.position.x - pc.position.x;
+            double dy0 = p0.position.y - pc.position.y;
+            double a0 = atan2 ( dy0, dx0 );
+            double radius = sqrt ( dx0*dx0 + dy0*dy0 );
+            double dx1 = p1.position.x - pc.position.x;
+            double dy1 = p1.position.y - pc.position.y;
+            double a1 = atan2 ( dy1, dx1 );
+
+            double da = atan2 ( sin ( a0-a1 ), cos ( a0-a1 ) ); /// signed minimal delta angle difference
+            if ( direction == RIGHT ) {
+                da = da<0?da:da-2*M_PI;
+            } else {
+                da = da>=0?da:da+2*M_PI;
+            }
+            double d = fabs ( da ) * radius;
+
+            double distance_resolution = angle_resolution * radius;
+
+            double l;
+            Ogre::Vector3 v0 ( p0.position.x, p0.position.y, p0.position.z );
+            Ogre::Vector3 v1 ( v0 );
+            for ( double l = 0; l < d; l+= distance_resolution ) {
+                double a = a0 + l/radius * direction;
+                arcs_.push_back ( boost::shared_ptr<rviz::Line> ( new rviz::Line ( scene_manager_, frame_node_ ) ) );
+                boost::shared_ptr<rviz::Line> line = arcs_.back();
+                v1 = Ogre::Vector3 ( pc.position.x + cos ( a ) * radius, pc.position.y + sin ( a ) * radius, 0 );
+                line->setColor ( color_arcs_ );
+                line->setPoints ( v0, v1 );
+                line->setScale ( Ogre::Vector3 ( 1, 1, 1 ) );
+                v0 = v1;
+            }
+            arcs_.push_back ( boost::shared_ptr<rviz::Line> ( new rviz::Line ( scene_manager_, frame_node_ ) ) );
+            boost::shared_ptr<rviz::Line> line = arcs_.back();
+            v1 = Ogre::Vector3 ( p1.position.x, p1.position.y, p1.position.z );
+            line->setColor ( color_arcs_ );
+            line->setPoints ( v0, v1 );
+            line->setScale ( Ogre::Vector3 ( 1, 1, 1 ) );
+        }
+
     }
+
 }
 
 // Position is passed through to the SceneNode.
@@ -175,6 +215,18 @@ void RouteSegmentsVisual::setCenterPointColor ( Ogre::ColourValue color ) {
 }
 
 
+void RouteSegmentsVisual::setLineColor ( Ogre::ColourValue color ) {
+    color_lines_ = color;
+    for ( boost::shared_ptr <rviz::Line > &pnt   : lines_ ) {
+        pnt   ->setColor ( color_lines_ );
+    }
+}
+void RouteSegmentsVisual::setArcColor ( Ogre::ColourValue color ) {
+    color_arcs_ = color;
+    for ( boost::shared_ptr <rviz::Line > &pnt   : arcs_ ) {
+        pnt   ->setColor ( color_arcs_ );
+    }
+}
 
 // Shape type is passed through to the Shape object.
 void RouteSegmentsVisual::setStartPointShape ( rviz::Shape::Type shape_type ) {
@@ -237,6 +289,29 @@ void RouteSegmentsVisual::setCenterPointScale ( float scale ) {
         pnt   ->setScale ( Ogre::Vector3 ( scale_center_point_, scale_center_point_, scale_center_point_ ) );
     }
 }
+
+void RouteSegmentsVisual::setShowArcs ( bool visible ) {
+    show_acrs_ = visible;
+    if ( !show_acrs_ ) arcs_.clear();
+}
+
+void RouteSegmentsVisual::setShowLines ( bool visible ) {
+    show_lines_ = visible;
+    if ( !show_lines_ ) lines_.clear();
+}
+void RouteSegmentsVisual::setShowStartPoints ( bool visible ) {
+    show_start_points_ = visible;
+    if ( !show_start_points_ ) startPts_.clear();
+}
+void RouteSegmentsVisual::setShowEndPoints ( bool visible ) {
+    show_end_points_ = visible;
+    if ( !show_end_points_ ) endPts_.clear();
+}
+void RouteSegmentsVisual::setShowCenterPoints ( bool visible ) {
+    show_center_points_ = visible;
+    if ( !show_center_points_ ) centerPts_.clear();
+}
+
 
 } // end namespace tuw_nav_rviz_plugin
 

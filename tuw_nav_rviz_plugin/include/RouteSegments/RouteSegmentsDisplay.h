@@ -99,8 +99,13 @@ private Q_SLOTS:
   void updateCenterPointScale();
     
   void updateHistoryLength();
+  void updateColorLines();
+  void updateColorArcs();
   void updateShowLines();
   void updateShowArcs();
+  void updateShowStartPoints();
+  void updateShowEndPoints();
+  void updateShowCenterPoints();
   
   // Function to handle an incoming ROS message.
 private:
@@ -121,10 +126,15 @@ private:
   rviz::EnumProperty*  shape_center_point_;
   rviz::FloatProperty* scale_center_point_;
   
+  rviz::BoolProperty* show_center_point_;
+  rviz::BoolProperty* show_end_point_;
+  rviz::BoolProperty* show_start_point_;
   
-  rviz::IntProperty*  history_length_property_;
+  rviz::ColorProperty* color_lines_;
   rviz::BoolProperty* show_lines_property_;
+  rviz::ColorProperty* color_arcs_;
   rviz::BoolProperty* show_arcs_property_;
+  rviz::IntProperty*  history_length_property_;
 };
 
 } // end namespace tuw_nav_rviz_plugin

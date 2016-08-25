@@ -47,6 +47,8 @@ namespace tuw_nav {
     static const unsigned int ARC = 2;
     static const unsigned int SPIROS = 3;
     static const unsigned int SPLINE = 4;
+    static const unsigned int CLOCKWISE  = 0;
+    static const unsigned int COUNTER_CLOCKWISE  = 1;
   };
   
   class RouteSegments : public tuw_nav_msgs::RouteSegments{

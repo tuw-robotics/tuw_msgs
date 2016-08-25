@@ -80,6 +80,8 @@ public:
   void setStartPointColor( Ogre::ColourValue color );
   void setEndPointColor( Ogre::ColourValue color );
   void setCenterPointColor( Ogre::ColourValue color );
+  void setLineColor( Ogre::ColourValue color );
+  void setArcColor( Ogre::ColourValue color );
 
   // Set the shape of the visual, which is an user-editable
   // parameter and therefore don't come from the MarkerDetection message.
@@ -92,6 +94,12 @@ public:
   void setStartPointScale( float scale );
   void setEndPointScale( float scale );
   void setCenterPointScale( float scale );
+  
+  void setShowArcs( bool visible );
+  void setShowLines ( bool visible );
+  void setShowStartPoints( bool visible );
+  void setShowEndPoints ( bool visible );
+  void setShowCenterPoints ( bool visible );
 
 private:
   // The objects implementing the actual shape
@@ -115,6 +123,8 @@ private:
   Ogre::ColourValue color_start_point_;
   Ogre::ColourValue color_end_point_;
   Ogre::ColourValue color_center_point_;
+  Ogre::ColourValue color_lines_;
+  Ogre::ColourValue color_arcs_;
   
   // The Shape object's shape type
   rviz::Shape::Type shape_start_point_;
@@ -125,6 +135,11 @@ private:
   float scale_start_point_;
   float scale_end_point_;
   float scale_center_point_;
+  bool show_lines_;
+  bool show_acrs_;
+  bool show_start_points_;
+  bool show_end_points_;
+  bool show_center_points_;
   
 };
 
