@@ -214,7 +214,7 @@ void RouteSegmentsVisual::setStartPointShape ( rviz::Shape::Type shape_type ) {
         Ogre::Vector3       posOld = pnt->getPosition();
         Ogre::Quaternion orientOld = pnt->getOrientation();
         pnt.reset ( new rviz::Shape ( shape_start_point_, scene_manager_, frame_node_ ) );
-        pnt->setColor ( color_center_point_ );
+        pnt->setColor ( color_start_point_ );
         pnt->setPosition ( posOld );
         pnt->setOrientation ( orientOld );
         pnt->setScale ( Ogre::Vector3 ( scale_start_point_, scale_start_point_, scale_start_point_ ) );

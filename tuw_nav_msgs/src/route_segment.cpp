@@ -49,12 +49,14 @@ double RouteSegment::sample_equal_distance ( std::vector<geometry_msgs::PosePtr 
         double d = sqrt ( dx*dx+dy*dy );
         double ux = dx/d, uy = dy/d;
         tuw_geometry_msgs::obj::Pose pose;
-        for (double l = distance_offset ; l < d; l += distance_resolution ) {
+	double l = distance_offset;
+	while(l < d){
             pose.setXYZ ( start.position.x + ux * l, start.position.y + uy * l, 0 );
             pose.setRPY ( 0, 0, atan2 ( uy, ux ) );
             poses.push_back ( pose.create() );
-            distance_offset = d - l;
+	    l += distance_resolution;
         }
+        distance_offset = l - d;
 
     } else if ( type == ARC ) {
         static const double LEFT = -1.;
@@ -79,13 +81,15 @@ double RouteSegment::sample_equal_distance ( std::vector<geometry_msgs::PosePtr 
         double d = fabs ( da ) * radius;
 
         tuw_geometry_msgs::obj::Pose pose;
-        for (double l = distance_offset; l < d; l += distance_resolution ) {
+	double l = distance_offset;
+	while(l < d){
             double a = a0 + l/radius * direction;
             pose.setXYZ ( center.position.x + cos ( a ) * radius, center.position.y + sin ( a ) * radius, 0 );
             pose.setRPY ( 0, 0, a+ ( M_PI/2.*direction ) );
             poses.push_back ( pose.create() );
-            distance_offset = d - l;
+	    l += distance_resolution;
         }
+        distance_offset = l - d;
     }
     return distance_offset;
 }
