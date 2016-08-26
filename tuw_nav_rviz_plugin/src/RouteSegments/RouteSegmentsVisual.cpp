@@ -36,7 +36,8 @@
 
 #include <RouteSegments/RouteSegmentsVisual.h>
 #include <eigen3/unsupported/Eigen/Splines>
-#include <tuw_nav/route_segments.h>
+#include <tuw_nav_msgs/route_segment.h>
+#include <tuw_nav_msgs/route_segments.h>
 
 namespace tuw_nav_rviz_plugin {
 
@@ -92,7 +93,7 @@ void RouteSegmentsVisual::setMessage ( const tuw_nav_msgs::RouteSegments::ConstP
     lines_.clear ();
     arcs_.clear ();
     for ( size_t i = 0; i < msg->segments.size(); i++ ) {
-        const tuw_nav_msgs::RouteSegment &segment = msg->segments[i];
+        const tuw_nav_msgs::obj::RouteSegment &segment = (const tuw_nav_msgs::obj::RouteSegment &) msg->segments[i];
         const geometry_msgs::Pose &p0 = segment.start;
         const geometry_msgs::Pose &pc = segment.center;
         const geometry_msgs::Pose &p1 = segment.end;
@@ -114,7 +115,7 @@ void RouteSegmentsVisual::setMessage ( const tuw_nav_msgs::RouteSegments::ConstP
             endShape->setOrientation ( Ogre::Quaternion ( p1.orientation.x, p1.orientation.y, p1.orientation.z, p1.orientation.w ) );
             endShape->setScale ( Ogre::Vector3 ( scale_end_point_, scale_end_point_, scale_end_point_ ) );
         }
-        if ( show_center_points_ && (segment.type == tuw_nav::RouteSegment::ARC ))  {
+        if ( show_center_points_ && (segment.type == tuw_nav_msgs::obj::RouteSegment::ARC ))  {
             centerPts_.push_back ( boost::shared_ptr<rviz::Shape> ( new rviz::Shape ( shape_center_point_, scene_manager_, frame_node_ ) ) );
             boost::shared_ptr<rviz::Shape> centerShape = centerPts_.back();
             centerShape->setColor ( color_center_point_ );
@@ -122,7 +123,7 @@ void RouteSegmentsVisual::setMessage ( const tuw_nav_msgs::RouteSegments::ConstP
             centerShape->setOrientation ( Ogre::Quaternion ( pc.orientation.x, pc.orientation.y, pc.orientation.z, pc.orientation.w ) );
             centerShape->setScale ( Ogre::Vector3 ( scale_center_point_, scale_center_point_, scale_center_point_ ) );
         }
-        if ( show_lines_ && ( segment.type == tuw_nav::RouteSegment::LINE ) ) {
+        if ( show_lines_ && ( segment.type == tuw_nav_msgs::obj::RouteSegment::LINE ) ) {
             lines_.push_back ( boost::shared_ptr<rviz::Line> ( new rviz::Line ( scene_manager_, frame_node_ ) ) );
             boost::shared_ptr<rviz::Line> line = lines_.back();
             line->setColor ( color_lines_ );
@@ -130,41 +131,18 @@ void RouteSegmentsVisual::setMessage ( const tuw_nav_msgs::RouteSegments::ConstP
             line->setScale ( Ogre::Vector3 ( 1, 1, 1 ) );
         }
 
-        if ( show_acrs_ && ( segment.type == tuw_nav::RouteSegment::ARC ) ) {
+        if ( show_acrs_ && ( segment.type == tuw_nav_msgs::obj::RouteSegment::ARC ) ) {
             double angle_resolution = M_PI/45.;
-            static const double LEFT = -1.;
-            static const double RIGHT = +1.;
-            double direction = LEFT;
-            if ( segment.orientation == tuw_nav::RouteSegment::CLOCKWISE ) direction = LEFT;
-            else if ( segment.orientation == tuw_nav::RouteSegment::COUNTER_CLOCKWISE ) direction = RIGHT;
-            else throw 0;
-
-            double dx0 = p0.position.x - pc.position.x;
-            double dy0 = p0.position.y - pc.position.y;
-            double a0 = atan2 ( dy0, dx0 );
-            double radius = sqrt ( dx0*dx0 + dy0*dy0 );
-            double dx1 = p1.position.x - pc.position.x;
-            double dy1 = p1.position.y - pc.position.y;
-            double a1 = atan2 ( dy1, dx1 );
-
-            double da = atan2 ( sin ( a0-a1 ), cos ( a0-a1 ) ); /// signed minimal delta angle difference
-            if ( direction == RIGHT ) {
-                da = da<0?da:da-2*M_PI;
-            } else {
-                da = da>=0?da:da+2*M_PI;
-            }
-            double d = fabs ( da ) * radius;
-
-            double distance_resolution = angle_resolution * radius;
-
-            double l;
-            Ogre::Vector3 v0 ( p0.position.x, p0.position.y, p0.position.z );
-            Ogre::Vector3 v1 ( v0 );
-            for ( double l = 0; l < d; l+= distance_resolution ) {
-                double a = a0 + l/radius * direction;
+            std::vector<geometry_msgs::PosePtr> poses;
+            
+            segment.sample_equal_angle(poses, angle_resolution, 0);
+            
+            Ogre::Vector3 v0( p0.position.x, p0.position.y, p0.position.z);
+            Ogre::Vector3 v1;
+            for ( int i = 1; i < poses.size(); i++) {
                 arcs_.push_back ( boost::shared_ptr<rviz::Line> ( new rviz::Line ( scene_manager_, frame_node_ ) ) );
                 boost::shared_ptr<rviz::Line> line = arcs_.back();
-                v1 = Ogre::Vector3 ( pc.position.x + cos ( a ) * radius, pc.position.y + sin ( a ) * radius, 0 );
+                v1 = Ogre::Vector3 ( poses[i]->position.x, poses[i]->position.y, poses[i]->position.z);
                 line->setColor ( color_arcs_ );
                 line->setPoints ( v0, v1 );
                 line->setScale ( Ogre::Vector3 ( 1, 1, 1 ) );
@@ -172,10 +150,11 @@ void RouteSegmentsVisual::setMessage ( const tuw_nav_msgs::RouteSegments::ConstP
             }
             arcs_.push_back ( boost::shared_ptr<rviz::Line> ( new rviz::Line ( scene_manager_, frame_node_ ) ) );
             boost::shared_ptr<rviz::Line> line = arcs_.back();
-            v1 = Ogre::Vector3 ( p1.position.x, p1.position.y, p1.position.z );
+            v1 = Ogre::Vector3 ( p1.position.x, p1.position.y, p1.position.z);
             line->setColor ( color_arcs_ );
             line->setPoints ( v0, v1 );
             line->setScale ( Ogre::Vector3 ( 1, 1, 1 ) );
+            
         }
 
     }

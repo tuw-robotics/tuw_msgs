@@ -127,7 +127,12 @@ include_directories(
 
 ## Declare a C++ library
 add_library(tuw_nav_msgs
+   src/route_segment.cpp
    src/route_segments.cpp
+   src/pose.cpp
+   src/pose_stamped.cpp
+   src/path.cpp
+   src/point.cpp
 )
 
 ## Add cmake target dependencies of the library

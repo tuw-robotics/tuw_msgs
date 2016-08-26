@@ -32,10 +32,11 @@
 
 
 
-#include <tuw_nav/route_segments.h>
+#include <tuw_nav_msgs/route_segment.h>
+#include <tuw_nav_msgs/route_segments.h>
 #include <tf/tf.h>
 
-using namespace tuw_nav;
+using namespace tuw_nav_msgs::obj;
 
 RouteSegments::RouteSegments() {
 
@@ -108,3 +109,18 @@ void RouteSegments::set_level ( const std::vector<int> &level ) {
     for ( int i = 0; i < segments.size(); i++ ) segments[i].level = level[i];
 }
 
+void RouteSegments::convert(nav_msgs::Path &path, double distance) const{
+  path.header = header;
+  double offset = 0;
+  std::vector<geometry_msgs::PosePtr> waypoints;
+  for(size_t i = 0; i < segments.size(); i++){
+    const tuw_nav_msgs::obj::RouteSegment& segment =  (const tuw_nav_msgs::obj::RouteSegment& ) segments[i];
+    offset = segment.sample_equal_distance(waypoints, distance, offset);
+  }
+  path.poses.resize(waypoints.size());
+  for(size_t i = 0; i < waypoints.size(); i++){
+    path.poses[i].header = header;
+    path.poses[i].pose = *waypoints[i];
+  }
+  
+}

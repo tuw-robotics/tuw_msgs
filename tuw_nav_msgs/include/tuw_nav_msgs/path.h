@@ -31,40 +31,21 @@
  ***************************************************************************/
 
 
-#ifndef TUW_ROUTE_SEGMENT
-#define TUW_ROUTE_SEGMENT
+#ifndef TUW_NAV_MSG_PATH_H
+#define TUW_NAV_MSG_PATH_H
 
 
 //ROS
-#include <tuw_nav_msgs/RouteSegments.h>
+#include <nav_msgs/Path.h>
 
-namespace tuw_nav {
-  
-  class RouteSegment : public tuw_nav_msgs::RouteSegment{
+namespace tuw_nav_msgs {
+  namespace obj{
+  class Path : public nav_msgs::Path {
   public:
-    static const unsigned int NA = 0;
-    static const unsigned int LINE = 1;
-    static const unsigned int ARC = 2;
-    static const unsigned int SPIROS = 3;
-    static const unsigned int SPLINE = 4;
-    static const unsigned int CLOCKWISE  = 0;
-    static const unsigned int COUNTER_CLOCKWISE  = 1;
+    Path();
   };
-  
-  class RouteSegments : public tuw_nav_msgs::RouteSegments{
-  public:
-    RouteSegments();
-    RouteSegments(size_t n);
-    void set_ids(const std::vector<unsigned int> &id);
-    void set_type(const std::vector<unsigned int> &type);
-    void set_orientation(const std::vector<unsigned int> &orientation);
-    void set_motion_type(const std::vector<unsigned int> &motion_type);
-    void set_start(const std::vector<double> &x, const std::vector<double> &y, const std::vector<double> &theta);
-    void set_end(const std::vector<double> &x, const std::vector<double> &y, const std::vector<double> &theta);
-    void set_center(const std::vector<double> &x, const std::vector<double> &y, const std::vector<double> &theta);
-    void set_level(const std::vector<int> &level);
   };
 };
 
 
-#endif // TUW_ROUTE_SEGMENT
+#endif // TUW_NAV_MSG_PATH_H
