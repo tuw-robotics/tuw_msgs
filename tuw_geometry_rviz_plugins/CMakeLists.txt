@@ -1,19 +1,16 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(tuw_nav_rviz_plugin)
+project(tuw_geometry_rviz_plugins)
 
-add_compile_options(-std=c++11) ## for c++ 2011
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  tuw_geometry_msgs
-  tuw_nav_msgs
+  geometry_msgs
   rviz
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-find_package(Eigen3 REQUIRED)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -69,7 +66,7 @@ find_package(Eigen3 REQUIRED)
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   tuw_nav_msgs
+#   geometry_msgs
 # )
 
 ################################################
@@ -103,8 +100,8 @@ find_package(Eigen3 REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES tuw_nav_rviz_plugin
-#  CATKIN_DEPENDS rviz tuw_nav_msgs
+#  LIBRARIES tuw_geometry_rviz_plugins
+#  CATKIN_DEPENDS geometry_msgs rviz
 #  DEPENDS system_lib
 )
 
@@ -117,57 +114,29 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
-  ${EIGEN3_INCLUDE_DIR} 
-  include
-)
-link_directories(${catkin_LIBRARY_DIRS})
-
-## This setting causes Qt's "MOC" generation to happen automatically.
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-## This plugin includes Qt widgets, so we must include Qt.
-## We'll use the version that rviz used so they are compatible.
-if(rviz_QT_VERSION VERSION_LESS "5")
-  message(STATUS "Using Qt4 based on the rviz_QT_VERSION: ${rviz_QT_VERSION}")
-  find_package(Qt4 ${rviz_QT_VERSION} EXACT REQUIRED QtCore QtGui)
-  ## pull in all required include dirs, define QT_LIBRARIES, etc.
-  include(${QT_USE_FILE})
-else()
-  message(STATUS "Using Qt5 based on the rviz_QT_VERSION: ${rviz_QT_VERSION}")
-  find_package(Qt5 ${rviz_QT_VERSION} EXACT REQUIRED Core Widgets)
-  ## make target_link_libraries(${QT_LIBRARIES}) pull in all required dependencies
-  set(QT_LIBRARIES Qt5::Widgets)
-endif()
-
-## I prefer the Qt signals and slots to avoid defining "emit", "slots",
-## etc because they can conflict with boost signals, so define QT_NO_KEYWORDS here.
-add_definitions(-DQT_NO_KEYWORDS)
-
-## Here we specify the list of source files, including the output of
-## the previous command which is stored in ``${MOC_FILES}``.
-set(SOURCE_FILES
-  include/Spline/SplineVisual.h
-  include/Spline/SplineDisplay.h
-  src/Spline/SplineVisual.cpp
-  src/Spline/SplineDisplay.cpp
-  
-  include/RouteSegments/RouteSegmentsVisual.h
-  include/RouteSegments/RouteSegmentsDisplay.h
-  src/RouteSegments/RouteSegmentsVisual.cpp
-  src/RouteSegments/RouteSegmentsDisplay.cpp
 )
 
 ## Declare a C++ library
-add_library(tuw_rviz_plugin
-  ${SOURCE_FILES}
-)
+# add_library(tuw_geometry_rviz_plugins
+#   src/${PROJECT_NAME}/tuw_geometry_rviz_plugins.cpp
+# )
+
+## Add cmake target dependencies of the library
+## as an example, code may need to be generated before libraries
+## either from message generation or dynamic reconfigure
+# add_dependencies(tuw_geometry_rviz_plugins ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+## Declare a C++ executable
+# add_executable(tuw_geometry_rviz_plugins_node src/tuw_geometry_rviz_plugins_node.cpp)
+
+## Add cmake target dependencies of the executable
+## same as for the library above
+# add_dependencies(tuw_geometry_rviz_plugins_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(tuw_rviz_plugin
-  ${QT_LIBRARIES} 
-  ${catkin_LIBRARIES}
-)
+# target_link_libraries(tuw_geometry_rviz_plugins_node
+#   ${catkin_LIBRARIES}
+# )
 
 #############
 ## Install ##
@@ -184,12 +153,11 @@ target_link_libraries(tuw_rviz_plugin
 # )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS 
-  tuw_rviz_plugin
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+# install(TARGETS tuw_geometry_rviz_plugins tuw_geometry_rviz_plugins_node
+#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 ## Mark cpp header files for installation
 # install(DIRECTORY include/${PROJECT_NAME}/
@@ -199,22 +167,18 @@ install(TARGETS
 # )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
-install(FILES
-  plugin_description.xml
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-install(DIRECTORY 
-  icons/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/icons
-)
+# install(FILES
+#   # myfile1
+#   # myfile2
+#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+# )
 
 #############
 ## Testing ##
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_tuw_nav_rviz_plugin.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_tuw_geometry_rviz_plugins.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

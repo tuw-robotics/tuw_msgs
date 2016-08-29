@@ -40,9 +40,11 @@
   <!-- Use test_depend for packages you need only for testing: -->
   <!--   <test_depend>gtest</test_depend> -->
   <build_depend>rviz</build_depend>
+  <build_depend>tuw_geometry_msgs</build_depend>
   <build_depend>tuw_nav_msgs</build_depend>
   
   <run_depend>rviz</run_depend>
+  <run_depend>tuw_geometry_msgs</run_depend>
   <run_depend>tuw_nav_msgs</run_depend>
 
 

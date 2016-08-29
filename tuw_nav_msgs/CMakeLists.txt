@@ -8,7 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   std_msgs
   geometry_msgs
-  tf
+  tuw_geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -109,7 +109,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES tuw_nav_msgs
-  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs tf
+#  CATKIN_DEPENDS geometry_msgs
 #  DEPENDS system_lib
 )
 
@@ -129,10 +129,7 @@ include_directories(
 add_library(tuw_nav_msgs
    src/route_segment.cpp
    src/route_segments.cpp
-   src/pose.cpp
-   src/pose_stamped.cpp
    src/path.cpp
-   src/point.cpp
 )
 
 ## Add cmake target dependencies of the library
