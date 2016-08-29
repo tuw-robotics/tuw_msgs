@@ -38,8 +38,8 @@
 //ROS
 #include <nav_msgs/Path.h>
 
-namespace tuw_nav_msgs {
-  namespace obj{
+namespace tuw {
+  namespace ros_msgs{
   class Path : public nav_msgs::Path {
   public:
     Path();

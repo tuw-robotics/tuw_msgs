@@ -39,8 +39,8 @@
 #include <tuw_geometry_msgs/pose.h>
 #include <tuw_nav_msgs/RouteSegment.h>
 
-namespace tuw_nav_msgs {
-namespace obj{
+namespace tuw {
+namespace ros_msgs{
   class RouteSegment : public tuw_nav_msgs::RouteSegment{
   public:
     RouteSegment();

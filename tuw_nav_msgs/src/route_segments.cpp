@@ -36,7 +36,7 @@
 #include <tuw_nav_msgs/route_segments.h>
 #include <tf/tf.h>
 
-using namespace tuw_nav_msgs::obj;
+using namespace tuw::ros_msgs;
 
 RouteSegments::RouteSegments() {
 
@@ -114,7 +114,7 @@ void RouteSegments::convert(nav_msgs::Path &path, double distance) const{
   double offset = 0;
   std::vector<geometry_msgs::PosePtr> waypoints;
   for(size_t i = 0; i < segments.size(); i++){
-    const tuw_nav_msgs::obj::RouteSegment& segment =  (const tuw_nav_msgs::obj::RouteSegment& ) segments[i];
+    const tuw::ros_msgs::RouteSegment& segment =  (const tuw::ros_msgs::RouteSegment& ) segments[i];
     offset = segment.sample_equal_distance(waypoints, distance, offset);
   }
   path.poses.resize(waypoints.size());

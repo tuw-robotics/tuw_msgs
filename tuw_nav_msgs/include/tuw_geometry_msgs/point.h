@@ -38,8 +38,8 @@
 //ROS
 #include <geometry_msgs/Point.h>
 
-namespace tuw_geometry_msgs {
-namespace obj {
+namespace tuw {
+namespace ros_msgs {
 }
 double Distance(const geometry_msgs::Point &a, const geometry_msgs::Point &b);
 };

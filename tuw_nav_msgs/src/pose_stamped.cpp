@@ -34,7 +34,7 @@
 
 #include <tuw_geometry_msgs/pose_stamped.h>
 
-using namespace tuw_msgs::obj;
+using namespace tuw::ros_msgs;
 
 PoseStamped::PoseStamped() {
 

@@ -39,8 +39,8 @@
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/PoseStamped.h>
 
-namespace tuw_geometry_msgs {
-namespace obj{
+namespace tuw {
+namespace ros_msgs{
 class Pose;
 typedef boost::shared_ptr< Pose > PosePtr;
 typedef boost::shared_ptr< Pose const> PoseConstPtr;
@@ -62,7 +62,7 @@ void SetPositionXYZ(geometry_msgs::PosePtr &pose, double x, double y, double z);
 void SetOrientation(geometry_msgs::PosePtr &pose, double x, double y, double z, double w );
 void SetRPY ( geometry_msgs::PosePtr &pose, double roll, double pitch, double yaw  );
 void Set ( geometry_msgs::PosePtr &pose, double x, double y, double z, double roll, double pitch, double yaw );
-void Set ( geometry_msgs::PosePtr &des, const tuw_geometry_msgs::obj::Pose & src);
+void Set ( geometry_msgs::PosePtr &des, const tuw::ros_msgs::Pose & src);
 
 };
 #endif // TUW_GEOMETRY_MSGS_POSE_H

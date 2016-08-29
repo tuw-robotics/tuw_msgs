@@ -93,7 +93,7 @@ void RouteSegmentsVisual::setMessage ( const tuw_nav_msgs::RouteSegments::ConstP
     lines_.clear ();
     arcs_.clear ();
     for ( size_t i = 0; i < msg->segments.size(); i++ ) {
-        const tuw_nav_msgs::obj::RouteSegment &segment = (const tuw_nav_msgs::obj::RouteSegment &) msg->segments[i];
+        const tuw::ros_msgs::RouteSegment &segment = (const tuw::ros_msgs::RouteSegment &) msg->segments[i];
         const geometry_msgs::Pose &p0 = segment.start;
         const geometry_msgs::Pose &pc = segment.center;
         const geometry_msgs::Pose &p1 = segment.end;
@@ -115,7 +115,7 @@ void RouteSegmentsVisual::setMessage ( const tuw_nav_msgs::RouteSegments::ConstP
             endShape->setOrientation ( Ogre::Quaternion ( p1.orientation.x, p1.orientation.y, p1.orientation.z, p1.orientation.w ) );
             endShape->setScale ( Ogre::Vector3 ( scale_end_point_, scale_end_point_, scale_end_point_ ) );
         }
-        if ( show_center_points_ && (segment.type == tuw_nav_msgs::obj::RouteSegment::ARC ))  {
+        if ( show_center_points_ && (segment.type == tuw::ros_msgs::RouteSegment::ARC ))  {
             centerPts_.push_back ( boost::shared_ptr<rviz::Shape> ( new rviz::Shape ( shape_center_point_, scene_manager_, frame_node_ ) ) );
             boost::shared_ptr<rviz::Shape> centerShape = centerPts_.back();
             centerShape->setColor ( color_center_point_ );
@@ -123,7 +123,7 @@ void RouteSegmentsVisual::setMessage ( const tuw_nav_msgs::RouteSegments::ConstP
             centerShape->setOrientation ( Ogre::Quaternion ( pc.orientation.x, pc.orientation.y, pc.orientation.z, pc.orientation.w ) );
             centerShape->setScale ( Ogre::Vector3 ( scale_center_point_, scale_center_point_, scale_center_point_ ) );
         }
-        if ( show_lines_ && ( segment.type == tuw_nav_msgs::obj::RouteSegment::LINE ) ) {
+        if ( show_lines_ && ( segment.type == tuw::ros_msgs::RouteSegment::LINE ) ) {
             lines_.push_back ( boost::shared_ptr<rviz::Line> ( new rviz::Line ( scene_manager_, frame_node_ ) ) );
             boost::shared_ptr<rviz::Line> line = lines_.back();
             line->setColor ( color_lines_ );
@@ -131,7 +131,7 @@ void RouteSegmentsVisual::setMessage ( const tuw_nav_msgs::RouteSegments::ConstP
             line->setScale ( Ogre::Vector3 ( 1, 1, 1 ) );
         }
 
-        if ( show_acrs_ && ( segment.type == tuw_nav_msgs::obj::RouteSegment::ARC ) ) {
+        if ( show_acrs_ && ( segment.type == tuw::ros_msgs::RouteSegment::ARC ) ) {
             double angle_resolution = M_PI/45.;
             std::vector<geometry_msgs::PosePtr> poses;
             

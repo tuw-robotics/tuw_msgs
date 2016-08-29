@@ -34,7 +34,7 @@
 
 #include <tuw_nav_msgs/path.h>
 
-using namespace tuw_nav_msgs::obj;
+using namespace tuw::ros_msgs;
 
 Path::Path() {
 

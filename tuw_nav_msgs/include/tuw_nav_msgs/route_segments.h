@@ -39,8 +39,8 @@
 #include <tuw_nav_msgs/RouteSegments.h>
 #include <nav_msgs/Path.h>
 
-namespace tuw_nav_msgs {
-namespace obj{
+namespace tuw {
+namespace ros_msgs{
   
   class RouteSegments : public tuw_nav_msgs::RouteSegments{
   public:

@@ -35,7 +35,7 @@
 #include <tuw_geometry_msgs/pose.h>
 #include <memory.h>
 
-using namespace tuw_geometry_msgs::obj;
+using namespace tuw::ros_msgs;
 
 Pose::Pose() {
 
@@ -72,13 +72,13 @@ geometry_msgs::PosePtr Pose::create() {
     Set(p, *this); 
     return p;
 }
-void tuw_geometry_msgs::SetPositionXYZ ( geometry_msgs::PosePtr &pose, double x, double y, double z ) {
+void tuw::SetPositionXYZ ( geometry_msgs::PosePtr &pose, double x, double y, double z ) {
     pose->position.x = x, pose->position.y = y, pose->position.z = z;
 }
-void tuw_geometry_msgs::SetOrientation (geometry_msgs::PosePtr &pose,  double x, double y, double z, double w ) {
+void tuw::SetOrientation (geometry_msgs::PosePtr &pose,  double x, double y, double z, double w ) {
     pose->orientation.x = x, pose->orientation.y = y, pose->orientation.z = z, pose->orientation.w = w;
 }
-void tuw_geometry_msgs::SetRPY ( geometry_msgs::PosePtr &pose, double roll, double pitch, double yaw  ) {
+void tuw::SetRPY ( geometry_msgs::PosePtr &pose, double roll, double pitch, double yaw  ) {
     double halfYaw = double ( yaw ) * double ( 0.5 ), halfPitch = double ( pitch ) * double ( 0.5 ), halfRoll = double ( roll ) * double ( 0.5 );
     double cosYaw = cos ( halfYaw ), sinYaw = sin ( halfYaw ), cosPitch = cos ( halfPitch ), sinPitch = sin ( halfPitch ), cosRoll = cos ( halfRoll ), sinRoll = sin ( halfRoll );
     pose->orientation.x = sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw;   // x
@@ -86,10 +86,10 @@ void tuw_geometry_msgs::SetRPY ( geometry_msgs::PosePtr &pose, double roll, doub
     pose->orientation.z = cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw;   // z
     pose->orientation.w = cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw; // formerly yzx
 }
-void tuw_geometry_msgs::Set ( geometry_msgs::PosePtr &pose, double x, double y, double z, double roll, double pitch, double yaw ) {
+void tuw::Set ( geometry_msgs::PosePtr &pose, double x, double y, double z, double roll, double pitch, double yaw ) {
     SetPositionXYZ(pose, x, y, z), SetRPY(pose, roll, pitch, yaw);
 }
-void tuw_geometry_msgs::Set ( geometry_msgs::PosePtr &des, const Pose & src) {
+void tuw::Set ( geometry_msgs::PosePtr &des, const Pose & src) {
     SetPositionXYZ(des, src.position.x, src.position.y, src.position.z); 
     SetOrientation(des, src.orientation.x, src.orientation.y, src.orientation.z, src.orientation.w);
 }

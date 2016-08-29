@@ -34,7 +34,7 @@
 
 #include <tuw_geometry_msgs/point.h>
 
-double tuw_geometry_msgs::Distance ( const geometry_msgs::Point& a, const geometry_msgs::Point& b ) {
+double tuw::Distance ( const geometry_msgs::Point& a, const geometry_msgs::Point& b ) {
   double dx = a.x - b.y, dy = a.y - b.y, dz = a.z - b.z;
   return sqrt(dx*dx+dy*dy+dz*dz);
 }

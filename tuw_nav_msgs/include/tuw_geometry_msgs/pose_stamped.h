@@ -39,8 +39,8 @@
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/PoseStamped.h>
 
-namespace tuw_msgs {
-namespace obj{
+namespace tuw {
+namespace ros_msgs{
   class PoseStamped : public geometry_msgs::PoseStamped {
   public:
     PoseStamped();

@@ -35,7 +35,7 @@
 #include <tuw_geometry_msgs/point.h>
 #include <tuw_nav_msgs/route_segment.h>
 
-using namespace tuw_nav_msgs::obj;
+using namespace tuw::ros_msgs;
 
 RouteSegment::RouteSegment() {
 
@@ -48,7 +48,7 @@ double RouteSegment::sample_equal_distance ( std::vector<geometry_msgs::PosePtr 
         double dx = end.position.x-start.position.x, dy = end.position.y - start.position.y;
         double d = sqrt ( dx*dx+dy*dy );
         double ux = dx/d, uy = dy/d;
-        tuw_geometry_msgs::obj::Pose pose;
+        tuw::ros_msgs::Pose pose;
 	double l = distance_offset;
 	while(l < d){
             pose.setXYZ ( start.position.x + ux * l, start.position.y + uy * l, 0 );
@@ -62,8 +62,8 @@ double RouteSegment::sample_equal_distance ( std::vector<geometry_msgs::PosePtr 
         static const double LEFT = -1.;
         static const double RIGHT = +1.;
         double direction = LEFT;
-        if ( orientation == tuw_nav_msgs::obj::RouteSegment::CLOCKWISE ) direction = LEFT;
-        else if ( orientation == tuw_nav_msgs::obj::RouteSegment::COUNTER_CLOCKWISE ) direction = RIGHT;
+        if ( orientation == tuw::ros_msgs::RouteSegment::CLOCKWISE ) direction = LEFT;
+        else if ( orientation == tuw::ros_msgs::RouteSegment::COUNTER_CLOCKWISE ) direction = RIGHT;
         else throw 0;
 
         double dx0 = start.position.x - center.position.x, dy0 = start.position.y - center.position.y;
@@ -80,7 +80,7 @@ double RouteSegment::sample_equal_distance ( std::vector<geometry_msgs::PosePtr 
         }
         double d = fabs ( da ) * radius;
 
-        tuw_geometry_msgs::obj::Pose pose;
+        tuw::ros_msgs::Pose pose;
 	double l = distance_offset;
 	while(l < d){
             double a = a0 + l/radius * direction;
@@ -97,12 +97,12 @@ double RouteSegment::sample_equal_distance ( std::vector<geometry_msgs::PosePtr 
 double RouteSegment::sample_equal_angle ( std::vector<geometry_msgs::PosePtr > &poses, double angle_resolution, double distance_offset ) const {
 
     if ( type == ARC ) {
-        double radius = tuw_geometry_msgs::Distance ( start.position, center.position );
+        double radius = tuw::Distance ( start.position, center.position );
         double distance_resolution = angle_resolution * radius;
         return sample_equal_distance ( poses, distance_resolution, distance_offset );
     }
     if ( type == LINE ) {
-        double distance_resolution = tuw_geometry_msgs::Distance ( start.position, end.position );
+        double distance_resolution = tuw::Distance ( start.position, end.position );
         return sample_equal_distance ( poses, distance_resolution, distance_offset );
     }
 }
