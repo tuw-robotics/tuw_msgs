@@ -144,9 +144,8 @@ endif()
 ## etc because they can conflict with boost signals, so define QT_NO_KEYWORDS here.
 add_definitions(-DQT_NO_KEYWORDS)
 
-## Here we specify the list of source files, including the output of
-## the previous command which is stored in ``${MOC_FILES}``.
-set(SOURCE_FILES
+## Declare a C++ library
+add_library(${PROJECT_NAME}
   include/Spline/SplineVisual.h
   include/Spline/SplineDisplay.h
   src/Spline/SplineVisual.cpp
@@ -158,13 +157,8 @@ set(SOURCE_FILES
   src/RouteSegments/RouteSegmentsDisplay.cpp
 )
 
-## Declare a C++ library
-add_library(tuw_rviz_plugin
-  ${SOURCE_FILES}
-)
-
 ## Specify libraries to link a library or executable target against
-target_link_libraries(tuw_rviz_plugin
+target_link_libraries(${PROJECT_NAME}
   ${QT_LIBRARIES} 
   ${catkin_LIBRARIES}
 )
@@ -185,7 +179,7 @@ target_link_libraries(tuw_rviz_plugin
 
 ## Mark executables and/or libraries for installation
 install(TARGETS 
-  tuw_rviz_plugin
+  ${PROJECT_NAME}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

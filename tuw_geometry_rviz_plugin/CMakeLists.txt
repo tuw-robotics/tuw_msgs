@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(tuw_geometry_rviz_plugins)
+project(tuw_geometry_rviz_plugin)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -100,7 +100,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES tuw_geometry_rviz_plugins
+#  LIBRARIES tuw_geometry_rviz_plugin
 #  CATKIN_DEPENDS geometry_msgs rviz
 #  DEPENDS system_lib
 )
@@ -114,29 +114,46 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  include
 )
+link_directories(${catkin_LIBRARY_DIRS})
+
+## This setting causes Qt's "MOC" generation to happen automatically.
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+## This plugin includes Qt widgets, so we must include Qt.
+## We'll use the version that rviz used so they are compatible.
+if(rviz_QT_VERSION VERSION_LESS "5")
+  message(STATUS "Using Qt4 based on the rviz_QT_VERSION: ${rviz_QT_VERSION}")
+  find_package(Qt4 ${rviz_QT_VERSION} EXACT REQUIRED QtCore QtGui)
+  ## pull in all required include dirs, define QT_LIBRARIES, etc.
+  include(${QT_USE_FILE})
+else()
+  message(STATUS "Using Qt5 based on the rviz_QT_VERSION: ${rviz_QT_VERSION}")
+  find_package(Qt5 ${rviz_QT_VERSION} EXACT REQUIRED Core Widgets)
+  ## make target_link_libraries(${QT_LIBRARIES}) pull in all required dependencies
+  set(QT_LIBRARIES Qt5::Widgets)
+endif()
+
+## I prefer the Qt signals and slots to avoid defining "emit", "slots",
+## etc because they can conflict with boost signals, so define QT_NO_KEYWORDS here.
+add_definitions(-DQT_NO_KEYWORDS)
 
 ## Declare a C++ library
-# add_library(tuw_geometry_rviz_plugins
-#   src/${PROJECT_NAME}/tuw_geometry_rviz_plugins.cpp
-# )
-
-## Add cmake target dependencies of the library
-## as an example, code may need to be generated before libraries
-## either from message generation or dynamic reconfigure
-# add_dependencies(tuw_geometry_rviz_plugins ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-## Declare a C++ executable
-# add_executable(tuw_geometry_rviz_plugins_node src/tuw_geometry_rviz_plugins_node.cpp)
-
-## Add cmake target dependencies of the executable
-## same as for the library above
-# add_dependencies(tuw_geometry_rviz_plugins_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_library(${PROJECT_NAME}
+  include/PoseWithCovarianceStamped/PoseWithCovarianceStampedVisual.h
+  include/PoseWithCovarianceStamped/PoseWithCovarianceStampedDisplay.h
+  src/PoseWithCovarianceStamped/PoseWithCovarianceStampedVisual.cpp
+  src/PoseWithCovarianceStamped/PoseWithCovarianceStampedDisplay.cpp
+)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(tuw_geometry_rviz_plugins_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(${PROJECT_NAME}
+  ${QT_LIBRARIES} 
+  ${catkin_LIBRARIES}
+)
+
 
 #############
 ## Install ##
@@ -153,11 +170,12 @@ include_directories(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS tuw_geometry_rviz_plugins tuw_geometry_rviz_plugins_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(TARGETS 
+  ${PROJECT_NAME}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark cpp header files for installation
 # install(DIRECTORY include/${PROJECT_NAME}/
@@ -167,18 +185,22 @@ include_directories(
 # )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
-# install(FILES
-#   # myfile1
-#   # myfile2
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
+install(FILES
+  plugin_description.xml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+install(DIRECTORY 
+  icons/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/icons
+)
 
 #############
 ## Testing ##
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_tuw_geometry_rviz_plugins.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_tuw_nav_rviz_plugin.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

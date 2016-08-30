@@ -1,4 +1,4 @@
-<library path="lib/libtuw_rviz_plugin">
+<library path="lib/libtuw_nav_rviz_plugin">
   <class name="tuw_nav_rviz_plugin/Spline"
          type="tuw_nav_rviz_plugin::SplineDisplay"
          base_class_type="rviz::Display">

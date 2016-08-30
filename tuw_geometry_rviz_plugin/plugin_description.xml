@@ -1,0 +1,11 @@
+<library path="lib/tuw_geometry_rviz_plugin">
+  <class name="tuw_geometry_rviz_plugin/PoseWithCovariance"
+         type="tuw_geometry_rviz_plugin::PoseWithCovarianceDisplay"
+         base_class_type="rviz::Display">
+    <description>
+      Displays position, orientation and variance of a pose from geometry_msgs/PoseWithCovarianceStamped messages.
+    </description>
+    <message_type>geometry_msgs/PoseWithCovarianceStamped</message_type>
+  </class>
+</library>
+
