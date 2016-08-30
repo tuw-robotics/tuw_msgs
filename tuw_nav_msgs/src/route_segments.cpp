@@ -117,10 +117,19 @@ void RouteSegments::convert(nav_msgs::Path &path, double distance) const{
     const tuw::ros_msgs::RouteSegment& segment =  (const tuw::ros_msgs::RouteSegment& ) segments[i];
     offset = segment.sample_equal_distance(waypoints, distance, offset);
   }
-  path.poses.resize(waypoints.size());
+  /// check if an additional end point is needed
+  if(offset > 0) {
+    path.poses.resize(waypoints.size()+1);
+  } else {
+    path.poses.resize(waypoints.size());
+  }
   for(size_t i = 0; i < waypoints.size(); i++){
     path.poses[i].header = header;
     path.poses[i].pose = *waypoints[i];
   }
-  
+  if(offset > 0) {
+    /// add the additional end point
+    path.poses[waypoints.size()].header = header;
+    path.poses[waypoints.size()].pose = segments.back().end;
+  }
 }
