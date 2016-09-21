@@ -1,4 +1,4 @@
-<library path="lib/tuw_geometry_rviz_plugin">
+<library path="lib/libtuw_geometry_rviz_plugin">
   <class name="tuw_geometry_rviz_plugin/PoseWithCovariance"
          type="tuw_geometry_rviz_plugin::PoseWithCovarianceDisplay"
          base_class_type="rviz::Display">
