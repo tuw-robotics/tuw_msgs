@@ -155,6 +155,11 @@ add_library(${PROJECT_NAME}
   include/RouteSegments/RouteSegmentsDisplay.h
   src/RouteSegments/RouteSegmentsVisual.cpp
   src/RouteSegments/RouteSegmentsDisplay.cpp
+  
+  include/Path/PathVisual.h
+  include/Path/PathDisplay.h
+  src/Path/PathVisual.cpp
+  src/Path/PathDisplay.cpp
 )
 
 ## Specify libraries to link a library or executable target against

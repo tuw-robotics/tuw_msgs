@@ -15,5 +15,13 @@
     </description>
     <message_type>tuw_nav_msgs/RouteSegments</message_type>
   </class>
+  <class name="tuw_nav_rviz_plugin/Path"
+         type="tuw_nav_rviz_plugin::PathDisplay"
+         base_class_type="rviz::Display">
+    <description>
+      Displays RouteSegments
+    </description>
+    <message_type>nav_msgs/Path</message_type>
+  </class>
 </library>
 
