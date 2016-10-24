@@ -55,6 +55,7 @@ find_package(catkin REQUIRED COMPONENTS
   JointsIWS.msg
   IwsCmd_VRAT.msg
   IwsCmd_VRAT_Vec.msg
+  IwsCmd_VWWT_Vec.msg
 )
 
 ## Generate services in the 'srv' folder

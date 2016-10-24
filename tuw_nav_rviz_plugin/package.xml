@@ -42,11 +42,12 @@
   <build_depend>rviz</build_depend>
   <build_depend>tuw_geometry_msgs</build_depend>
   <build_depend>tuw_nav_msgs</build_depend>
+  <build_depend>tuw_control</build_depend>
   
   <run_depend>rviz</run_depend>
   <run_depend>tuw_geometry_msgs</run_depend>
   <run_depend>tuw_nav_msgs</run_depend>
-
+  <run_depend>tuw_control</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

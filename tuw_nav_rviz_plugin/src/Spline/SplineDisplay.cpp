@@ -60,11 +60,11 @@ SplineDisplay::SplineDisplay() {
     shape_property_->addOptionStd ( "Cube"    , rviz::Shape::Cube );
     shape_property_->addOptionStd ( "Cylinder", rviz::Shape::Cylinder );
     
-    points_nr_path_property_ = new rviz::IntProperty ( "Path Points Nr", 100,
-            "Number of points to display along path.",
-            this, SLOT ( updatePathPointsNr() ) );
-    points_nr_path_property_->setMin ( 1 );
-    points_nr_path_property_->setMax ( 100000 );
+    ds_path_property_     = new rviz::FloatProperty ( "Path Points DeltaDist", 0.1,
+            "Distance [m] between path points.",
+            this, SLOT ( updatePathDs() ) );
+    ds_path_property_->setMin ( 0.01 );
+    ds_path_property_->setMax ( 100000 );
 
     scale_path_property_ = new rviz::FloatProperty ( "Path Points Scale", 0.1,
             "Scale of the spline contour.",
@@ -75,11 +75,11 @@ SplineDisplay::SplineDisplay() {
     color_orient_property_ = new rviz::ColorProperty ( "Orientation Color", QColor ( 50, 51, 204 ),
             "Color to draw the spline orientation arrows.",
             this, SLOT ( updateOrientColor() ) );
-    points_nr_orient_property_ = new rviz::IntProperty ( "Orientation Points Nr", 50,
-            "Number of arrows to display along path.",
-            this, SLOT ( updateOrientPointsNr() ) );
-    points_nr_orient_property_->setMin ( 1 );
-    points_nr_orient_property_->setMax ( 100000 );
+    ds_orient_property_    = new rviz::FloatProperty ( "Orientation Points DeltaDist", 0.1,
+            "Distance [m] between orientation points.",
+            this, SLOT ( updatePathDs() ) );
+    ds_orient_property_->setMin ( 0.01 );
+    ds_orient_property_->setMax ( 100000 );
 
     scale_orient_property_ = new rviz::FloatProperty ( "Orientation Points Scale", 0.1,
             "Scale of the spline orientation arrows.",
@@ -149,13 +149,13 @@ void SplineDisplay::updateHistoryLength() {
     visuals_.rset_capacity ( history_length_property_->getInt() );
 }
 
-void SplineDisplay::updatePathPointsNr() {
-    int pointsNr = points_nr_path_property_->getInt();
-    for ( auto& visualsI: visuals_ ) { visualsI->setPathPointsNr ( pointsNr ); }
+void SplineDisplay::updatePathDs() {
+    float ds = ds_path_property_->getFloat();
+    for ( auto& visualsI: visuals_ ) { visualsI->setPathDs ( ds ); }
 }
-void SplineDisplay::updateOrientPointsNr() {
-    int pointsNr = points_nr_orient_property_->getInt();
-    for ( auto& visualsI: visuals_ ) { visualsI->setOrientPointsNr ( pointsNr ); }
+void SplineDisplay::updateOrientDs() {
+    float ds = ds_orient_property_->getFloat();
+    for ( auto& visualsI: visuals_ ) { visualsI->setOrientDs ( ds ); }
 }
 
 
@@ -191,11 +191,11 @@ void SplineDisplay::processMessage ( const tuw_nav_msgs::Spline::ConstPtr& msg )
     visual->setPathColor     ( color_path_property_->getOgreColor() );
     visual->setShape         ( ( rviz::Shape::Type ) shape_property_->getOptionInt() );
     visual->setPathScale     ( scale_path_property_->getFloat() );
-    visual->setPathPointsNr  ( points_nr_path_property_->getInt() );
+    visual->setPathDs        ( ds_path_property_->getFloat() );
     
     visual->setOrientColor   ( color_orient_property_->getOgreColor() );
     visual->setOrientScale   ( scale_orient_property_->getFloat() );
-    visual->setOrientPointsNr( points_nr_orient_property_->getInt() );
+    visual->setOrientDs      ( ds_orient_property_->getFloat() );
 
     // And send it to the end of the circular buffer
     visuals_.push_back ( visual );

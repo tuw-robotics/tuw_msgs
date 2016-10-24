@@ -37,6 +37,37 @@
 #include <Spline/SplineVisual.h>
 #include <eigen3/unsupported/Eigen/Splines>
 
+using SNM = tuw::MetricSplineSim::StateNmVars;
+using SCF = tuw::MetricSplineSim::StateCfVars;
+
+namespace tuw {
+    
+
+    MetricSplineSim::MetricSplineSim (boost::shared_ptr<Eigen::Spline3d> _funcs) : StateSimTemplate< 2, 1 >() {
+	spline3d_ = _funcs;
+    }
+    StateSimUPtr MetricSplineSim::cloneStateSim() const {
+	return std::make_unique< MetricSplineSim >(*this);
+    }
+    double MetricSplineSim::stateArc    () const { return stateCf_.value(asInt(SCF::ARC)); }
+    double MetricSplineSim::stateDist   () const { return stateCf_.value(asInt(SCF::ARC)); }
+
+    ParamFuncs*     MetricSplineSim::paramFuncs    () { throw "not implemented"; }
+    ParamFuncsDist* MetricSplineSim::paramFuncsDist() { throw "not implemented"; }
+
+
+    void MetricSplineSim::setStateCf ( const double& _arc, const ParamFuncs::EvalArcGuarantee& _evalArcGuarantee ) {
+	stateCf_.value(asInt(SCF::ARC)) = _arc;
+    }
+    State& MetricSplineSim::stateNmDot () { 
+	auto splEval = spline3d_->derivatives(stateNm_.value(asInt(SNM::SIGMA)), 1);
+	const double& xDash = splEval(0,1);
+	const double& yDash = splEval(1,1);
+	stateNmDotCache_.value(asInt(SNM::SIGMA)) = 1. / sqrt( xDash*xDash + yDash*yDash );
+	return stateNmDotCache_; 
+    }
+}
+
 namespace tuw_nav_rviz_plugin {
 
 SplineVisual::SplineVisual ( Ogre::SceneManager* scene_manager, Ogre::SceneNode* parent_node ) {
@@ -57,8 +88,8 @@ SplineVisual::SplineVisual ( Ogre::SceneManager* scene_manager, Ogre::SceneNode*
     shape_type_ = rviz::Shape::Sphere;
     scalePath_ = 0.01;
     scaleOrient_ = 0.1;
-    pointsNrPath_ = 100;
-    pointsNrOrient_ = 50;
+    dsPathXY_    = 0.1;
+    dsPathTheta_ = 0.1;
 }
 
 SplineVisual::~SplineVisual() {
@@ -77,16 +108,34 @@ void SplineVisual::setMessage ( const tuw_nav_msgs::Spline::ConstPtr& msg ) {
     for( int i = 0; i < mCtrls.rows(); ++i) {  for( int j = 0; j < mCtrls.cols(); ++j) { mCtrls(i,j) = msg->ctrls[i].val[j]; } }
     spline_ = boost::shared_ptr<Eigen::Spline3d>( new Eigen::Spline3d(vKnots, mCtrls) ); 
     
-    splinePtsXY_   .resize ( pointsNrPath_ + 1 );
-    for( size_t i = 0; i <= pointsNrPath_; ++i) { 
-	double p_x = (*spline_)(i / (double)pointsNrPath_ )(0);
-	double p_y = (*spline_)(i / (double)pointsNrPath_ )(1);
-	Eigen::SplineTraits< Eigen::Spline3d >::DerivativeType diff = spline_->derivatives(i / (double)pointsNrPath_, 1);
-	double v_x = diff(0,1);
-	double v_y = diff(1,1);
+    
+    metricSplineSim_ = std::make_shared<tuw::MetricSplineSim>(spline_);
+    for(size_t i = 0; i < metricSplineSim_->state0().valueSize(); ++i){ metricSplineSim_->state0().value(i) = 0; }
+    metricSplineSim_->setDiscrType(tuw::RungeKutta::DiscretizationType::RK4);
+    
+    metricSplineSim_->toState0();
+    sigmaXYLattice_.clear();
+    double s = 0;
+    if ( dsPathXY_ > 0.01 ) {
+	while( metricSplineSim_->stateNm().value(tuw::asInt(SNM::SIGMA)) < 1 ) {
+	    sigmaXYLattice_.emplace_back( metricSplineSim_->stateNm().value(tuw::asInt(SNM::SIGMA)) );
+	    s += dsPathXY_;
+	    metricSplineSim_->advance( s );
+	}
+	sigmaXYLattice_.emplace_back(1.);
+    }
+    splinePtsXY_   .resize ( sigmaXYLattice_.size() );
+    
+    for( size_t i = 0; i < splinePtsXY_.size(); ++i) { 
+	auto splEval = spline_->derivatives(sigmaXYLattice_[i], 1);
+	double p_x = splEval(0,0);
+	double p_y = splEval(1,0);
+	
+	double v_x = splEval(0,1);
+	double v_y = splEval(1,1);
 // 	double p_z = (*spline_)(i / (double)pointsNrPath_ )(2);
 	
-	Ogre::Quaternion rotation  = Ogre::Quaternion ( Ogre::Radian( (*spline_)(i / (double)pointsNrPath_ )(2) + atan2(v_y, v_x) ), Ogre::Vector3::UNIT_Z );
+	Ogre::Quaternion rotation  = Ogre::Quaternion ( Ogre::Radian( splEval(2,0) + atan2(v_y, v_x) ), Ogre::Vector3::UNIT_Z );
 	Ogre::Quaternion rotation2 = Ogre::Quaternion ( Ogre::Radian( -Ogre::Math::PI/2.), Ogre::Vector3::UNIT_Y );
 	splinePtsXY_[i].reset ( new rviz::Shape ( shape_type_, scene_manager_, frame_node_ ) );
         splinePtsXY_[i]->setColor ( colorPath_ );
@@ -95,17 +144,28 @@ void SplineVisual::setMessage ( const tuw_nav_msgs::Spline::ConstPtr& msg ) {
         splinePtsXY_[i]->setScale ( Ogre::Vector3 ( scalePath_, scalePath_, scalePath_ ) );
     }
     
-    splinePtsTheta_.resize ( pointsNrOrient_ + 1 );
-//     if( !plotArrows_ ) { splinePtsTheta_.resize ( 0 ); return; }
-    for( size_t i = 0; i <= pointsNrOrient_; ++i) { 
-	double p_x = (*spline_)(i / (double)pointsNrOrient_ )(0);
-	double p_y = (*spline_)(i / (double)pointsNrOrient_ )(1);
-	Eigen::SplineTraits< Eigen::Spline3d >::DerivativeType diff = spline_->derivatives(i / (double)pointsNrOrient_, 1);
-	double v_x = diff(0,1);
-	double v_y = diff(1,1);
+    metricSplineSim_->toState0();
+    sigmaThetaLattice_.clear();
+    s = 0;
+    if ( dsPathTheta_ > 0.01 ) {
+	while( metricSplineSim_->stateNm().value(tuw::asInt(SNM::SIGMA)) < 1 ) {
+	    sigmaThetaLattice_.emplace_back( metricSplineSim_->stateNm().value(tuw::asInt(SNM::SIGMA)) );
+	    s += dsPathTheta_;
+	    metricSplineSim_->advance( s );
+	}
+	sigmaThetaLattice_.emplace_back(1.);
+    }
+    splinePtsTheta_   .resize ( sigmaThetaLattice_.size() );
+    
+    for( size_t i = 0; i < splinePtsTheta_.size(); ++i) { 
+	auto splEval = spline_->derivatives(sigmaThetaLattice_[i], 1);
+	double p_x = splEval(0,0);
+	double p_y = splEval(1,0);
+	double v_x = splEval(0,1);
+	double v_y = splEval(1,1);
 // 	double p_z = (*spline_)(i / (double)pointsNrOrient_ )(2);
 	
-	Ogre::Quaternion rotation  = Ogre::Quaternion ( Ogre::Radian( (*spline_)(i / (double)pointsNrOrient_ )(2) + atan2(v_y, v_x) ), Ogre::Vector3::UNIT_Z );
+	Ogre::Quaternion rotation  = Ogre::Quaternion ( Ogre::Radian( splEval(2,0) + atan2(v_y, v_x) ), Ogre::Vector3::UNIT_Z );
 	Ogre::Quaternion rotation2 = Ogre::Quaternion ( Ogre::Radian( -Ogre::Math::PI/2.), Ogre::Vector3::UNIT_Y );
 	splinePtsTheta_[i].reset ( new rviz::Arrow ( scene_manager_, frame_node_ ) );
 	splinePtsTheta_[i]->setColor ( colorOrient_ );
@@ -164,13 +224,26 @@ void SplineVisual::setOrientScale ( float scale ) {
 }
 
 
-void SplineVisual::setPathPointsNr ( int pointsNr ) {
-    pointsNrPath_ = pointsNr;
+void SplineVisual::setPathDs ( float _ds ) {
+    dsPathXY_ = _ds;
     if(!spline_){ return; }
     
-    splinePtsXY_.resize ( pointsNrPath_ + 1 );
-    for( size_t i = 0; i <= pointsNrPath_; ++i) { 
-	auto splineEval = spline_->derivatives(i / (double)pointsNrPath_, 1);
+    metricSplineSim_->toState0();
+    sigmaXYLattice_.clear();
+    double s = 0;
+    if ( dsPathXY_ > 0.01 ) {
+	while( metricSplineSim_->stateNm().value(tuw::asInt(SNM::SIGMA)) < 1 ) {
+	    sigmaXYLattice_.emplace_back( metricSplineSim_->stateNm().value(tuw::asInt(SNM::SIGMA)) );
+	    s += dsPathXY_;
+	    metricSplineSim_->advance( s );
+	}
+	sigmaXYLattice_.emplace_back(1.);
+    }
+    
+    splinePtsXY_   .resize ( sigmaXYLattice_.size() );
+    for( size_t i = 0; i < splinePtsXY_.size(); ++i) { 
+    
+	auto splineEval = spline_->derivatives(sigmaXYLattice_[i], 1);
 	double p_x = splineEval(0,0), p_y = splineEval(1,0);
 	double v_x = splineEval(0,1), v_y = splineEval(1,1);
 	
@@ -185,13 +258,26 @@ void SplineVisual::setPathPointsNr ( int pointsNr ) {
     }
 }
 
-void SplineVisual::setOrientPointsNr ( int pointsNr ) {
-    pointsNrOrient_ = pointsNr;
+void SplineVisual::setOrientDs ( float _ds ) {
+    dsPathTheta_ = _ds;
     if(!spline_){ return; }
     
-    splinePtsTheta_.resize ( pointsNrOrient_ + 1 );
-    for( size_t i = 0; i <= pointsNrOrient_; ++i) { 
-	auto splineEval = spline_->derivatives(i / (double)pointsNrOrient_, 1);
+    metricSplineSim_->toState0();
+    sigmaThetaLattice_.clear();
+    double s = 0;
+    if ( dsPathTheta_ > 0.01 ) {
+	while( metricSplineSim_->stateNm().value(tuw::asInt(SNM::SIGMA)) < 1 ) {
+	    sigmaThetaLattice_.emplace_back( metricSplineSim_->stateNm().value(tuw::asInt(SNM::SIGMA)) );
+	    s += dsPathTheta_;
+	    metricSplineSim_->advance( s );
+	}
+	sigmaThetaLattice_.emplace_back(1.);
+    }
+    
+    splinePtsTheta_   .resize ( sigmaThetaLattice_.size() );
+    for( size_t i = 0; i < splinePtsTheta_.size(); ++i) { 
+    
+	auto splineEval = spline_->derivatives(sigmaThetaLattice_[i], 1);
 	double p_x = splineEval(0,0), p_y = splineEval(1,0);
 	double v_x = splineEval(0,1), v_y = splineEval(1,1);
 	
@@ -199,7 +285,7 @@ void SplineVisual::setOrientPointsNr ( int pointsNr ) {
 	Ogre::Quaternion rotation2 = Ogre::Quaternion ( Ogre::Radian( -Ogre::Math::PI/2.), Ogre::Vector3::UNIT_Y );
 	
 	splinePtsTheta_[i].reset ( new rviz::Arrow ( scene_manager_, frame_node_ ) );
-        splinePtsTheta_[i]->setColor ( colorOrient_ );
+        splinePtsTheta_[i]->setColor ( colorPath_ );
         splinePtsTheta_[i]->setPosition ( Ogre::Vector3 ( p_x, p_y, 0 ) );
         splinePtsTheta_[i]->setOrientation ( rotation*rotation2 );
         splinePtsTheta_[i]->setScale ( Ogre::Vector3 ( scaleOrient_, scaleOrient_, scaleOrient_ ) );

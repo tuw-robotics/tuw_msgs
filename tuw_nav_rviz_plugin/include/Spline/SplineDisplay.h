@@ -91,12 +91,12 @@ private Q_SLOTS:
   void updatePathColor();
   void updateShape();
   void updatePathScale();
-  void updatePathPointsNr();
+  void updatePathDs ();
   
   void updateOrientColor();
   void updateOrientShape();
   void updateOrientScale();
-  void updateOrientPointsNr();
+  void updateOrientDs ();
   
   void updateHistoryLength();
   
@@ -112,11 +112,12 @@ private:
   rviz::ColorProperty* color_path_property_;
   rviz::EnumProperty*  shape_property_;
   rviz::FloatProperty* scale_path_property_;
-  rviz::IntProperty* points_nr_path_property_;
+  rviz::FloatProperty* ds_path_property_;
+  
   
   rviz::ColorProperty* color_orient_property_;
   rviz::FloatProperty* scale_orient_property_;
-  rviz::IntProperty* points_nr_orient_property_;
+  rviz::FloatProperty* ds_orient_property_;
   
   rviz::IntProperty* history_length_property_;
 };

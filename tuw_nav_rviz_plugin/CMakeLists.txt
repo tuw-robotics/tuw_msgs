@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   tuw_geometry_msgs
   tuw_nav_msgs
   rviz
+  tuw_control
 )
 
 ## System dependencies are found with CMake's conventions
