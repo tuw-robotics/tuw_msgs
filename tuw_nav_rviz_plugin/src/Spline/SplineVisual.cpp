@@ -61,9 +61,10 @@ namespace tuw {
     }
     State& MetricSplineSim::stateNmDot () { 
 	auto splEval = spline3d_->derivatives(stateNm_.value(asInt(SNM::SIGMA)), 1);
-	const double& xDash = splEval(0,1);
-	const double& yDash = splEval(1,1);
-	stateNmDotCache_.value(asInt(SNM::SIGMA)) = 1. / sqrt( xDash*xDash + yDash*yDash );
+	const double&  xDash = splEval(0,1);
+	const double&  yDash = splEval(1,1);
+	const double& thDash = splEval(2,1);
+	stateNmDotCache_.value(asInt(SNM::SIGMA)) = 1. / sqrt( xDash*xDash + yDash*yDash + thDash*thDash );
 	return stateNmDotCache_; 
     }
 }
@@ -110,7 +111,7 @@ void SplineVisual::setMessage ( const tuw_nav_msgs::Spline::ConstPtr& msg ) {
     
     
     metricSplineSim_ = std::make_shared<tuw::MetricSplineSim>(spline_);
-    for(size_t i = 0; i < metricSplineSim_->state0().valueSize(); ++i){ metricSplineSim_->state0().value(i) = 0; }
+    for(size_t i = 0; i < metricSplineSim_->state0().valueSize(); ++i){ metricSplineSim_->state0().value(i) = 1e-2; }
     metricSplineSim_->setDiscrType(tuw::RungeKutta::DiscretizationType::RK4);
     
     metricSplineSim_->toState0();
