@@ -102,7 +102,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES tuw_geometry_msgs
-#  CATKIN_DEPENDS geometry_msgs
+  CATKIN_DEPENDS geometry_msgs
 #  DEPENDS system_lib
 )
 
