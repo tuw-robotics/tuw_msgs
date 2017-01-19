@@ -7,6 +7,7 @@ project(tuw_geometry_rviz_plugin)
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   rviz
+  tuw_geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -146,6 +147,10 @@ add_library(${PROJECT_NAME}
   include/PoseWithCovarianceStamped/PoseWithCovarianceStampedDisplay.h
   src/PoseWithCovarianceStamped/PoseWithCovarianceStampedVisual.cpp
   src/PoseWithCovarianceStamped/PoseWithCovarianceStampedDisplay.cpp
+  include/LineSegments2D/LineSegments2DVisual.h
+  include/LineSegments2D/LineSegments2DDisplay.h
+  src/LineSegments2D/LineSegments2DVisual.cpp
+  src/LineSegments2D/LineSegments2DDisplay.cpp
 )
 
 ## Specify libraries to link a library or executable target against
