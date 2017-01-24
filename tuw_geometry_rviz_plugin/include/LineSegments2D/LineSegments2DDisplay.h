@@ -58,44 +58,41 @@ class LineSegments2DVisual;
 // rviz::Display.
 class LineSegments2DDisplay: public rviz::MessageFilterDisplay<tuw_geometry_msgs::LineSegments>
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-  // Constructor.  pluginlib::ClassLoader creates instances by calling
-  // the default constructor, so make sure you have one.
-  LineSegments2DDisplay();
-  virtual ~LineSegments2DDisplay();
+    // Constructor.  pluginlib::ClassLoader creates instances by calling
+    // the default constructor, so make sure you have one.
+    LineSegments2DDisplay();
+    virtual ~LineSegments2DDisplay();
 
-  // Overrides of protected virtual functions from Display.  As much
-  // as possible, when Displays are not enabled, they should not be
-  // subscribed to incoming data and should not show anything in the
-  // 3D view.  These functions are where these connections are made
-  // and broken.
+    // Overrides of protected virtual functions from Display.  As much
+    // as possible, when Displays are not enabled, they should not be
+    // subscribed to incoming data and should not show anything in the
+    // 3D view.  These functions are where these connections are made
+    // and broken.
 protected:
-  virtual void onInitialize();
+    virtual void onInitialize();
 
-  // A helper to clear this display back to the initial state.
-  virtual void reset();
+    // A helper to clear this display back to the initial state.
+    virtual void reset();
 
-  // These Qt slots get connected to signals indicating changes in the user-editable properties.
+    // These Qt slots get connected to signals indicating changes in the user-editable properties.
 private Q_SLOTS:
-  //void updateScalePose();
-  void updateColorSegments();
-  //void updateColorVariance();
-
-  // Function to handle an incoming ROS message.
+    void updateScaleSegments();
+    void updateColorSegments();
+    void updateWidthSegments();
 private:
-  void processMessage(const tuw_geometry_msgs::LineSegments::ConstPtr& msg);
+    // Function to handle an incoming ROS message.
+    void processMessage ( const tuw_geometry_msgs::LineSegments::ConstPtr& msg );
 
-  // Storage of the visual
-  boost::shared_ptr<LineSegments2DVisual> visual_;
+    // Storage of the visual
+    boost::shared_ptr<LineSegments2DVisual> visual_;
 
-  // User-editable property variables.
-  rviz::ColorProperty* property_color_segments_;
-  /*
-  rviz::FloatProperty* property_scale_pose_;
-  rviz::ColorProperty* property_color_pose_;
-  rviz::ColorProperty* property_color_variance_;
-  */
+    // User-editable property variables.
+    rviz::ColorProperty* property_color_segments_;
+    rviz::FloatProperty* property_scale_segments_;
+    rviz::FloatProperty* property_width_segments_;
+    
 };
 
 } // end namespace tuw_pose_rviz_plugin

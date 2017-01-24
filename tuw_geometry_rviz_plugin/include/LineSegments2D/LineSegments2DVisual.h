@@ -31,9 +31,7 @@
 #define LINES_SEGMENTS_2D_VISUAL_H
 
 #include <tuw_geometry_msgs/LineSegments.h>
-#include <rviz/ogre_helpers/arrow.h>
-#include <rviz/ogre_helpers/shape.h>
-#include <rviz/ogre_helpers/line.h>
+#include <rviz/ogre_helpers/billboard_line.h>
 
 namespace Ogre
 {
@@ -43,9 +41,10 @@ class Quaternion;
 
 namespace rviz
 {
-class Arrow;
-class Shape;
-class Line;
+//class Arrow;
+//class Shape;
+//class Line;
+class BillboardLine;
 }
 
 namespace tuw_geometry_rviz_plugin
@@ -55,61 +54,50 @@ namespace tuw_geometry_rviz_plugin
 class LineSegments2DVisual
 {
 public:
-  // Constructor.  Creates the visual stuff and puts it into the
-  // scene, but in an unconfigured state.
-  LineSegments2DVisual( Ogre::SceneManager* scene_manager, Ogre::SceneNode* parent_node );
+    // Constructor.  Creates the visual stuff and puts it into the
+    // scene, but in an unconfigured state.
+    LineSegments2DVisual ( Ogre::SceneManager* scene_manager, Ogre::SceneNode* parent_node );
 
-  // Destructor.  Removes the visual stuff from the scene.
-  virtual ~LineSegments2DVisual();
+    // Destructor.  Removes the visual stuff from the scene.
+    virtual ~LineSegments2DVisual();
 
-  // Configure the visual to show the data in the message.
-  void setMessage(const tuw_geometry_msgs::LineSegments::ConstPtr& msg);
+    // Configure the visual to show the data in the message.
+    void setMessage ( const tuw_geometry_msgs::LineSegments::ConstPtr& msg );
 
-  // Set the pose of the coordinate frame the message refers to.
-  // These could be done inside setMessage(), but that would require
-  // calls to FrameManager and error handling inside setMessage(),
-  // which doesn't seem as clean.  This way LineSegments2DVisual is
-  // only responsible for visualization.
-  void setFramePosition( const Ogre::Vector3& position );
-  void setFrameOrientation( const Ogre::Quaternion& orientation );
+    // Set the pose of the coordinate frame the message refers to.
+    // These could be done inside setMessage(), but that would require
+    // calls to FrameManager and error handling inside setMessage(),
+    // which doesn't seem as clean.  This way LineSegments2DVisual is
+    // only responsible for visualization.
+    void setFramePosition ( const Ogre::Vector3& position );
+    void setFrameOrientation ( const Ogre::Quaternion& orientation );
 
-  // Set the scale of the visual, which is an user-editable
-  // parameter and therefore don't come from the PoseWithCovarianceStamped message.
-  //void setScalePose( float scale );
+    // Set the scale of the visual, which is an user-editable
+    // parameter and therefore don't come from the PoseWithCovarianceStamped message.
+    void setScaleSegments ( float scale );
 
-  // Set the color of the visual's Pose, which is an user-editable
-  // parameter and therefore don't come from the PoseWithCovarianceStamped message.
-  void setColorSegments( Ogre::ColourValue color );
+    // Set the color of the visual's Pose, which is an user-editable
+    // parameter and therefore don't come from the PoseWithCovarianceStamped message.
+    void setColorSegments ( Ogre::ColourValue color );
 
-  // Set the color of the visual's variance, which is an user-editable
-  // parameter and therefore don't come from the PoseWithCovarianceStamped message.
-  //void setColorVariance( Ogre::ColourValue color );
+    void setWidthSegments ( float width );
+
+    // Set the color of the visual's variance, which is an user-editable
+    // parameter and therefore don't come from the PoseWithCovarianceStamped message.
+    //void setColorVariance( Ogre::ColourValue color );
 
 private:
-  // The object implementing the actual pose shape
-  //boost::shared_ptr<rviz::Arrow> pose_;
-  //boost::shared_ptr<rviz::Line> line_;
-  std::vector<boost::shared_ptr<rviz::Line> > linesegments_;
+    // The object implementing the actual BillboardLine
+    boost::shared_ptr<rviz::BillboardLine> linesegments_;
 
-  // The object implementing the actual variance shape
-  //boost::shared_ptr<rviz::Shape> variance_;
+    // A SceneNode whose pose is set to match the coordinate frame of
+    // the Imu message header.
+    Ogre::SceneNode* frame_node_;
 
-  // A SceneNode whose pose is set to match the coordinate frame of
-  // the Imu message header.
-  Ogre::SceneNode* frame_node_;
+    // The SceneManager, kept here only so the destructor can ask it to
+    // destroy the ``frame_node_``.
+    Ogre::SceneManager* scene_manager_;
 
-  // The SceneManager, kept here only so the destructor can ask it to
-  // destroy the ``frame_node_``.
-  Ogre::SceneManager* scene_manager_;
-
-  // The pose Shape object's scale
-  // float scale_pose_;
-
-  // The pose Shape object's color
-  Ogre::ColourValue color_segment_;
-
-  // The variance Shape object's color
-  //Ogre::ColourValue color_variance_;
 };
 
 } // end namespace tuw_pose_rviz_plugin
