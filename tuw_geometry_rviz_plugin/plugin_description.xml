@@ -7,5 +7,12 @@
     </description>
     <message_type>geometry_msgs/PoseWithCovarianceStamped</message_type>
   </class>
+  <class name="tuw_geometry_rviz_plugin/LineSegments2D"
+         type="tuw_geometry_rviz_plugin::LineSegments2DDisplay"
+         base_class_type="rviz::Display">
+    <description>
+      Displays line segments from tuw_geometry_msgs/LineSegments2D messages.
+    </description>
+    <message_type>tuw_geometry_msgs/LineSegments2D</message_type>
+  </class>
 </library>
-
