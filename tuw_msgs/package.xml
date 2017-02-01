@@ -43,11 +43,8 @@
   <buildtool_depend>catkin</buildtool_depend>
   <run_depend>tuw_gazebo_msgs</run_depend>
   <run_depend>tuw_geometry_msgs</run_depend>
-  <run_depend>tuw_geometry_rviz_plugin</run_depend>
   <run_depend>tuw_nav_msgs</run_depend>
-  <run_depend>tuw_nav_rviz_plugin</run_depend>
   <run_depend>tuw_object_msgs</run_depend>
-  <run_depend>tuw_object_rviz_plugin</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

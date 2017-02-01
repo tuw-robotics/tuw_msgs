@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(tuw_nav_msgs)
+SET(GCC_COVERAGE_COMPILE_FLAGS "-fdump-ada-spec")
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
