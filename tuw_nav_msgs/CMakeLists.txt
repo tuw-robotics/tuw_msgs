@@ -7,6 +7,8 @@ SET(GCC_COVERAGE_COMPILE_FLAGS "-fdump-ada-spec")
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   message_generation
+  roscpp
+  rospy
   std_msgs
   geometry_msgs
   tuw_geometry_msgs
