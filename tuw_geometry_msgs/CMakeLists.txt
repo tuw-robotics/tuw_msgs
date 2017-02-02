@@ -101,7 +101,7 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES tuw_geometry_msgs
+#  LIBRARIES tuw_geometry_msgs
   CATKIN_DEPENDS geometry_msgs
 #  DEPENDS system_lib
 )
