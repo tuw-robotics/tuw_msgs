@@ -66,8 +66,7 @@ add_message_files(
 
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
-   DEPENDENCIES
-   geometry_msgs
+   DEPENDENCIES std_msgs geometry_msgs
 )
 
 ################################################
@@ -102,7 +101,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES tuw_geometry_msgs
-  CATKIN_DEPENDS geometry_msgs
+  CATKIN_DEPENDS message_generation geometry_msgs nav_msgs tuw_geometry_msgs
 #  DEPENDS system_lib
 )
 

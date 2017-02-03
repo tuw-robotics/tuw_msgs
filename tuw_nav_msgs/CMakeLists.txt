@@ -9,9 +9,9 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   roscpp
   rospy
+  tf
   std_msgs
   nav_msgs
-  tf
   geometry_msgs
   tuw_geometry_msgs
 )
@@ -80,8 +80,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
-   DEPENDENCIES
-   std_msgs geometry_msgs
+   DEPENDENCIES std_msgs geometry_msgs nav_msgs  tuw_geometry_msgs
 )
 
 ################################################
@@ -116,7 +115,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES tuw_nav_msgs
-#  CATKIN_DEPENDS geometry_msgs
+  CATKIN_DEPENDS tf message_generation std_msgs geometry_msgs nav_msgs  tuw_geometry_msgs
 #  DEPENDS system_lib
 )
 

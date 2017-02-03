@@ -70,8 +70,7 @@ add_message_files(
 
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
-  DEPENDENCIES
-  geometry_msgs
+  DEPENDENCIES std_msgs geometry_msgs 
 )
 
 ################################################
@@ -106,7 +105,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES tuw_object_msgs
-  CATKIN_DEPENDS message_runtime geometry_msgs message_generation
+  CATKIN_DEPENDS message_runtime message_generation std_msgs geometry_msgs 
 #  DEPENDS system_lib
 )
 
@@ -165,11 +164,11 @@ include_directories(
 # )
 
 ## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+  PATTERN ".svn" EXCLUDE
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
