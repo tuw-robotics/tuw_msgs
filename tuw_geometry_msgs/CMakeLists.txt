@@ -101,7 +101,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES tuw_geometry_msgs
-  CATKIN_DEPENDS message_generation geometry_msgs nav_msgs tuw_geometry_msgs
+  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs
 #  DEPENDS system_lib
 )
 

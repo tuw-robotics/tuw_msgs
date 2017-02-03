@@ -5,6 +5,7 @@ project(tuw_object_msgs)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  std_msgs
   geometry_msgs
   message_generation
 )
@@ -105,7 +106,7 @@ generate_messages(
 catkin_package(
  INCLUDE_DIRS include
 #  LIBRARIES tuw_object_msgs
-  CATKIN_DEPENDS message_runtime message_generation std_msgs geometry_msgs 
+  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs 
 #  DEPENDS system_lib
 )
 

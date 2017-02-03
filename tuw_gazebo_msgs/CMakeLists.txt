@@ -20,7 +20,7 @@ add_message_files(
 generate_messages(DEPENDENCIES std_msgs )
 
 catkin_package(
-  CATKIN_DEPENDS message_runtime std_msgs message_generation
+  CATKIN_DEPENDS message_runtime std_msgs
 )
 
 ## Mark cpp header files for installation
