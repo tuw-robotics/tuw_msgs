@@ -156,11 +156,11 @@ target_link_libraries(tuw_geometry_msgs
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS tuw_geometry_msgs tuw_geometry_msgs_node
+install(TARGETS tuw_geometry_msgs
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+)
 
 ## Mark cpp header files for installation
 install(DIRECTORY include/${PROJECT_NAME}/
