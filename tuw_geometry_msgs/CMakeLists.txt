@@ -48,6 +48,8 @@ add_message_files(
    FILES
    LineSegment.msg
    LineSegments.msg
+   WeightedPoseWithCovariance.msg
+   WeightedPoseWithCovarianceArray.msg
 )
 
 ## Generate services in the 'srv' folder
