@@ -53,6 +53,10 @@ add_message_files(
   ObjectWithCovarianceArray.msg
   ObjectWithCovariance.msg
   ObjectWithCovarianceStamped.msg
+  Cone.msg
+  ConeWithCovariance.msg
+  ConeWithCovarianceArray.msg
+  ConeDetection.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -71,7 +75,7 @@ add_message_files(
 
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
-  DEPENDENCIES std_msgs geometry_msgs 
+  DEPENDENCIES std_msgs geometry_msgs
 )
 
 ################################################
@@ -106,7 +110,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES tuw_object_msgs
-  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs 
+  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs
 #  DEPENDS system_lib
 )
 
