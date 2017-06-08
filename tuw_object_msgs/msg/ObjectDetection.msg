@@ -13,11 +13,12 @@ string   type                                 # object type used (person, obstac
 
 ObjectWithCovariance[] objects                # detected objects (with covariance)
 
-string          sensor_type                      # Sensor / detector type, see example constants below. 
+string          sensor_type                      # Sensor / detector type, see example constants below.
 
 # object type constants
 string OBJECT_TYPE_PERSON = person
 string OBJECT_TYPE_OBSTACLE = obstacle
+string OBJECT_TYPE_TRAFFIC_CONE = traffic_cone
 
 # sensor type constants
 string          SENSOR_TYPE_GENERIC_LASER_2D = laser2d
