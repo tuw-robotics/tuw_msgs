@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  geometry_msgs
 )
 
 add_definitions(-std=c++11)
@@ -47,13 +48,20 @@ add_definitions(-std=c++11)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
- add_message_files(
-    DIRECTORY msg
-    FILES
-    RWDControl.msg
-    ChassisState.msg
-    BatteryState.msg
-    Wheelspeeds.msg
+add_message_files(
+   DIRECTORY msg
+   FILES
+   Wheelspeeds.msg
+   AutonomousState.msg
+   RWDControl.msg
+   ChassisState.msg
+   ControlState.msg
+   DiagnosisState.msg
+   BatteryState.msg
+   ResState.msg
+   RWDMotion.msg
+   Track.msg
+   TrackMarking.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -74,6 +82,7 @@ add_definitions(-std=c++11)
  generate_messages(
    DEPENDENCIES
    std_msgs
+   geometry_msgs
  )
 
 ################################################
