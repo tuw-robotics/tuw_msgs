@@ -55,10 +55,7 @@ add_message_files(
    AutonomousState.msg
    RWDControl.msg
    ChassisState.msg
-   ControlState.msg
-   DiagnosisState.msg
    BatteryState.msg
-   ResState.msg
    RWDMotion.msg
    Track.msg
    TrackMarking.msg
