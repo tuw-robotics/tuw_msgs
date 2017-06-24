@@ -11,9 +11,6 @@ float64 steeringAngle
 float64 steeringAngleLeft
 float64 steeringAngleRight
 
-# from 0 to 1
-float64 throttle
-
 # in bar
 float64 frontBrakePressure
 float64 rearBrakePressure
