@@ -6,10 +6,11 @@
 namespace tuw {
 namespace ros_msgs {
 class BatteryState : public tuw_vehicle_msgs::BatteryState {
- public:
+public:
   BatteryState();
-  float GetLowestCellVoltage();
+  double GetLowestCellVoltage();
+  double GetTotalVoltage();
 };
 };
 };
-#endif  // TUWR_MSGS_BATTERY_STATE_H
+#endif // TUWR_MSGS_BATTERY_STATE_H
