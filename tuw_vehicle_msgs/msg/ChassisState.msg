@@ -7,8 +7,8 @@ float64 omg
 # in degrees, negative to the left
 float64 steeringAngle
 
-# from 0 to 1
-float64 throttle
+# in deg/s, negative to the left
+float64 steeringSpeed
 
 # in bar
 float64 frontBrakePressure

@@ -15,4 +15,3 @@ uint8 STATE_FINISHED=5
 
 uint8 state
 uint8 mission
-bool go
