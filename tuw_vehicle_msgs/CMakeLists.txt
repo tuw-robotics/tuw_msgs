@@ -60,6 +60,7 @@ add_message_files(
    BatteryState.msg
    ResState.msg
    RWDMotion.msg
+   RWDKinCmd.msg
    Track.msg
    TrackMarking.msg
 )
