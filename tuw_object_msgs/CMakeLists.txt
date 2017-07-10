@@ -53,10 +53,6 @@ add_message_files(
   ObjectWithCovarianceArray.msg
   ObjectWithCovariance.msg
   ObjectWithCovarianceStamped.msg
-  Cone.msg
-  ConeWithCovariance.msg
-  ConeWithCovarianceArray.msg
-  ConeDetection.msg
 )
 
 ## Generate services in the 'srv' folder
