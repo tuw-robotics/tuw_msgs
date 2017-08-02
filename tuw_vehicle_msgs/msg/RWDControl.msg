@@ -1,6 +1,4 @@
 Header header
-# control type
-uint8 control_type
 # requested torque on the left rear wheel in Nm
 float64 left_torque
 # requested torque on the right rear wheel in Nm
