@@ -1,7 +1,5 @@
 # single marking on the track
 
-Header header
-
 # position of the marking in space, as well as normal angle along the racetrack path
 geometry_msgs/Pose2D pose
 
