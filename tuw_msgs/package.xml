@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>tuw_msgs</name>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
   <description>The tuw_msgs meta package</description>
 
   <maintainer email="george.todoran@tuwien.ac.at">George Todoran</maintainer>
