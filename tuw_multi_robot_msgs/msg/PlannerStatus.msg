@@ -1,7 +1,7 @@
 int32 id
 int32 success
-int32 overallPathLength
-int32 longestPathLength
-int32 prioritySchedulingAttemps
-int32 speedSchedulingAttemps
+int32 overall_path_length
+int32 longest_path_length
+int32 priority_scheduling_attemps
+int32 speed_scheduling_attemps
 int32 duration

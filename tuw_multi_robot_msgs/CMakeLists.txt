@@ -52,12 +52,12 @@ add_message_files(
   FILES 
   PoseId.msg
   PoseIdArray.msg
-  PathPrecondition.msg
-  PathSegment.msg
-  SegmentPath.msg
+  RoutePrecondition.msg
+  RouteSegment.msg
+  Route.msg
   PlannerStatus.msg
   Vertex.msg
-  VoronoiGraph.msg
+  Graph.msg
 )
 
 ## Generate services in the 'srv' folder
