@@ -5,11 +5,11 @@ float64 vy
 float64 omg
 
 # in degrees, negative to the left
-float64 steeringAngle
+float64 steering_angle
 
 # in deg/s, negative to the left
-float64 steeringSpeed
+float64 steering_speed
 
 # in bar
-float64 frontBrakePressure
-float64 rearBrakePressure
+float64 front_brake_pressure
+float64 rear_brake_pressure

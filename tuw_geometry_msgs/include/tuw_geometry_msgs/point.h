@@ -30,19 +30,18 @@
  *   POSSIBILITY OF SUCH DAMAGE.                                           *
  ***************************************************************************/
 
-
 #ifndef TUW_GEOMETRY_MSGS_POINT_H
 #define TUW_GEOMETRY_MSGS_POINT_H
 
-
-//ROS
+// ROS
 #include <geometry_msgs/Point.h>
 
-namespace tuw {
-namespace ros_msgs {
+namespace tuw
+{
+namespace ros_msgs
+{
 }
 double Distance(const geometry_msgs::Point &a, const geometry_msgs::Point &b);
 };
 
-
-#endif // TUW_GEOMETRY_MSGS_POINT_H
+#endif  // TUW_GEOMETRY_MSGS_POINT_H

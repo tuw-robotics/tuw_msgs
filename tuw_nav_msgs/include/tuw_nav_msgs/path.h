@@ -30,22 +30,22 @@
  *   POSSIBILITY OF SUCH DAMAGE.                                           *
  ***************************************************************************/
 
-
 #ifndef TUW_NAV_MSG_PATH_H
 #define TUW_NAV_MSG_PATH_H
 
-
-//ROS
+// ROS
 #include <nav_msgs/Path.h>
 
-namespace tuw {
-  namespace ros_msgs{
-  class Path : public nav_msgs::Path {
-  public:
-    Path();
-  };
-  };
+namespace tuw
+{
+namespace ros_msgs
+{
+class Path : public nav_msgs::Path
+{
+public:
+  Path();
+};
+};
 };
 
-
-#endif // TUW_NAV_MSG_PATH_H
+#endif  // TUW_NAV_MSG_PATH_H

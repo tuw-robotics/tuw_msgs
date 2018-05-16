@@ -2,10 +2,10 @@
 Header header
 
 # ordered sequence of markings on the left side of the track
-TrackMarking[] leftBorder
+TrackMarking[] left_border
 
 # ordered sequence of markings on the right side of the track
-TrackMarking[] rightBorder
+TrackMarking[] right_border
 
 # ordered sequence of path points on the center of the track
 geometry_msgs/Pose2D[] waypoints

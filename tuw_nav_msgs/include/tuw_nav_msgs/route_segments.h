@@ -30,33 +30,33 @@
  *   POSSIBILITY OF SUCH DAMAGE.                                           *
  ***************************************************************************/
 
-
 #ifndef TUW_NAV_MSGS_ROUTE_SEGMENTS_H
 #define TUW_NAV_MSGS_ROUTE_SEGMENTS_H
 
-
-//ROS
+// ROS
 #include <tuw_nav_msgs/RouteSegments.h>
 #include <nav_msgs/Path.h>
 
-namespace tuw {
-namespace ros_msgs{
-  
-  class RouteSegments : public tuw_nav_msgs::RouteSegments{
-  public:
-    RouteSegments();
-    RouteSegments(size_t n);
-    void set_ids(const std::vector<unsigned int> &id);
-    void set_type(const std::vector<unsigned int> &type);
-    void set_orientation(const std::vector<unsigned int> &orientation);
-    void set_motion_type(const std::vector<unsigned int> &motion_type);
-    void set_start(const std::vector<double> &x, const std::vector<double> &y, const std::vector<double> &theta);
-    void set_end(const std::vector<double> &x, const std::vector<double> &y, const std::vector<double> &theta);
-    void set_center(const std::vector<double> &x, const std::vector<double> &y, const std::vector<double> &theta);
-    void set_level(const std::vector<int> &level);
-    void convert(nav_msgs::Path &path, double sample_distance) const;
-  };
+namespace tuw
+{
+namespace ros_msgs
+{
+class RouteSegments : public tuw_nav_msgs::RouteSegments
+{
+public:
+  RouteSegments();
+  RouteSegments(size_t n);
+  void set_ids(const std::vector<unsigned int> &id);
+  void set_type(const std::vector<unsigned int> &type);
+  void set_orientation(const std::vector<unsigned int> &orientation);
+  void set_motion_type(const std::vector<unsigned int> &motion_type);
+  void set_start(const std::vector<double> &x, const std::vector<double> &y, const std::vector<double> &theta);
+  void set_end(const std::vector<double> &x, const std::vector<double> &y, const std::vector<double> &theta);
+  void set_center(const std::vector<double> &x, const std::vector<double> &y, const std::vector<double> &theta);
+  void set_level(const std::vector<int> &level);
+  void convert(nav_msgs::Path &path, double sample_distance) const;
+};
 };
 };
 
-#endif // TUW_NAV_MSGS_ROUTE_SEGMENTS_H
+#endif  // TUW_NAV_MSGS_ROUTE_SEGMENTS_H

@@ -30,23 +30,23 @@
  *   POSSIBILITY OF SUCH DAMAGE.                                           *
  ***************************************************************************/
 
-
 #ifndef TUW_GEOMETRY_MSGS_POSE_H
 #define TUW_GEOMETRY_MSGS_POSE_H
 
-
-//ROS
+// ROS
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/PoseStamped.h>
 
-namespace tuw {
-namespace ros_msgs{
-  class PoseStamped : public geometry_msgs::PoseStamped {
-  public:
-    PoseStamped();
-  };
+namespace tuw
+{
+namespace ros_msgs
+{
+class PoseStamped : public geometry_msgs::PoseStamped
+{
+public:
+  PoseStamped();
+};
 };
 };
 
-
-#endif // TUW_GEOMETRY_MSGS_POSE_H
+#endif  // TUW_GEOMETRY_MSGS_POSE_H

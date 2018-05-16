@@ -6,20 +6,25 @@ BatteryState::BatteryState(){
 
 };
 
-double BatteryState::GetLowestCellVoltage() {
+double BatteryState::GetLowestCellVoltage()
+{
   bool lowestFound = false;
   double lowest = 0;
-  for (double const &voltage : this->cellVoltages) {
-    if (false == lowestFound || voltage < lowest) {
+  for (double const &voltage : this->cell_voltages)
+  {
+    if (false == lowestFound || voltage < lowest)
+    {
       lowest = voltage;
     }
   }
   return lowest;
 }
 
-double BatteryState::GetTotalVoltage() {
+double BatteryState::GetTotalVoltage()
+{
   double sum = 0;
-  for (double const &voltage : this->cellVoltages) {
+  for (double const &voltage : this->cell_voltages)
+  {
     sum += voltage;
   }
   return sum;

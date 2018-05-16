@@ -4,7 +4,7 @@ Header header
 float32 current
 
 # cell voltages of single cells
-float32[] cellVoltages
+float32[] cell_voltages
 
 # cell temperatures in degrees C
-float32[] cellTemperatures
+float32[] cell_temperatures

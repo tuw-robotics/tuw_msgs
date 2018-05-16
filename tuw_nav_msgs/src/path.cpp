@@ -30,12 +30,10 @@
  *   POSSIBILITY OF SUCH DAMAGE.                                           *
  ***************************************************************************/
 
-
-
 #include <tuw_nav_msgs/path.h>
 
 using namespace tuw::ros_msgs;
 
-Path::Path() {
+Path::Path(){
 
 };

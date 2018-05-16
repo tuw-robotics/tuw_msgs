@@ -3,12 +3,12 @@ JointCmd[8] cmd
 
 #Those are the 8 joints in order
 
-#JointCmd SteerTR
-#JointCmd SteerTL
-#JointCmd SteerBR
-#JointCmd SteerBL
+#JointCmd steer_tr
+#JointCmd steer_tl
+#JointCmd steer_br
+#JointCmd steer_bl
 
-#JointCmd WheelTR
-#JointCmd WheelTL
-#JointCmd WheelBR
-#JointCmd WheelBL
+#JointCmd wheel_tr
+#JointCmd wheel_tl
+#JointCmd wheel_br
+#JointCmd wheel_bl

@@ -30,32 +30,33 @@
  *   POSSIBILITY OF SUCH DAMAGE.                                           *
  ***************************************************************************/
 
-
 #ifndef TUW_NAV_MSGS_ROUTE_SEGMENT_H
 #define TUW_NAV_MSGS_ROUTE_SEGMENT_H
 
-
-//ROS
+// ROS
 #include <tuw_geometry_msgs/pose.h>
 #include <tuw_nav_msgs/RouteSegment.h>
 
-namespace tuw {
-namespace ros_msgs{
-  class RouteSegment : public tuw_nav_msgs::RouteSegment{
-  public:
-    RouteSegment();
-    static const unsigned int NA = 0;
-    static const unsigned int LINE = 1;
-    static const unsigned int ARC = 2;
-    static const unsigned int SPIROS = 3;
-    static const unsigned int SPLINE = 4;
-    static const unsigned int CLOCKWISE  = 0;
-    static const unsigned int COUNTER_CLOCKWISE  = 1;
-    double sample_equal_distance(std::vector<geometry_msgs::PosePtr > &poses, double distance, double distance_offset) const;
-    double sample_equal_angle(std::vector<geometry_msgs::PosePtr > &poses, double angle, double distance_offset) const;
-  };
+namespace tuw
+{
+namespace ros_msgs
+{
+class RouteSegment : public tuw_nav_msgs::RouteSegment
+{
+public:
+  RouteSegment();
+  static const unsigned int NA = 0;
+  static const unsigned int LINE = 1;
+  static const unsigned int ARC = 2;
+  static const unsigned int SPIROS = 3;
+  static const unsigned int SPLINE = 4;
+  static const unsigned int CLOCKWISE = 0;
+  static const unsigned int COUNTER_CLOCKWISE = 1;
+  double sample_equal_distance(std::vector<geometry_msgs::PosePtr> &poses, double distance,
+                               double distance_offset) const;
+  double sample_equal_angle(std::vector<geometry_msgs::PosePtr> &poses, double angle, double distance_offset) const;
+};
 };
 };
 
-
-#endif // TUW_NAV_MSGS_ROUTE_SEGMENT_H
+#endif  // TUW_NAV_MSGS_ROUTE_SEGMENT_H

@@ -30,12 +30,10 @@
  *   POSSIBILITY OF SUCH DAMAGE.                                           *
  ***************************************************************************/
 
-
-
 #include <tuw_geometry_msgs/pose_stamped.h>
 
 using namespace tuw::ros_msgs;
 
-PoseStamped::PoseStamped() {
+PoseStamped::PoseStamped(){
 
 };

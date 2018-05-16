@@ -1,13 +1,13 @@
 Header header
-Measure[8] Y
+Measure[8] y
 
 #Those are the 8 joints order
-#JointState SteerTR
-#JointState SteerTL
-#JointState SteerBR
-#JointState SteerBL
+#JointState steer_tr
+#JointState steer_tl
+#JointState steer_br
+#JointState steer_bl
 
-#JointState WheelTR
-#JointState WheelTL
-#JointState WheelBR
-#JointState WheelBL
+#JointState wheel_tr
+#JointState wheel_tl
+#JointState wheel_br
+#JointState wheel_bl
