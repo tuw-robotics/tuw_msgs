@@ -13,7 +13,6 @@ add_message_files(
   JointsMeasureI4ws.msg
   JointCmd.msg
   JointsCmdI4ws.msg
-  Measure.msg
   JointState.msg
 )
 

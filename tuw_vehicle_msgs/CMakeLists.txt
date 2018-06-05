@@ -60,7 +60,7 @@ add_message_files(
    RWDKinCmd.msg
    Track.msg
    TrackMarking.msg
-   CmdMpcVec_vphi.msg
+   CmdMpcVecVphi.msg
 )
 
 ## Generate services in the 'srv' folder

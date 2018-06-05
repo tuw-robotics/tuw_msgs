@@ -55,13 +55,13 @@ find_package(catkin REQUIRED COMPONENTS
   FILES
   RouteSegment.msg
   RouteSegments.msg
-  float64Array.msg
+  Float64Array.msg
   Spline.msg
   JointsIWS.msg
-  IwsCmd_VRAT.msg
-  IwsCmd_VRAT_Vec.msg
-  IwsCmd_VWWT_Vec.msg
-  DiffDriveCmd_VW_Vec.msg
+  IwsCmdVRAT.msg
+  IwsCmdVRATVec.msg
+  IwsCmdVWWTVec.msg
+  DiffDriveCmdVWVec.msg
   PathVec.msg
 )
 
