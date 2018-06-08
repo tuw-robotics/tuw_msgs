@@ -63,6 +63,7 @@ find_package(catkin REQUIRED COMPONENTS
   IwsCmdVWWTVec.msg
   DiffDriveCmdVWVec.msg
   PathVec.msg
+  BaseConstr.msg
 )
 
 ## Generate services in the 'srv' folder
