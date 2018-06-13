@@ -50,14 +50,15 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES 
-  PoseId.msg
-  PoseIdArray.msg
+  RobotGoals.msg
+  RobotGoalsArray.msg
   RoutePrecondition.msg
   RouteSegment.msg
   Route.msg
   PlannerStatus.msg
   Vertex.msg
   Graph.msg
+  RobotInfo.msg
 )
 
 ## Generate services in the 'srv' folder
