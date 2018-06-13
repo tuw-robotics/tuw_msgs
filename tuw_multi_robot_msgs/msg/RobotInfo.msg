@@ -1,0 +1,4 @@
+Header header
+string robot_name
+float32 robot_radius
+RoutePrecondition sync
