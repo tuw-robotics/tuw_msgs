@@ -55,7 +55,7 @@ add_message_files(
   RoutePrecondition.msg
   RouteSegment.msg
   Route.msg
-  PlannerStatus.msg
+  RouterStatus.msg
   Vertex.msg
   Graph.msg
   RobotInfo.msg

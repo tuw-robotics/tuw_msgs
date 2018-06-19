@@ -1,8 +1,9 @@
-Header header
-uint32 id
-geometry_msgs/Point[] path
-uint32 length
-float32 width
-uint32[] successors
-uint32[] predecessors
+uint32 id                   # Vertex id
+bool valid                  # true if it can be for planning
+geometry_msgs/Point[] path  # points describing the vertex start and endpoint
+                            #    the first point in the array reprecents the start and the last the endpoint 
+uint32 weight               # the weight of the vertex (e.g. length of the segment)
+float32 width               # fee space next to the vertex
+uint32[] successors         # edges to successors
+uint32[] predecessors       # edges to predecessor
  
