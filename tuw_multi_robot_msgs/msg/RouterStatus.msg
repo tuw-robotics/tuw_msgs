@@ -1,3 +1,8 @@
+#################################################################
+## A message to publish the status of the last route 
+## generation
+#################################################################
+
 int32 id # the unique id of the new plan
 bool success # true if a routing table was found to the given scenario
 string[] missing_robots # if the plan fails because of absent robots, these robots are listed here

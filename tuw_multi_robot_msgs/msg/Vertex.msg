@@ -1,3 +1,9 @@
+#################################################################
+## A single vertex in a graph 
+## Each vertex of the same graph must have a unique id. 
+## Successors and Predecessors must have a common start or end
+## point 
+#################################################################
 uint32 id                   # Vertex id
 bool valid                  # true if it can be for planning
 geometry_msgs/Point[] path  # points describing the vertex start and endpoint

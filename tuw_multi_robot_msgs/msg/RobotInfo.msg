@@ -1,3 +1,7 @@
+#################################################################
+## Presents dynamic parameters of a robot
+#################################################################
+
 Header header               # the creation time
 string robot_name           # the name of the robot (used in preconditions and topics)
 int32 shape                 # the shape of the robots (see enums)
