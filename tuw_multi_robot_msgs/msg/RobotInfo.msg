@@ -4,6 +4,7 @@
 
 Header header               # the creation time
 string robot_name           # the name of the robot (used in preconditions and topics)
+geometry_msgs/PoseWithCovariance pose # the robots current pose within the frame related to the msgs header
 int32 shape                 # the shape of the robots (see enums)
 float32[] shape_variables   # shape variables to define width height, ...
 RoutePrecondition sync      # the current position in the last received plan (-1 means none)
