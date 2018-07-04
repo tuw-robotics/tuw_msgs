@@ -19,6 +19,7 @@ string          sensor_type                      # Sensor / detector type, see e
 string OBJECT_TYPE_PERSON = person
 string OBJECT_TYPE_OBSTACLE = obstacle
 string OBJECT_TYPE_TRAFFIC_CONE = traffic_cone
+string OBJECT_TYPE_DOOR = door
 
 # sensor type constants
 string          SENSOR_TYPE_GENERIC_LASER_2D = laser2d
