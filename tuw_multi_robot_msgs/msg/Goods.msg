@@ -3,5 +3,5 @@
 #################################################################
 
 Header header
-Good[] goods
+tuw_multi_robot_msgs/Good[] goods
 
