@@ -20,7 +20,7 @@ int32 MODE_PICKUP = 3               # robot is picking up goods
 
 # status
 int32 STATUS_DRIVING = 0            # robot is driving
-int32 STATUS_STOPED = 1             # robot has stoped
+int32 STATUS_STOPPED = 1            # robot has stopped
 int32 STATUS_DONE = 2               # robot has finished its last job
 int32 STATUS_BROKEN = 3             # robot is broken and not ready for any task
 
