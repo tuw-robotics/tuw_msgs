@@ -26,7 +26,7 @@ int32 STATUS_BROKEN = 3             # robot is broken and not ready for any task
 
 # good_id
 int32 GOOD_EMPTY = -1               # no goods attached
-int32 GOOD_NA = 0                   # undefined good
+int32 GOOD_NA = -2                  # undefined good
 
 # shape
 int32 SHAPE_CIRCLE = 0                 # robot is in shape of a circle    ShapeVars
