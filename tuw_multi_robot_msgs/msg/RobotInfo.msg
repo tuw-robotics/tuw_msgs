@@ -20,13 +20,13 @@ int32 MODE_PICKUP = 3               # robot is picking up goods
 
 # status
 int32 STATUS_DRIVING = 0            # robot is driving
-int32 STATUS_STOPED = 1             # robot has stoped
+int32 STATUS_STOPPED = 1            # robot has stopped
 int32 STATUS_DONE = 2               # robot has finished its last job
 int32 STATUS_BROKEN = 3             # robot is broken and not ready for any task
 
 # good_id
 int32 GOOD_EMPTY = -1               # no goods attached
-int32 GOOD_NA = 0                   # undefined good
+int32 GOOD_NA = -2                  # undefined good
 
 # shape
 int32 SHAPE_CIRCLE = 0                 # robot is in shape of a circle    ShapeVars

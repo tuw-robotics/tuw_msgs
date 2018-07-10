@@ -59,6 +59,10 @@ add_message_files(
   Vertex.msg
   Graph.msg
   RobotInfo.msg
+  Good.msg
+  Goods.msg
+  Pickup.msg
+  GoodPosition.msg
 )
 
 ## Generate services in the 'srv' folder
