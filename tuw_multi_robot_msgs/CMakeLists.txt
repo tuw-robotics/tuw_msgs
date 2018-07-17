@@ -59,8 +59,8 @@ add_message_files(
   Vertex.msg
   Graph.msg
   RobotInfo.msg
-  Good.msg
-  Goods.msg
+  Order.msg
+  OrderArray.msg
   Pickup.msg
   GoodPosition.msg
 )

@@ -1,7 +1,7 @@
 #################################################################
-## List of goods to deliver
+## List of multiple orders
 #################################################################
 
 Header header
-tuw_multi_robot_msgs/Good[] goods
+tuw_multi_robot_msgs/Order[] orders
 
