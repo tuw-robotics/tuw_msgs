@@ -1,5 +1,6 @@
 #################################################################
-## Goods to deliver from position A to B
+## Good to deliver from position A to B (via intermediate 
+## positions)
 #################################################################
 
 Header                 header
