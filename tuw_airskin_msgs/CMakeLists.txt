@@ -101,7 +101,7 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES tuw_object_msgs
+#  LIBRARIES tuw_airskin_msgs
   CATKIN_DEPENDS message_runtime std_msgs geometry_msgs 
 #  DEPENDS system_lib
 )
@@ -118,24 +118,24 @@ include_directories(
 )
 
 ## Declare a C++ library
-# add_library(tuw_object_msgs
-#   src/${PROJECT_NAME}/tuw_object_msgs.cpp
+# add_library(tuw_airskin_msgs
+#   src/${PROJECT_NAME}/tuw_airskin_msgs.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(tuw_object_msgs ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(tuw_airskin_msgs ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(tuw_object_msgs_node src/tuw_object_msgs_node.cpp)
+# add_executable(tuw_airskin_msgs_node src/tuw_airskin_msgs_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(tuw_object_msgs_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(tuw_airskin_msgs_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(tuw_object_msgs_node
+# target_link_libraries(tuw_airskin_msgs_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -154,7 +154,7 @@ include_directories(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS tuw_object_msgs tuw_object_msgs_node
+# install(TARGETS tuw_airskin_msgs tuw_airskin_msgs_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -179,7 +179,7 @@ install(DIRECTORY include/${PROJECT_NAME}/
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_tuw_object_msgs.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_tuw_airskin_msgs.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
