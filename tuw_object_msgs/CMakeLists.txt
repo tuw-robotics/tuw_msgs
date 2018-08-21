@@ -51,6 +51,7 @@ add_message_files(
   ObjectDetection.msg
   ObjectStamped.msg
   ObjectWithCovarianceArray.msg
+  ObjectWithCovarianceArrayArray.msg
   ObjectWithCovariance.msg
   ObjectWithCovarianceStamped.msg
 )
