@@ -1,6 +1,6 @@
 #################################################################
-## Used to send a number of goals to different nodes
+## Used to send goal requests for multiple robots to the multi robot planner
 #################################################################
 
-Header header # the time of the generation
-RobotGoals[] goals  # contains a goal message for each robot included in the plan
+Header header        # the time of the generation
+RobotGoals[] robots  # contains a goals/checkpoints for each robot
