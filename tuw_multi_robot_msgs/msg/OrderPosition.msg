@@ -1,9 +1,7 @@
 #################################################################
-## Current position of a good
+## Current position of an order
 #################################################################
 
 Header                 header
-int32                  good_id
+int32                  order_id
 geometry_msgs/Pose     position
-
-
