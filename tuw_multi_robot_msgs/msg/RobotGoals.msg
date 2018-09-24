@@ -1,6 +1,6 @@
 #################################################################
-## used to discribe a set destinations for a robot
-## robot_name is used as id and offten used as namespace for topics
+## used to describe a set of destinations for a robot
+## robot_name is used as id and often used as namespace for topics
 #################################################################
 
 string robot_name                   # the name of the robot
