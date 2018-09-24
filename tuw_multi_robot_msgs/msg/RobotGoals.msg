@@ -1,11 +1,11 @@
 #################################################################
-## used to send a goal to another node
-## robot_name is used as id and as namespace for topics
+## used to discribe a set destinations for a robot
+## robot_name is used as id and offten used as namespace for topics
 #################################################################
 
 string robot_name                   # the name of the robot
-geometry_msgs/Pose[] path_points    # describes a set of poses, where the last one is the final goal of the route
-                                    # if there are more than one points the first one is the start pose
+geometry_msgs/Pose[] destinations   # Describes a set of destinations, where the last one is the final goal of the trip
+                                    # if there are more than one destinations the first one is the start pose
                                     # else the current pose of the robot is used as start
  
  
