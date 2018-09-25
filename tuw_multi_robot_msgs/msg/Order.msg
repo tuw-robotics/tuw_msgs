@@ -6,5 +6,4 @@
 Header                 header
 int32                  order_id
 string                 order_name
-geometry_msgs/Pose[]   positions
-
+Station[]              stations
