@@ -64,6 +64,7 @@ find_package(catkin REQUIRED COMPONENTS
   DiffDriveCmdVWVec.msg
   PathVec.msg
   BaseConstr.msg
+  ControllerState.msg
 )
 
 ## Generate services in the 'srv' folder
