@@ -48,6 +48,7 @@ add_message_files(
   DIRECTORY msg
   FILES
   AirskinPressures.msg
+  AirskinInfo.msg
   AirskinColors.msg
 )
 
