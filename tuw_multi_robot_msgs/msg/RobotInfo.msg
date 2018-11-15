@@ -11,6 +11,8 @@ RoutePrecondition sync                   # the current position in the last rece
 int32   mode                             # the mode of operation
 int32   status                           # the status of the robot
 int32   good_id                          # the good id attached to the robot
+int32   order_id                         # the order id scheduled to this robot (-1: none)
+int32   order_status                     # the status of the assigned order
 
 # mode
 int32 MODE_NA = 0                   # undefined mode
@@ -30,3 +32,10 @@ int32 GOOD_NA = -2                  # undefined good
 
 # shape
 int32 SHAPE_CIRCLE = 0                 # robot is in shape of a circle    ShapeVars
+
+# order_status
+int32 ORDER_NONE = 0                # no order assigned
+int32 ORDER_APPROACH = 1            # the robot approaches the first station of the order
+int32 ORDER_PICKUP = 2              # the robot picks up a good at the station
+int32 ORDER_TRANSPORT = 3           # the robot currently transports a good from one station to another
+int32 ORDER_DROP = 4                # the robot drops a good at the last station of its order, finishing the order

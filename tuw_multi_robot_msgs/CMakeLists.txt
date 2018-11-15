@@ -62,7 +62,7 @@ add_message_files(
   Order.msg
   OrderArray.msg
   Pickup.msg
-  GoodPosition.msg
+  OrderPosition.msg
   Station.msg
   StationArray.msg
 )

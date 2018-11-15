@@ -4,5 +4,4 @@
 
 Header                 header
 string                 robot_name
-int32                  good_id
-
+int32                  order_id
