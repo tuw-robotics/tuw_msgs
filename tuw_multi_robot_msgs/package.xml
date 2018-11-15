@@ -12,6 +12,7 @@
 
 
   <author email="benjamin.binder@tuwien.ac.at">Benjamin Binder</author>
+  <author email="eugen.kaltengger@gmail.com">Eugen Kaltenegger</author>
 
 
   <buildtool_depend>catkin</buildtool_depend>
