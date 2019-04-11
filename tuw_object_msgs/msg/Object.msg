@@ -25,6 +25,7 @@ int32 SHAPE_MESH             = 106
 
 int32 SHAPE_TRAFFIC_CONE     = 201 # [radius, color(1 = blue, 2 = yellow, 3 = red)] 
 int32 SHAPE_DOOR             = 202 # [width, height, opening angle (0=closed), nr of door leafs, clockwise (0) counterclockwise (1)]
+int32 SHAPE_MAP_DOOR         = 212 # for doors already mapped, same parameters as usual door
 int32 SHAPE_PERSON           = 203
 int32 SHAPE_VEHICLE          = 204
 int32 SHAPE_FIDUCIAL         = 205
