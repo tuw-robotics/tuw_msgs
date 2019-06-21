@@ -10,6 +10,5 @@
 #################################################################
 
 Header header               # Header for Timestamp and Id
-float32 resolution          # The resolution of the map (meter/pixel)
 geometry_msgs/Pose origin   # The origin of the map (respectively: offset (the map is moved))
 Vertex[] vertices           # The vertices in the graph (in pixels)
