@@ -3,3 +3,4 @@
 #################################################################
 Header header # time of route generation
 RouteSegment[] segments # route segments a robot has to follow
+BehaviourProfile[] profiles

@@ -65,6 +65,8 @@ add_message_files(
   OrderPosition.msg
   Station.msg
   StationArray.msg
+  BehaviourProfile.msg
+  Parameter.msg
 )
 
 ## Generate services in the 'srv' folder
