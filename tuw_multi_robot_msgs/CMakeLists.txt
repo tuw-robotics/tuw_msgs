@@ -65,8 +65,8 @@ add_message_files(
   OrderPosition.msg
   Station.msg
   StationArray.msg
-  RouteProgress.msg
-  LocalControllerProgress.msg
+  ProgressPath.msg
+  ProgressRoute.msg
 )
 
 ## Generate services in the 'srv' folder
