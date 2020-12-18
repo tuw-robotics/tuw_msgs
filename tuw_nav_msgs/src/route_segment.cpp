@@ -110,10 +110,10 @@ double RouteSegment::sample_equal_angle(std::vector<geometry_msgs::PosePtr> &pos
     double radius = tuw::Distance(start.position, center.position);
     double distance_resolution = angle_resolution * radius;
     return sample_equal_distance(poses, distance_resolution, distance_offset);
-  }
-  if (type == LINE)
+  } else if (type == LINE)
   {
     double distance_resolution = tuw::Distance(start.position, end.position);
     return sample_equal_distance(poses, distance_resolution, distance_offset);
   }
+  return  NAN;
 }
