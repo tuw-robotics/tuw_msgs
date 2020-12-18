@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION  3.0.2)
 project(tuw_nav_msgs)
 SET(GCC_COVERAGE_COMPILE_FLAGS "-fdump-ada-spec")
 
