@@ -57,6 +57,7 @@ find_package(catkin REQUIRED COMPONENTS
   RouteSegments.msg
   Float64Array.msg
   Spline.msg
+  Joints.msg
   JointsIWS.msg
   IwsCmdVRAT.msg
   IwsCmdVRATVec.msg
