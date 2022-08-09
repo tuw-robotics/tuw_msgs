@@ -48,6 +48,7 @@ add_message_files(
    FILES
    LineSegment.msg
    LineSegments.msg
+   TwistWithOrientation.msg
    WeightedPoseWithCovariance.msg
    WeightedPoseWithCovarianceArray.msg
 )
