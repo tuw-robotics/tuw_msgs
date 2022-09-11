@@ -3,7 +3,7 @@
 ## positions)
 #################################################################
 
-Header                 header
+std_msgs/Header        header
 int32                  order_id
 string                 order_name
 Station[]              stations

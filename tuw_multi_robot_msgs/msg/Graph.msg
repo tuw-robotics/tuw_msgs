@@ -9,6 +9,6 @@
 ## !! every id must be present...
 #################################################################
 
-Header header               # Header for Timestamp and Id
+std_msgs/Header header      # Header for Timestamp and Id
 geometry_msgs/Pose origin   # The origin of the map (respectively: offset (the map is moved))
 Vertex[] vertices           # The vertices in the graph (in pixels)

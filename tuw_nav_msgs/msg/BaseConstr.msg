@@ -1,4 +1,4 @@
-Header header
+std_msgs/Header header
 float64 v_max
 float64 av_max
 float64 w_max

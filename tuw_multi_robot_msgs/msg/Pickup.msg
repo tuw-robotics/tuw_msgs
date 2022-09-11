@@ -2,6 +2,6 @@
 ## notifies robot to pick up good
 #################################################################
 
-Header                 header
+std_msgs/Header        header
 string                 robot_name
 int32                  order_id

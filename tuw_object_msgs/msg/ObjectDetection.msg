@@ -1,5 +1,5 @@
 # This expresses a object detection
-Header header                                 # timestamp in the header is the acquisition time and frame
+std_msgs/Header header                                 # timestamp in the header is the acquisition time and frame
 
 float32 distance_min                          # distance minimum range value [m]
 float32 distance_max                          # distance maximum range value [m]

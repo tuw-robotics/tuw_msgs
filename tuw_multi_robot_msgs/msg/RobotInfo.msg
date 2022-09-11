@@ -2,7 +2,7 @@
 ## Presents dynamic parameters of a robot
 #################################################################
 
-Header header                            # the creation time
+std_msgs/Header header                   # the creation time
 string robot_name                        # the name of the robot (used in preconditions and topics)
 geometry_msgs/PoseWithCovariance pose    # the robots current pose within the frame related to the msgs header
 int32 shape                              # the shape of the robots (see enums)
