@@ -29,14 +29,14 @@ set(msg_files
   msg/IwsCmdVRATVec.msg
   msg/IwsCmdVWWTVec.msg
   msg/DiffDriveCmdVWVec.msg
-  msg/PathVec.msg
   msg/BaseConstr.msg
   msg/ControllerState.msg
+  msg/PathVec.msg
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
-  DEPENDENCIES builtin_interfaces geometry_msgs std_msgs
+  DEPENDENCIES builtin_interfaces geometry_msgs std_msgs nav_msgs
   ADD_LINTER_TESTS
 )
 
