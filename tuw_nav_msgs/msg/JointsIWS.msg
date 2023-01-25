@@ -1,4 +1,4 @@
-#Message for sensing/control of an indepenend N wheel steering platform 
+# Message for sensing/control of an indepenend N wheel steering platform
 std_msgs/Header header
 
 #the type defines the usage and units such as cmd_torque, cmd_acceleration, cmd_velocity, cmd_position, measured_torque, measured_acceleration, measured_velocity, measured_position

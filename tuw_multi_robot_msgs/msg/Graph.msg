@@ -2,7 +2,7 @@
 ## This message is used to transport a graph between two nodes.
 ## Each vertex has a set of points and a width describing the
 ## shape of it and additionally successors and predecessors
-## to describe the overall structure of the graph 
+## to describe the overall structure of the graph
 ##
 ## Remark for the TUW_Multi_Robot_Router
 ## !! all vertices have to be sorted by id

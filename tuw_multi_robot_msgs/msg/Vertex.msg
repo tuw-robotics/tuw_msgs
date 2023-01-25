@@ -1,8 +1,8 @@
 #################################################################
-## A single vertex in a graph 
-## Each vertex of the same graph must have a unique id. 
+## A single vertex in a graph
+## Each vertex of the same graph must have a unique id.
 ## Successors and Predecessors must have a common start or end
-## point 
+## point
 #################################################################
 uint32 id                   # Vertex id
 bool valid                  # true if it can be used for planning

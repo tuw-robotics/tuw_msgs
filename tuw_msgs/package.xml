@@ -9,8 +9,8 @@
 
   <license>BSD</license>
 
-  <exec_depend>tuw_airskin_msgs</exec_depend>
   <exec_depend>tuw_geometry_msgs</exec_depend>
+  <exec_depend>tuw_airskin_msgs</exec_depend>
   <exec_depend>tuw_multi_robot_msgs</exec_depend>
   <exec_depend>tuw_nav_msgs</exec_depend>
   <exec_depend>tuw_object_msgs</exec_depend>

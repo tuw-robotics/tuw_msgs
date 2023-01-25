@@ -1,5 +1,5 @@
 #################################################################
-## A message to publish the status of the last route 
+## A message to publish the status of the last route
 ## generation
 #################################################################
 

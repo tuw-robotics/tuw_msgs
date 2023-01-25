@@ -1,5 +1,5 @@
 #################################################################
-## Good to deliver from position A to B (via intermediate 
+## Good to deliver from position A to B (via intermediate
 ## positions)
 #################################################################
 
