@@ -34,6 +34,7 @@ set(msg_files
   "msg/Station.msg"
   "msg/StationArray.msg"
   "msg/RouteProgress.msg"
+  "msg/RouteTable.msg"
 )
 
 set(srv_files
