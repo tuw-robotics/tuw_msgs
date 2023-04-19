@@ -8,15 +8,11 @@
   <maintainer email="benjamin.binder@tuwien.ac.at">Benjamin Binder</maintainer>
   <maintainer email="markus.bader@tuwien.ac.at">Markus Bader</maintainer>
 
-
   <license>BSD</license>
-
 
   <author email="benjamin.binder@tuwien.ac.at">Benjamin Binder</author>
   <author email="eugen.kaltengger@gmail.com">Eugen Kaltenegger</author>
   <author email="markus.bader@tuwien.ac.at">Markus Bader</author>
-
-
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
