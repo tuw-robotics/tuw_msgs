@@ -18,7 +18,8 @@ find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
 set(msg_files
-  "msg/Vertex.msg"
+  "msg/Edge.msg"
+  "msg/Node.msg"
   "msg/Graph.msg"
 )
 

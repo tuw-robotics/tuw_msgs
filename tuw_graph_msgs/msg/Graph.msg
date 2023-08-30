@@ -10,5 +10,5 @@
 #################################################################
 
 std_msgs/Header header      # Header for Timestamp and Id
-geometry_msgs/Pose origin   # The origin of the map (respectively: offset (the map is moved))
-Vertex[] vertices           # The vertices in the graph (in pixels)
+Node[] nodes                # The nodes in the graph
+Edge[] edges                # The edges in the graph
