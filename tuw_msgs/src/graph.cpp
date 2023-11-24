@@ -1,8 +1,6 @@
 
-#include <iostream>
 #include <fstream>
 #include <string>
-#include <string_view>
 #include <sstream>
 #include <stdexcept>
 #include <algorithm>
@@ -21,18 +19,20 @@ Graph::~Graph()
 
 int Graph::read(std::string const &filename, tuw_graph_msgs::msg::Graph &graph)
 {
-    std::ifstream graph_file;
-    graph_file.open(filename);
+    std::ifstream file(filename, std::ios_base::binary | std::ios_base::in);
+    if (!file.is_open())
+        throw std::runtime_error("Failed to open " + filename);
+    file.open(filename);
     std::string line;
-    if (graph_file.is_open())
+    if (file.is_open())
     {
         long line_number = 0;
         using std::operator""sv;
         constexpr auto delim{";"sv};
-        while (graph_file)
+        while (file)
         {
             line_number++;
-            std::getline(graph_file, line);
+            std::getline(file, line);
             /// trim all spaces
             line.erase(std::remove_if(line.begin(), line.end(), [](unsigned char x) { return std::isspace(x); }), line.end());
             if (line.empty() || (line.rfind("#", 0) == 0))
@@ -61,7 +61,7 @@ int Graph::read(std::string const &filename, tuw_graph_msgs::msg::Graph &graph)
             else
                 return line_number;
         }
-        graph_file.close();
+        file.close();
     }
     return DECODE_SUCCESSFUL;
 }
