@@ -10,5 +10,6 @@
 #################################################################
 
 std_msgs/Header header      # Header for Timestamp and Id
+geometry_msgs/Pose origin   # Graph origin
 Node[] nodes                # The nodes in the graph
 Edge[] edges                # The edges in the graph
