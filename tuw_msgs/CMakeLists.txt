@@ -38,14 +38,14 @@ ament_target_dependencies(
   "rclcpp_components"
 )
 
-install(TARGETS ${PROJECT_NAME} example_graph 
+install(TARGETS ${PROJECT_NAME} example_graph
   EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
- )
+)
 
-  
+
 install(DIRECTORY include/
   DESTINATION include
 )
