@@ -41,6 +41,11 @@ ament_target_dependencies(
 install(TARGETS example_graph tuw_msgs
   DESTINATION lib/${PROJECT_NAME})
 
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

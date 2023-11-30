@@ -192,7 +192,7 @@ int Serialize::decode_value(const std::string & line, geometry_msgs::msg::Pose &
   } catch (const std::invalid_argument & ia) {
     return DECODE_ERROR_INVALID;
   }
-  if (entries.size() == 6) {
+  if (entries.size() == 7) {
     pose.orientation.x = 0.;
     pose.orientation.y = 0.;
     pose.orientation.z = 0.;
