@@ -13,7 +13,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 
 
-add_library(tuw_msgs src/serialize.cpp src/graph.cpp)
+add_library(tuw_msgs src/serialize.cpp src/graph.cpp src/utils.cpp)
 target_compile_features(tuw_msgs PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 target_include_directories(tuw_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -38,11 +38,15 @@ ament_target_dependencies(
   "rclcpp_components"
 )
 
-install(TARGETS example_graph tuw_msgs
-  DESTINATION lib/${PROJECT_NAME})
+install(TARGETS ${PROJECT_NAME} example_graph 
+  EXPORT export_${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+ )
 
-install(
-  DIRECTORY include/
+  
+install(DIRECTORY include/
   DESTINATION include
 )
 

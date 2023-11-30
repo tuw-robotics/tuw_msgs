@@ -6,6 +6,7 @@
 #include <string>
 #include <string_view>
 #include <tuw_msgs/serialize.hpp>
+#include <tuw_msgs/utils.hpp>
 
 using namespace tuw_msgs;
 
@@ -32,7 +33,9 @@ bool Serialize::check(const std::string & search, std::string & target, bool tri
 {
   std::string::size_type pos = target.find(search);
   if ((pos != std::string::npos) && (pos == 0)) {
-    if (trim) {target.erase(pos, search.length());}
+    if (trim) {
+      target.erase(pos, search.length());
+    }
     return true;
   }
   return false;
@@ -64,7 +67,9 @@ bool Serialize::check_and_remove_symbol_close(std::string & line, const char * s
 
 int Serialize::decode_value(const std::string & line, double & nr)
 {
-  if (line.empty()) {return DECODE_ERROR_SYNTAX;}
+  if (line.empty()) {
+    return DECODE_ERROR_SYNTAX;
+  }
   try {
     nr = std::stod(line);
   } catch (const std::invalid_argument & ia) {
@@ -74,7 +79,9 @@ int Serialize::decode_value(const std::string & line, double & nr)
 }
 int Serialize::decode_value(const std::string & line, float & nr)
 {
-  if (line.empty()) {return DECODE_ERROR_SYNTAX;}
+  if (line.empty()) {
+    return DECODE_ERROR_SYNTAX;
+  }
   try {
     nr = std::stof(line);
   } catch (const std::invalid_argument & ia) {
@@ -85,7 +92,9 @@ int Serialize::decode_value(const std::string & line, float & nr)
 
 int Serialize::decode_value(const std::string & line, uint32_t & nr)
 {
-  if (line.empty()) {return DECODE_ERROR_SYNTAX;}
+  if (line.empty()) {
+    return DECODE_ERROR_SYNTAX;
+  }
   try {
     nr = std::stoi(line);
   } catch (const std::invalid_argument & ia) {
@@ -96,7 +105,9 @@ int Serialize::decode_value(const std::string & line, uint32_t & nr)
 
 int Serialize::decode_value(const std::string & line, int64_t & nr)
 {
-  if (line.empty()) {return DECODE_ERROR_SYNTAX;}
+  if (line.empty()) {
+    return DECODE_ERROR_SYNTAX;
+  }
   try {
     nr = std::stoi(line);
   } catch (const std::invalid_argument & ia) {
@@ -106,7 +117,9 @@ int Serialize::decode_value(const std::string & line, int64_t & nr)
 }
 int Serialize::decode_value(const std::string & line, int32_t & nr)
 {
-  if (line.empty()) {return DECODE_ERROR_SYNTAX;}
+  if (line.empty()) {
+    return DECODE_ERROR_SYNTAX;
+  }
   try {
     nr = std::stoi(line);
   } catch (const std::invalid_argument & ia) {
@@ -117,7 +130,9 @@ int Serialize::decode_value(const std::string & line, int32_t & nr)
 
 int Serialize::decode_value(std::string line, std::__cxx11::basic_string<char> & frame_id)
 {
-  if (line.empty()) {return DECODE_ERROR_SYNTAX;}
+  if (line.empty()) {
+    return DECODE_ERROR_SYNTAX;
+  }
   line.erase(
     line.begin(),
     std::find_if(line.begin(), line.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
@@ -127,7 +142,9 @@ int Serialize::decode_value(std::string line, std::__cxx11::basic_string<char> &
 
 int Serialize::decode_value(const std::string & line, bool & des)
 {
-  if (line.empty()) {return DECODE_ERROR_SYNTAX;}
+  if (line.empty()) {
+    return DECODE_ERROR_SYNTAX;
+  }
   if ((line.find("true") != std::string::npos)) {
     des = true;
   } else if ((line.find("1") != std::string::npos)) {
@@ -148,14 +165,22 @@ int Serialize::decode_value(const std::string & line, geometry_msgs::msg::Point 
   split(entries, line, delim_cols);
 
   /// remove the opening and closing brackets
-  if (entries.size() == 0) {return DECODE_EMPTY;}
+  if (entries.size() == 0) {
+    return DECODE_EMPTY;
+  }
   bool open_found = check_and_remove_symbol_open(entries.front(), "[");
   bool close_found = check_and_remove_symbol_close(entries.back(), "]");
-  if (!open_found && !close_found) {return DECODE_EMPTY;}
-  if (!open_found || !close_found) {return DECODE_ERROR_SYNTAX;}
+  if (!open_found && !close_found) {
+    return DECODE_EMPTY;
+  }
+  if (!open_found || !close_found) {
+    return DECODE_ERROR_SYNTAX;
+  }
 
   /// check the number of entries
-  if ((entries.size() != 2) && (entries.size() != 3)) {return DECODE_ERROR_SYNTAX;}
+  if ((entries.size() != 2) && (entries.size() != 3)) {
+    return DECODE_ERROR_SYNTAX;
+  }
 
   try {
     point.x = std::stod(entries[0]);
@@ -179,11 +204,17 @@ int Serialize::decode_value(const std::string & line, geometry_msgs::msg::Pose &
   /// remove the opening and closing brackets
   bool open_found = check_and_remove_symbol_open(entries.front(), "[");
   bool close_found = check_and_remove_symbol_close(entries.back(), "]");
-  if (!open_found && !close_found) {return DECODE_EMPTY;}
-  if (!open_found || !close_found) {return DECODE_ERROR_SYNTAX;}
+  if (!open_found && !close_found) {
+    return DECODE_EMPTY;
+  }
+  if (!open_found || !close_found) {
+    return DECODE_ERROR_SYNTAX;
+  }
 
   /// check the number of entries
-  if ((entries.size() != 3) && (entries.size() != 6)) {return DECODE_ERROR_SYNTAX;}
+  if ((entries.size() != 3) && (entries.size() != 6)) {
+    return DECODE_ERROR_SYNTAX;
+  }
 
   try {
     pose.position.x = std::stod(entries[0]);
@@ -193,11 +224,16 @@ int Serialize::decode_value(const std::string & line, geometry_msgs::msg::Pose &
     return DECODE_ERROR_INVALID;
   }
   if (entries.size() == 7) {
-    pose.orientation.x = 0.;
-    pose.orientation.y = 0.;
-    pose.orientation.z = 0.;
-    pose.orientation.w = 1.;
+    pose.orientation.x = std::stod(entries[3]);
+    pose.orientation.y = std::stod(entries[4]);
+    pose.orientation.z = std::stod(entries[5]);
+    pose.orientation.w = std::stod(entries[6]);
     /// ToDo computation quaternion
+  } else if (entries.size() == 6) {
+    tuw_msgs::to_msg(
+      std::stod(entries[3]), std::stod(entries[4]), std::stod(entries[5]), pose.orientation);
+  } else {
+    return DECODE_ERROR_SYNTAX;
   }
   return DECODE_SUCCESSFUL;
 }

@@ -1,5 +1,6 @@
 # graph
 frame: map
+origin: [-0.5, -1.05, 0, 0, 0, 0 ]
 
 # nodes: id: position
 node:    0: [  +1.5500,  +0.0125]

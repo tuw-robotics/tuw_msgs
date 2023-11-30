@@ -37,6 +37,12 @@ int Graph::read(std::string const & filename, tuw_graph_msgs::msg::Graph & graph
         } else {
           return line_number;
         }
+      } else if (check("origin:", line, true)) {
+        if (decode_value(line, graph.origin) == DECODE_SUCCESSFUL) {
+          continue;
+        } else {
+          return line_number;
+        }
       } else if (check("node:", line, true)) {
         tuw_graph_msgs::msg::Node node;
         if (decode_node(line, node) == DECODE_SUCCESSFUL) {
