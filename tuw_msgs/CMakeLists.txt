@@ -38,7 +38,21 @@ ament_target_dependencies(
   "rclcpp_components"
 )
 
-install(TARGETS ${PROJECT_NAME} example_graph
+
+add_executable(example_serialize src/examples/main_serialize.cpp)
+target_include_directories(example_serialize PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_link_libraries(example_serialize tuw_msgs)
+target_compile_features(example_serialize PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+ament_target_dependencies(
+  example_serialize
+  "tuw_graph_msgs"
+  "rclcpp"
+  "rclcpp_components"
+)
+
+install(TARGETS ${PROJECT_NAME} example_graph example_serialize
   EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
@@ -60,6 +74,12 @@ if(BUILD_TESTING)
   # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
+
+  find_package(ament_cmake_gtest REQUIRED)
+  ament_add_gtest(test_serialize test/test_serialize.cpp)  # Need to link .cpp file under test
+  target_include_directories(test_serialize PUBLIC src/)  # Need to specify directories in order to #include from them in the test
+  target_link_libraries(test_serialize ${PROJECT_NAME})
+
 endif()
 
 ament_package()

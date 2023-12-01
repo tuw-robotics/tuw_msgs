@@ -9,11 +9,11 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <exec_depend>tuw_geometry_msgs</exec_depend>
-  <exec_depend>tuw_airskin_msgs</exec_depend>
-  <exec_depend>tuw_multi_robot_msgs</exec_depend>
-  <exec_depend>tuw_nav_msgs</exec_depend>
-  <exec_depend>tuw_object_msgs</exec_depend>
+  <build_depend>tuw_geometry_msgs</build_depend>
+  <build_depend>tuw_airskin_msgs</build_depend>
+  <build_depend>tuw_multi_robot_msgs</build_depend>
+  <build_depend>tuw_nav_msgs</build_depend>
+  <build_depend>tuw_object_msgs</build_depend>
 
   <depend>rclcpp</depend>
   <depend>rclcpp_components</depend>

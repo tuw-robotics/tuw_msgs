@@ -10,7 +10,7 @@
 
 using namespace tuw_msgs;
 
-Serialize::Serialize() {this->delim();}
+Serialize::Serialize() { this->delim(); }
 
 void Serialize::delim(char delim_entries, char delim_rows, char delim_cols)
 {
@@ -20,220 +20,102 @@ void Serialize::delim(char delim_entries, char delim_rows, char delim_cols)
 }
 
 Serialize::~Serialize() {}
-void Serialize::split(std::vector<std::string> & strings, const std::string & str, char delim)
-{
-  std::istringstream ss(str);
-  std::string line;
-  while (std::getline(ss, line, delim)) {
-    strings.push_back(line);
-  }
-}
 
-bool Serialize::check(const std::string & search, std::string & target, bool trim)
+ std::string &Serialize::encode(geometry_msgs::msg::Point &src, std::string &des){
+  char txt[0xFF];
+  if(src.z == 0.){
+    sprintf(txt, "[%f, %f]", src.x, src.y);
+  } else {
+    sprintf(txt, "[%f, %f, %f]", src.x, src.y, src.z);
+  }
+  des.append(txt);
+  return des;
+ }
+
+ std::string &Serialize::encode(geometry_msgs::msg::Quaternion &src, std::string &des){
+  char txt[0xFF];
+  if((src.x == 0.) && (src.y == 0.) && (src.z == 0.) && (src.w == 1.)){
+    sprintf(txt, "[]");
+  } else {
+    sprintf(txt, "[%f, %f, %f, %f]", src.x, src.y, src.z, src.w);
+  }
+  des.append(txt);
+  return des;
+ }
+
+ std::string &Serialize::encode(geometry_msgs::msg::Pose &src, std::string &des){
+  des.append("[");
+  encode(src.position, des);
+  des.append(", ");
+  encode(src.orientation, des);
+  des.append("]");
+  return des;
+ }
+
+size_t Serialize::decode(geometry_msgs::msg::Point &des, std::string &line, size_t pos)
 {
-  std::string::size_type pos = target.find(search);
-  if ((pos != std::string::npos) && (pos == 0)) {
-    if (trim) {
-      target.erase(pos, search.length());
+  pos = line.find("[", pos);
+  if (pos == std::string::npos)
+    throw std::runtime_error("Failed decode Point in line: " + line);
+  const char *str = line.c_str() + pos;
+  int n = sscanf(str, "[%lf,%lf,%lf]%*s", &des.x, &des.y, &des.z);
+  if (n != 3)
+  {
+    int n = sscanf(str, "[%lf,%lf]%*s", &des.x, &des.y);
+    if (n != 2)
+    {
+      throw std::runtime_error("Failed decode Point incorrect number of values: " + line);
     }
-    return true;
+    des.z = 0;
   }
-  return false;
+  pos = line.find("]", pos);
+  if (pos == std::string::npos)
+    throw std::runtime_error("Failed decode Point in line: " + line);
+  return pos++;
 }
 
-bool Serialize::check_and_remove_symbol_open(std::string & line, const char * symbol)
+size_t Serialize::decode(geometry_msgs::msg::Quaternion &des, std::string &line, size_t pos)
 {
-  /// remove the opening bracket from the first entry if it exits
-  std::string::size_type pos_open_bracket = line.find(symbol);
-  if (pos_open_bracket != std::string::npos) {
-    line.erase(0, pos_open_bracket + 1);
-  } else {
-    return false;
-  }
-  return true;
-}
-
-bool Serialize::check_and_remove_symbol_close(std::string & line, const char * symbol)
-{
-  /// remove the closing bracket from the last entry if it exits
-  std::string::size_type pos_close_bracket = line.rfind(symbol);
-  if (pos_close_bracket != std::string::npos) {
-    line.erase(pos_close_bracket, line.length() - pos_close_bracket);
-  } else {
-    return false;
-  }
-  return true;
-}
-
-int Serialize::decode_value(const std::string & line, double & nr)
-{
-  if (line.empty()) {
-    return DECODE_ERROR_SYNTAX;
-  }
-  try {
-    nr = std::stod(line);
-  } catch (const std::invalid_argument & ia) {
-    return DECODE_ERROR_INVALID;
-  }
-  return DECODE_SUCCESSFUL;
-}
-int Serialize::decode_value(const std::string & line, float & nr)
-{
-  if (line.empty()) {
-    return DECODE_ERROR_SYNTAX;
-  }
-  try {
-    nr = std::stof(line);
-  } catch (const std::invalid_argument & ia) {
-    return DECODE_ERROR_INVALID;
-  }
-  return DECODE_SUCCESSFUL;
-}
-
-int Serialize::decode_value(const std::string & line, uint32_t & nr)
-{
-  if (line.empty()) {
-    return DECODE_ERROR_SYNTAX;
-  }
-  try {
-    nr = std::stoi(line);
-  } catch (const std::invalid_argument & ia) {
-    return DECODE_ERROR_INVALID;
-  }
-  return DECODE_SUCCESSFUL;
-}
-
-int Serialize::decode_value(const std::string & line, int64_t & nr)
-{
-  if (line.empty()) {
-    return DECODE_ERROR_SYNTAX;
-  }
-  try {
-    nr = std::stoi(line);
-  } catch (const std::invalid_argument & ia) {
-    return DECODE_ERROR_INVALID;
-  }
-  return DECODE_SUCCESSFUL;
-}
-int Serialize::decode_value(const std::string & line, int32_t & nr)
-{
-  if (line.empty()) {
-    return DECODE_ERROR_SYNTAX;
-  }
-  try {
-    nr = std::stoi(line);
-  } catch (const std::invalid_argument & ia) {
-    return DECODE_ERROR_INVALID;
-  }
-  return DECODE_SUCCESSFUL;
-}
-
-int Serialize::decode_value(std::string line, std::__cxx11::basic_string<char> & frame_id)
-{
-  if (line.empty()) {
-    return DECODE_ERROR_SYNTAX;
-  }
-  line.erase(
-    line.begin(),
-    std::find_if(line.begin(), line.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
-  frame_id = line;
-  return DECODE_SUCCESSFUL;
-}
-
-int Serialize::decode_value(const std::string & line, bool & des)
-{
-  if (line.empty()) {
-    return DECODE_ERROR_SYNTAX;
-  }
-  if ((line.find("true") != std::string::npos)) {
-    des = true;
-  } else if ((line.find("1") != std::string::npos)) {
-    des = true;
-  } else if ((line.find("false") != std::string::npos)) {
-    des = false;
-  } else if ((line.find("0") != std::string::npos)) {
-    des = false;
-  } else {
-    return DECODE_ERROR_SYNTAX;
-  }
-  return DECODE_SUCCESSFUL;
-}
-
-int Serialize::decode_value(const std::string & line, geometry_msgs::msg::Point & point)
-{
-  std::vector<std::string> entries;
-  split(entries, line, delim_cols);
-
-  /// remove the opening and closing brackets
-  if (entries.size() == 0) {
-    return DECODE_EMPTY;
-  }
-  bool open_found = check_and_remove_symbol_open(entries.front(), "[");
-  bool close_found = check_and_remove_symbol_close(entries.back(), "]");
-  if (!open_found && !close_found) {
-    return DECODE_EMPTY;
-  }
-  if (!open_found || !close_found) {
-    return DECODE_ERROR_SYNTAX;
-  }
-
-  /// check the number of entries
-  if ((entries.size() != 2) && (entries.size() != 3)) {
-    return DECODE_ERROR_SYNTAX;
-  }
-
-  try {
-    point.x = std::stod(entries[0]);
-    point.y = std::stod(entries[1]);
-    if (entries.size() >= 3) {
-      point.z = std::stod(entries[2]);
+  pos = line.find("[", pos);
+  if (pos == std::string::npos)
+    throw std::runtime_error("Failed decode Quaternion in line: " + line);
+  const char *str = line.c_str() + pos;
+  int n = sscanf(str, "[%lf,%lf,%lf,%lf]%*s", &des.x, &des.y, &des.z, &des.w);
+  if (n != 4)
+  {
+    double roll, pitch, yaw;
+    int n = sscanf(str, "[%lf,%lf,%lf]%*s", &roll, &pitch, &yaw);
+    if (n == 3)
+    {
+      tuw_msgs::to_msg(roll, pitch, yaw, des);
     } else {
-      point.z = 0.;
+      pos = line.find("[]", pos, 2);
+      if (pos == std::string::npos)
+        throw std::runtime_error("Failed decode Quaternion incorrect number of values: " + line);
+      tuw_msgs::to_msg(0,0,0,1, des);
     }
-  } catch (const std::invalid_argument & ia) {
-    return 0;
+
   }
-  return DECODE_SUCCESSFUL;
+  pos = line.find("]", pos);
+  if (pos == std::string::npos)
+    throw std::runtime_error("Failed decode Quaternion in line: " + line);
+  return pos++;
 }
 
-int Serialize::decode_value(const std::string & line, geometry_msgs::msg::Pose & pose)
+size_t Serialize::decode(geometry_msgs::msg::Pose &des, std::string &line, size_t pos)
 {
-  std::vector<std::string> entries;
-  split(entries, line, delim_cols);
-
-  /// remove the opening and closing brackets
-  bool open_found = check_and_remove_symbol_open(entries.front(), "[");
-  bool close_found = check_and_remove_symbol_close(entries.back(), "]");
-  if (!open_found && !close_found) {
-    return DECODE_EMPTY;
-  }
-  if (!open_found || !close_found) {
-    return DECODE_ERROR_SYNTAX;
-  }
-
-  /// check the number of entries
-  if ((entries.size() != 3) && (entries.size() != 6)) {
-    return DECODE_ERROR_SYNTAX;
-  }
-
-  try {
-    pose.position.x = std::stod(entries[0]);
-    pose.position.y = std::stod(entries[1]);
-    pose.position.z = std::stod(entries[2]);
-  } catch (const std::invalid_argument & ia) {
-    return DECODE_ERROR_INVALID;
-  }
-  if (entries.size() == 7) {
-    pose.orientation.x = std::stod(entries[3]);
-    pose.orientation.y = std::stod(entries[4]);
-    pose.orientation.z = std::stod(entries[5]);
-    pose.orientation.w = std::stod(entries[6]);
-    /// ToDo computation quaternion
-  } else if (entries.size() == 6) {
-    tuw_msgs::to_msg(
-      std::stod(entries[3]), std::stod(entries[4]), std::stod(entries[5]), pose.orientation);
-  } else {
-    return DECODE_ERROR_SYNTAX;
-  }
-  return DECODE_SUCCESSFUL;
+  pos = line.find("[", pos);
+  if (pos == std::string::npos)
+    throw std::runtime_error("Failed decode Pose in line: " + line);
+  pos++;
+  pos = decode(des.position, line, pos);
+  pos = line.find(",", pos);
+  if (pos == std::string::npos)
+    throw std::runtime_error("Failed decode Pose in line: " + line);
+  pos++;
+  pos = decode(des.orientation, line, pos);
+  pos = line.find("]", pos);
+  if (pos == std::string::npos)
+    throw std::runtime_error("Failed decode Pose in line: " + line);
+  return pos++;
 }
