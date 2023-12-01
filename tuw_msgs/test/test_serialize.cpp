@@ -58,16 +58,21 @@ TEST(Serialize, equal)
   ASSERT_NE(pose_a, pose_d);
   ASSERT_NE(pose_a, pose_f);
   
+
+  tuw_msgs::Node node_a(1, pose_a);
+  tuw_msgs::Node node_b(1, pose_b);
+  tuw_msgs::Node node_c(3, pose_c);
+  ASSERT_EQ(node_a, node_b);
+  ASSERT_NE(node_a, node_c);
 }
 
 
 TEST(Serialize, simpylfy)
 {
   std::string str(" [[3.3, 221.2], []]");
-  tuw_msgs::Serialize s;
   tuw_msgs::Pose src;
   size_t pos = 0;
-  pos = s.decode(src, str, pos);
+  pos = tuw_msgs::decode(src, str, pos);
   ASSERT_FLOAT_EQ(src.position.x, 3.3);
   ASSERT_FLOAT_EQ(src.position.y, 221.2);
   ASSERT_FLOAT_EQ(src.position.z, 0);
@@ -77,10 +82,10 @@ TEST(Serialize, simpylfy)
   ASSERT_FLOAT_EQ(src.orientation.w, 1.0);
   
   std::string str_pose;
-  s.encode(src, str_pose);
+  tuw_msgs::encode(src, str_pose);
   ASSERT_STREQ(str_pose.c_str(), "[[3.300000, 221.200000], []]");
   tuw_msgs::Pose des;
-  pos = s.decode(des, str_pose);
+  pos = tuw_msgs::decode(des, str_pose);
   ASSERT_FLOAT_EQ(des.position.x, 3.3);
   ASSERT_FLOAT_EQ(des.position.y, 221.2);
   ASSERT_FLOAT_EQ(des.position.z, 0);
@@ -94,35 +99,33 @@ TEST(Serialize, decode_encode_pose)
 {
 
   std::string str(" [[3.3, 221.2, 1], [0.413010, 0.197120, -0.753504, 0.472016]]");
-  tuw_msgs::Serialize s;
   tuw_msgs::Pose src;
   size_t pos = 0;
-  pos = s.decode(src, str, pos);
+  pos = tuw_msgs::decode(src, str, pos);
   ASSERT_FLOAT_EQ(src.position.x, 3.3);
   
   std::string str_pose;
-  s.encode(src, str_pose);
+  tuw_msgs::encode(src, str_pose);
   ASSERT_STREQ(str_pose.c_str(), "[[3.300000, 221.200000, 1.000000], [0.413010, 0.197120, -0.753504, 0.472016]]");
   tuw_msgs::Pose des;
-  pos = s.decode(des, str_pose);
+  pos = tuw_msgs::decode(des, str_pose);
   ASSERT_FLOAT_EQ(des.position.x, 3.3);
 }
 
 TEST(Serialize, decode_encode_pose_with_roll_pitch_yaw)
 {
   std::string str(" [[3.3, 221.2, 1], [3.3, 2.2, 1.2]]");
-  tuw_msgs::Serialize s;
   tuw_msgs::Pose src;
   size_t pos = 0;
-  pos = s.decode(src, str, pos);
+  pos = tuw_msgs::decode(src, str, pos);
   ASSERT_FLOAT_EQ(src.position.x, 3.3);
 
   
   std::string str_pose;
-  s.encode(src, str_pose);
+  tuw_msgs::encode(src, str_pose);
   ASSERT_STREQ(str_pose.c_str(), "[[3.300000, 221.200000, 1.000000], [0.413010, 0.197120, -0.753504, 0.472016]]");
   tuw_msgs::Pose des;
-  pos = s.decode(des, str_pose);
+  pos = tuw_msgs::decode(des, str_pose);
   ASSERT_FLOAT_EQ(des.position.x, 3.3);
 
 }
@@ -132,20 +135,31 @@ TEST(Serialize, decode_encode_pose_with_roll_pitch_yaw)
 TEST(Serialize, node)
 {
   std::string str("node: 2: [[3.3, 221.2, 1], [0.413010, 0.197120, -0.753504, 0.472016]]");
-  tuw_msgs::Node g;
-  tuw_graph_msgs::msg::Node src;
+  tuw_msgs::Node src;
   size_t pos = 0;
-  pos = g.decode(src, str, pos);
+  pos = tuw_msgs::decode(src, str, pos);
   ASSERT_EQ(src.id, 2);
   ASSERT_FLOAT_EQ(src.pose.position.x, 3.3);
   ASSERT_FLOAT_EQ(src.pose.orientation.w, 0.472016);
 
   std::string str_node;
-  g.encode(src, str_node);
+  tuw_msgs::encode(src, str_node);
   ASSERT_STREQ(str_node.c_str(), "node:    2: [[3.000000, 221.200000, 1.000000], [0.413010, 0.197120, -0.753504, 0.472016]]");
-  tuw_graph_msgs::msg::Node des;
-  pos = g.decode(des, str_node);
-  //ASSERT_EQ(src, des);
+  tuw_msgs::Node des;
+  pos = tuw_msgs::decode(des, str_node);
+  ASSERT_EQ(src, des);
 }
 
+
+
+TEST(Serialize, edge)
+{
+  std::string str("edge:     4:   valid: undirected:   1.0000: [   0,    1]: [[[ 1.55, 0.35],[]]; [[ 1.55, 0.3],[]]; [[ 1.55, 0.25],[]]; [[ 1.55, 0.2],[]]; [[1.55, 0.15],[]]; [[ 1.55, 0.1],[]]]");
+  tuw_msgs::Edge src;
+  size_t pos = 0;
+  pos = tuw_msgs::decode(src, str, pos);
+  ASSERT_EQ(src.id, 4);
+  ASSERT_FLOAT_EQ(src.valid, true);
+  ASSERT_FLOAT_EQ(src.directed, false);
+}
 

@@ -1,27 +1,12 @@
-#include <algorithm>
-#include <fstream>
-#include <iostream>
-#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <string_view>
 #include <tuw_msgs/serialize.hpp>
 #include <tuw_msgs/utils.hpp>
 
 using namespace tuw_msgs;
 
-Serialize::Serialize() { this->delim(); }
 
-void Serialize::delim(char delim_entries, char delim_rows, char delim_cols)
-{
-  this->delim_entries = delim_entries;
-  this->delim_rows = delim_rows;
-  this->delim_cols = delim_cols;
-}
-
-Serialize::~Serialize() {}
-
- std::string &Serialize::encode(geometry_msgs::msg::Point &src, std::string &des){
+ std::string &tuw_msgs::encode(geometry_msgs::msg::Point &src, std::string &des){
   char txt[0xFF];
   if(src.z == 0.){
     sprintf(txt, "[%f, %f]", src.x, src.y);
@@ -32,7 +17,7 @@ Serialize::~Serialize() {}
   return des;
  }
 
- std::string &Serialize::encode(geometry_msgs::msg::Quaternion &src, std::string &des){
+ std::string &tuw_msgs::encode(geometry_msgs::msg::Quaternion &src, std::string &des){
   char txt[0xFF];
   if((src.x == 0.) && (src.y == 0.) && (src.z == 0.) && (src.w == 1.)){
     sprintf(txt, "[]");
@@ -43,7 +28,7 @@ Serialize::~Serialize() {}
   return des;
  }
 
- std::string &Serialize::encode(geometry_msgs::msg::Pose &src, std::string &des){
+ std::string &tuw_msgs::encode(geometry_msgs::msg::Pose &src, std::string &des){
   des.append("[");
   encode(src.position, des);
   des.append(", ");
@@ -52,7 +37,7 @@ Serialize::~Serialize() {}
   return des;
  }
 
-size_t Serialize::decode(geometry_msgs::msg::Point &des, std::string &line, size_t pos)
+size_t tuw_msgs::decode(geometry_msgs::msg::Point &des, std::string &line, size_t pos)
 {
   pos = line.find("[", pos);
   if (pos == std::string::npos)
@@ -71,10 +56,11 @@ size_t Serialize::decode(geometry_msgs::msg::Point &des, std::string &line, size
   pos = line.find("]", pos);
   if (pos == std::string::npos)
     throw std::runtime_error("Failed decode Point in line: " + line);
-  return pos++;
+  pos++;
+  return pos;
 }
 
-size_t Serialize::decode(geometry_msgs::msg::Quaternion &des, std::string &line, size_t pos)
+size_t tuw_msgs::decode(geometry_msgs::msg::Quaternion &des, std::string &line, size_t pos)
 {
   pos = line.find("[", pos);
   if (pos == std::string::npos)
@@ -99,12 +85,14 @@ size_t Serialize::decode(geometry_msgs::msg::Quaternion &des, std::string &line,
   pos = line.find("]", pos);
   if (pos == std::string::npos)
     throw std::runtime_error("Failed decode Quaternion in line: " + line);
-  return pos++;
+  pos++;
+  return pos;
 }
 
-size_t Serialize::decode(geometry_msgs::msg::Pose &des, std::string &line, size_t pos)
+size_t tuw_msgs::decode(geometry_msgs::msg::Pose &des, std::string &line, size_t pos)
 {
   pos = line.find("[", pos);
+  const char *str = line.c_str() + pos;  /// for debugging
   if (pos == std::string::npos)
     throw std::runtime_error("Failed decode Pose in line: " + line);
   pos++;
@@ -115,7 +103,9 @@ size_t Serialize::decode(geometry_msgs::msg::Pose &des, std::string &line, size_
   pos++;
   pos = decode(des.orientation, line, pos);
   pos = line.find("]", pos);
+  str = line.c_str() + pos;  /// for debugging
   if (pos == std::string::npos)
     throw std::runtime_error("Failed decode Pose in line: " + line);
-  return pos++;
+  pos++;
+  return pos;
 }
