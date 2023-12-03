@@ -23,9 +23,17 @@ namespace tuw_msgs
   class Edge : public tuw_graph_msgs::msg::Edge
   {
   public:
-    Edge(){}
+    Edge();
     bool operator==(const Edge& rhs) const;
-  }; // class Node
+  }; // class Edge
+
+
+  class Graph : public tuw_graph_msgs::msg::Graph
+  {
+  public:
+    Graph();
+    bool operator==(const Graph& rhs) const;
+  }; // class Graph
   
     std::string &encode(tuw_graph_msgs::msg::Node &src, std::string &des);
     size_t decode(tuw_graph_msgs::msg::Node &des, std::string &line, size_t pos = 0);

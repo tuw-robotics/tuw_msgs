@@ -92,20 +92,23 @@ size_t tuw_msgs::decode(geometry_msgs::msg::Quaternion &des, std::string &line, 
 size_t tuw_msgs::decode(geometry_msgs::msg::Pose &des, std::string &line, size_t pos)
 {
   pos = line.find("[", pos);
-  const char *str = line.c_str() + pos;  /// for debugging
+  const char *str = line.c_str() + pos; /// simplyfies debugging
   if (pos == std::string::npos)
     throw std::runtime_error("Failed decode Pose in line: " + line);
   pos++;
   pos = decode(des.position, line, pos);
+  str = line.c_str() + pos;     /// simplyfies debugging
   pos = line.find(",", pos);
   if (pos == std::string::npos)
     throw std::runtime_error("Failed decode Pose in line: " + line);
   pos++;
   pos = decode(des.orientation, line, pos);
+  str = line.c_str() + pos;     /// simplyfies debugging
   pos = line.find("]", pos);
-  str = line.c_str() + pos;  /// for debugging
   if (pos == std::string::npos)
     throw std::runtime_error("Failed decode Pose in line: " + line);
   pos++;
+  str = line.c_str() + pos;     /// simplyfies debugging
   return pos;
 }
+
