@@ -31,21 +31,18 @@
 
 TEST(Serialize, equal)
 {
-  
-    tuw_msgs::Point pa(3,2,1);
-    tuw_msgs::Point pb(3,2,1);
-    tuw_msgs::Point pc(3,1,1);
-    ASSERT_EQ(pa,pb);
-    ASSERT_NE(pa,pc);
-  
 
-  
-  tuw_msgs::Quaternion qa(4,3,2,1);
-  tuw_msgs::Quaternion qb(4,3,2,1);
-  tuw_msgs::Quaternion qc(0,3,1,1);
-  ASSERT_EQ(qa,qb);
-  ASSERT_NE(qa,qc);
+  tuw_msgs::Point pa(3, 2, 1);
+  tuw_msgs::Point pb(3, 2, 1);
+  tuw_msgs::Point pc(3, 1, 1);
+  ASSERT_EQ(pa, pb);
+  ASSERT_NE(pa, pc);
 
+  tuw_msgs::Quaternion qa(4, 3, 2, 1);
+  tuw_msgs::Quaternion qb(4, 3, 2, 1);
+  tuw_msgs::Quaternion qc(0, 3, 1, 1);
+  ASSERT_EQ(qa, qb);
+  ASSERT_NE(qa, qc);
 
   tuw_msgs::Pose pose_a(pa, qa);
   tuw_msgs::Pose pose_b(pb, qb);
@@ -58,8 +55,126 @@ TEST(Serialize, equal)
   ASSERT_NE(pose_a, pose_f);
 }
 
+TEST(Serialize, point_to_string)
+{
+  std::string str;
+  {
+    tuw_msgs::Point src(3.3, 221.2, 5.3);
+    str = to_str(src);
+    ASSERT_STREQ(str.c_str(), "[3.300000, 221.200000, 5.300000]");
+  }
+  {
+    tuw_msgs::Point src(3.3, 0.0, 0.0);
+    str = to_str(src, tuw_msgs::Format::LOOSE);
+    ASSERT_STREQ(str.c_str(), "[3.300000, 0.000000, 0.000000]");
+  }
+  {
+    tuw_msgs::Point src(3.3, 0.0, 0.0);
+    str = to_str(src, tuw_msgs::Format::LOOSE);
+    ASSERT_STREQ(str.c_str(), "[3.300000, 0.000000, 0.000000]");
+  }
+  {
+    tuw_msgs::Point src(3.3, 1.0, 0.0);
+    str = to_str(src, tuw_msgs::Format::COMPACT);
+    ASSERT_STREQ(str.c_str(), "[3.300000, 1.000000]");
+  }
+  {
+    tuw_msgs::Point src(0.0, 0.0, 0.0);
+    str = to_str(src, tuw_msgs::Format::LOOSE);
+    ASSERT_STREQ(str.c_str(), "[0.000000, 0.000000, 0.000000]");
+  }
+  {
+    tuw_msgs::Point src(0.0, 0.0, 0.0);
+    str = to_str(src, tuw_msgs::Format::COMPACT);
+    ASSERT_STREQ(str.c_str(), "[]");
+  }
+}
 
-TEST(Serialize, simpylfy)
+TEST(Serialize, point_from_string)
+{
+  {
+    geometry_msgs::msg::Point des = tuw_msgs::Point::from_str("[3.300000, 1.000000, 0.000000]");
+    ASSERT_EQ(des, tuw_msgs::Point(3.3, 1.0, 0.0));
+  }
+  {
+    geometry_msgs::msg::Point des = tuw_msgs::Point::from_str("[3.300000, 221.200000, 5.300000]");
+    ASSERT_EQ(des, tuw_msgs::Point(3.3, 221.2, 5.3));
+  }
+  {
+    geometry_msgs::msg::Point des = tuw_msgs::Point::from_str("[3.300000, 221.200000]");
+    ASSERT_EQ(des, tuw_msgs::Point(3.3, 221.2, 0));
+  }
+  {
+    geometry_msgs::msg::Point des = tuw_msgs::Point::from_str("[]");
+    ASSERT_EQ(des, tuw_msgs::Point(0, 0, 0));
+  }
+  {
+    geometry_msgs::msg::Point des = tuw_msgs::Point::from_str(" [3.300000, 1.000000, 0.000000]");
+    ASSERT_EQ(des, tuw_msgs::Point(3.3, 1.0, 0.0));
+  }
+  {
+    geometry_msgs::msg::Point des = tuw_msgs::Point::from_str(" [3.300000, 221.200000, 5.300000]");
+    ASSERT_EQ(des, tuw_msgs::Point(3.3, 221.2, 5.3));
+  }
+  {
+    geometry_msgs::msg::Point des = tuw_msgs::Point::from_str(" [3.300000, 221.200000]");
+    ASSERT_EQ(des, tuw_msgs::Point(3.3, 221.2, 0));
+  }
+  {
+    geometry_msgs::msg::Point des = tuw_msgs::Point::from_str(" []");
+    ASSERT_EQ(des, tuw_msgs::Point(0, 0, 0));
+  }
+}
+
+
+TEST(Serialize, quaternion_to_string)
+{
+  std::string str;
+  {
+    tuw_msgs::Quaternion src(0.413010, 0.197120, -0.753504, 0.472016);
+    str = to_str(src);
+    ASSERT_STREQ(str.c_str(), "[0.413010, 0.197120, -0.753504, 0.472016]");
+  }
+  {
+    tuw_msgs::Quaternion src(0.0, 0.0, 0.0, 1.0);
+    str = to_str(src);
+    ASSERT_STREQ(str.c_str(), "[0.000000, 0.000000, 0.000000, 1.000000]");
+  }
+  {
+    tuw_msgs::Quaternion src(0.413010, 0.197120, -0.753504, 0.472016);
+    str = to_str(src, tuw_msgs::Format::LOOSE);
+    ASSERT_STREQ(str.c_str(), "[0.413010, 0.197120, -0.753504, 0.472016]");
+  }
+  {
+    tuw_msgs::Quaternion src(0.0, 0.0, 0.0, 1.0);
+    str = to_str(src, tuw_msgs::Format::COMPACT);
+    ASSERT_STREQ(str.c_str(), "[]");
+  }
+}
+
+
+TEST(Serialize, Quaternion_from_string)
+{
+  {
+    geometry_msgs::msg::Quaternion des = tuw_msgs::Quaternion::from_str("[0.413010, 0.197120, -0.753504, 0.472016]");
+    ASSERT_EQ(des, tuw_msgs::Quaternion(0.413010, 0.197120, -0.753504, 0.472016));
+  }
+  {
+    geometry_msgs::msg::Quaternion des = tuw_msgs::Quaternion::from_str("[0.00000, 0.000000, 0.000000, 1.000000]");
+    ASSERT_EQ(des, tuw_msgs::Quaternion(0.0, 0.0, 0.0, 1.0));
+  }
+  {
+    geometry_msgs::msg::Quaternion des = tuw_msgs::Quaternion::from_str("[]");
+    ASSERT_EQ(des, tuw_msgs::Quaternion(0.0, 0.0, 0.0, 1.0));
+  }
+  {
+    geometry_msgs::msg::Quaternion des = tuw_msgs::Quaternion::from_str("[3.3, 2.2, 1.2]");
+    ASSERT_TRUE(tuw_msgs::Quaternion(0.413010, 0.197120, -0.753504, 0.472016).close_to(des));
+  }
+}
+
+
+TEST(Serialize, pose_simpylfy)
 {
   std::string str(" [[3.3, 221.2], []]");
   tuw_msgs::Pose src;
@@ -72,7 +187,7 @@ TEST(Serialize, simpylfy)
   ASSERT_FLOAT_EQ(src.orientation.y, 0.0);
   ASSERT_FLOAT_EQ(src.orientation.z, 0.0);
   ASSERT_FLOAT_EQ(src.orientation.w, 1.0);
-  
+
   std::string str_pose;
   tuw_msgs::encode(src, str_pose);
   ASSERT_STREQ(str_pose.c_str(), "[[3.300000, 221.200000], []]");
@@ -95,7 +210,7 @@ TEST(Serialize, decode_encode_pose)
   size_t pos = 0;
   pos = tuw_msgs::decode(src, str, pos);
   ASSERT_FLOAT_EQ(src.position.x, 3.3);
-  
+
   std::string str_pose;
   tuw_msgs::encode(src, str_pose);
   ASSERT_STREQ(str_pose.c_str(), "[[3.300000, 221.200000, 1.000000], [0.413010, 0.197120, -0.753504, 0.472016]]");
@@ -112,12 +227,10 @@ TEST(Serialize, decode_encode_pose_with_roll_pitch_yaw)
   pos = tuw_msgs::decode(src, str, pos);
   ASSERT_FLOAT_EQ(src.position.x, 3.3);
 
-  
   std::string str_pose;
   tuw_msgs::encode(src, str_pose);
   ASSERT_STREQ(str_pose.c_str(), "[[3.300000, 221.200000, 1.000000], [0.413010, 0.197120, -0.753504, 0.472016]]");
   tuw_msgs::Pose des;
   pos = tuw_msgs::decode(des, str_pose);
   ASSERT_FLOAT_EQ(des.position.x, 3.3);
-
 }

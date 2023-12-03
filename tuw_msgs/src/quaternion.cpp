@@ -69,3 +69,50 @@ size_t tuw_msgs::decode(geometry_msgs::msg::Quaternion &des, std::string &line, 
   pos++;
   return pos;
 }
+bool tuw_msgs::is_zero(const geometry_msgs::msg::Quaternion &src)
+{
+  return (src.x == 0.) && (src.y == 0.) && (src.z == 0.) && (src.w == 1.);
+}
+
+std::string tuw_msgs::to_str(const geometry_msgs::msg::Quaternion &src, tuw_msgs::Format format)
+{
+  std::string str;
+  return to_str(src, str, format);
+}
+
+std::string &tuw_msgs::to_str(const geometry_msgs::msg::Quaternion &src, std::string &des, tuw_msgs::Format format)
+{
+  char txt[0xFF];
+  if ((format == COMPACT) && is_zero(src))
+  {
+    sprintf(txt, "[]");
+  }
+  else
+  {
+    sprintf(txt, "[%f, %f, %f, %f]", src.x, src.y, src.z, src.w);
+  }
+  des.append(txt);
+  return des;
+}
+
+
+geometry_msgs::msg::Quaternion &tuw_msgs::from_str(const std::string &src, geometry_msgs::msg::Quaternion &des)
+{
+  size_t offset = nr_of_leading_spaces(src);
+  int n = sscanf(src.c_str()+offset, "[%lf,%lf,%lf,%lf]%*s", &des.x, &des.y, &des.z, &des.w);
+  if (n != 4)
+  {
+    double roll, pitch, yaw;
+    int n = sscanf(src.c_str()+offset, "[%lf,%lf,%lf]%*s", &roll, &pitch, &yaw);
+    if (n != 3)
+    {
+      size_t pos = src.find("[]",offset);
+      if (pos == std::string::npos)
+        throw std::runtime_error("Failed decode Point incorrect number of values: " + src); 
+      des.x = 0, des.y = 0, des.z = 0, des.w = 1;
+    } else {
+      to_msg(roll, pitch, yaw, des);
+    }
+  }
+  return des;
+}
