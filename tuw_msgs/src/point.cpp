@@ -4,96 +4,56 @@
 
 using namespace tuw_msgs;
 
-
-geometry_msgs::msg::Point &tuw_msgs::to_msg(double x, double y, double z, geometry_msgs::msg::Point &des)
+bool Point::operator==(const Point &rhs) const
 {
-  des.x = x, des.y = y, des.z = z;
-  return des;
+  return (x == rhs.x) && (y == rhs.y) && (z == rhs.z);
+}
+bool Point::is_zero() const
+{
+  return (this->x == 0.) && (this->y == 0.) && (this->z == 0.);
 }
 
-std::string &tuw_msgs::encode(geometry_msgs::msg::Point &src, std::string &des)
-{
-  char txt[0xFF];
-  if (src.z == 0.)
-  {
-    sprintf(txt, "[%f, %f]", src.x, src.y);
-  }
-  else
-  {
-    sprintf(txt, "[%f, %f, %f]", src.x, src.y, src.z);
-  }
-  des.append(txt);
-  return des;
-}
-
-size_t tuw_msgs::decode(geometry_msgs::msg::Point &des, std::string &line, size_t pos)
-{
-  pos = line.find("[", pos);
-  if (pos == std::string::npos)
-    throw std::runtime_error("Failed decode Point in line: " + line);
-  const char *str = line.c_str() + pos;
-  int n = sscanf(str, "[%lf,%lf,%lf]%*s", &des.x, &des.y, &des.z);
-  if (n != 3)
-  {
-    int n = sscanf(str, "[%lf,%lf]%*s", &des.x, &des.y);
-    if (n != 2)
-    {
-      throw std::runtime_error("Failed decode Point incorrect number of values: " + line);
-    }
-    des.z = 0;
-  }
-  pos = line.find("]", pos);
-  if (pos == std::string::npos)
-    throw std::runtime_error("Failed decode Point in line: " + line);
-  pos++;
-  return pos;
-}
-
-bool tuw_msgs::is_zero(const geometry_msgs::msg::Point &src)
-{
-  return (src.x == 0.) && (src.y == 0.) && (src.z == 0.);
-}
-
-std::string tuw_msgs::to_str(const geometry_msgs::msg::Point &src, tuw_msgs::Format format)
+std::string Point::to_str(tuw_msgs::Format format) const
 {
   std::string str;
-  return to_str(src, str, format);
+  return to_str(str, format);
 }
 
-std::string &tuw_msgs::to_str(const geometry_msgs::msg::Point &src, std::string &des, tuw_msgs::Format format)
+std::string &Point::to_str(std::string &des, tuw_msgs::Format format, bool append) const
 {
-  char txt[0xFF];
-  if ((format == COMPACT) && is_zero(src))
+  char txt[0x40];
+  if ((format == COMPACT) && this->is_zero())
   {
     sprintf(txt, "[]");
   }
-  else if ((format == COMPACT) && src.z == 0.)
+  else if ((format == COMPACT) && this->z == 0.)
   {
-    sprintf(txt, "[%f, %f]", src.x, src.y);
+    sprintf(txt, "[%f, %f]", this->x, this->y);
   }
   else
   {
-    sprintf(txt, "[%f, %f, %f]", src.x, src.y, src.z);
+    sprintf(txt, "[%f, %f, %f]", this->x, this->y, this->z);
   }
-  des.append(txt);
+  if(append) des.append(txt);
+  else des.assign(txt);
   return des;
 }
 
-geometry_msgs::msg::Point &tuw_msgs::from_str(const std::string &src, geometry_msgs::msg::Point &des)
+tuw_msgs::Point &Point::from_str(const std::string &src)
 {
   size_t offset = nr_of_leading_spaces(src);
-  int n = sscanf(src.c_str()+offset, "[%lf,%lf,%lf]%*s", &des.x, &des.y, &des.z);
+  int n = sscanf(src.c_str() + offset, "[%lf,%lf,%lf]%*s", &this->x, &this->y, &this->z);
   if (n != 3)
   {
-    int n = sscanf(src.c_str()+offset, "[%lf,%lf]%*s", &des.x, &des.y);
+    int n = sscanf(src.c_str() + offset, "[%lf,%lf]%*s", &this->x, &this->y);
     if (n != 2)
     {
-      size_t pos = src.find("[]",offset);
+      size_t pos = src.find("[]", offset);
       if (pos == std::string::npos)
-        throw std::runtime_error("Failed decode Point incorrect number of values: " + src); 
-      des.x = 0, des.y = 0;
+        throw std::runtime_error("Failed decode Point incorrect number of values: " + src);
+      this->x = 0, this->y = 0, this->z = 0;
     }
-    des.z = 0;
+    this->z = 0;
   }
-  return des;
+  return *this;
 }

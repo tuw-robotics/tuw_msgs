@@ -7,8 +7,7 @@
 
 namespace tuw_msgs
 {
-    std::string &encode(geometry_msgs::msg::Pose &src, std::string &des);
-    size_t decode(geometry_msgs::msg::Pose &des, std::string &line, size_t pos = 0);
+
   struct Pose : public geometry_msgs::msg::Pose
   {
     Pose() {};
@@ -57,9 +56,14 @@ namespace tuw_msgs
     const Quaternion &get_orientation() const {
       return static_cast<const Quaternion&>(this->orientation);
     }
-    bool operator==(const Pose& rhs) const { 
-      return (get_position() == rhs.get_position()) && (get_orientation() == rhs.get_orientation()); 
-    }
+    bool operator==(const Pose& rhs) const ;
+
+    double similar(const Pose &rhs, double threshold_position = 0.0001, double threshold_orientation = 0.0001) const;
+
+    bool is_zero() const;
+    std::string to_str(tuw_msgs::Format format = LOOSE) const;
+    std::string &to_str(std::string &des, tuw_msgs::Format format = LOOSE, bool append = false) const;
+    Pose &from_str(const std::string &src);
   };
 
 }

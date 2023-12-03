@@ -3,17 +3,10 @@
 
 #include <geometry_msgs/msg/point.hpp>
 #include <tuw_msgs/utils.hpp>
+#include <cmath>
 
 namespace tuw_msgs
 {
-  bool is_zero(const geometry_msgs::msg::Point &src);
-  geometry_msgs::msg::Point &to_msg(double x, double y, double z, geometry_msgs::msg::Point &des);
-  std::string to_str(const geometry_msgs::msg::Point &src, tuw_msgs::Format format = LOOSE);
-  std::string &to_str(const geometry_msgs::msg::Point &src, std::string &des, tuw_msgs::Format format = LOOSE);
-  geometry_msgs::msg::Point &from_str(const std::string &src, geometry_msgs::msg::Point &des);
-  std::string &encode(geometry_msgs::msg::Point &src, std::string &des);
-  size_t decode(geometry_msgs::msg::Point &des, std::string &line, size_t pos = 0);
-
   struct Point : public geometry_msgs::msg::Point
   {
     Point(){};
@@ -23,23 +16,29 @@ namespace tuw_msgs
     };
     Point(const std::string &src)
     {
-      tuw_msgs::from_str(src, *this);
+      this->from_str(src);
     };
     Point &set(double x, double y, double z)
     {
       this->x = x, this->y = y, this->z = z;
       return *this;
     };
-    bool operator==(const Point &rhs) const
-    {
-      return (x == rhs.x) && (y == rhs.y) && (z == rhs.z);
+    geometry_msgs::msg::Point &msg(){
+      return static_cast<geometry_msgs::msg::Point&>(*this);
     }
-    static const geometry_msgs::msg::Point from_str(const std::string &src)
-    {
-      geometry_msgs::msg::Point des;
-      return tuw_msgs::from_str(src, des);
+    const geometry_msgs::msg::Point &msg() const {
+      return static_cast<const geometry_msgs::msg::Point&>(*this);
     }
-
+    double similar(const Point &rhs, double threshold = 0.0001) const
+    {
+      double d = std::sqrt( std::pow(x - rhs.x, 2) + std::pow(y - rhs.y, 2) + std::pow(z - rhs.z, 2));
+      return (fabs(d) < threshold);
+    }
+    bool operator==(const Point &rhs) const;
+    bool is_zero() const;
+    std::string to_str(tuw_msgs::Format format = LOOSE) const;
+    std::string &to_str(std::string &des, tuw_msgs::Format format = LOOSE, bool append = false) const;
+    Point &from_str(const std::string &src);
   };
 }
 #endif // TUW_MSGS__POINT_HPP_

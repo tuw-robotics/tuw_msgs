@@ -1,38 +1,40 @@
 #include <stdexcept>
 #include <string>
 #include <tuw_msgs/pose.hpp>
+#include <cmath>
 
 using namespace tuw_msgs;
 
- std::string &tuw_msgs::encode(geometry_msgs::msg::Pose &src, std::string &des){
-  des.append("[");
-  encode(src.position, des);
-  des.append(", ");
-  encode(src.orientation, des);
-  des.append("]");
-  return des;
- }
-
-size_t tuw_msgs::decode(geometry_msgs::msg::Pose &des, std::string &line, size_t pos)
+bool Pose::is_zero() const
 {
-  pos = line.find("[", pos);
-  const char *str = line.c_str() + pos; /// simplyfies debugging
-  if (pos == std::string::npos)
-    throw std::runtime_error("Failed decode Pose in line: " + line);
-  pos++;
-  pos = decode(des.position, line, pos);
-  str = line.c_str() + pos;     /// simplyfies debugging
-  pos = line.find(",", pos);
-  if (pos == std::string::npos)
-    throw std::runtime_error("Failed decode Pose in line: " + line);
-  pos++;
-  pos = decode(des.orientation, line, pos);
-  str = line.c_str() + pos;     /// simplyfies debugging
-  pos = line.find("]", pos);
-  if (pos == std::string::npos)
-    throw std::runtime_error("Failed decode Pose in line: " + line);
-  pos++;
-  str = line.c_str() + pos;     /// simplyfies debugging
-  return pos;
+  return get_orientation().is_zero() && get_position().is_zero();
 }
 
+bool Pose::operator==(const tuw_msgs::Pose &rhs) const
+{
+  return (get_position() == rhs.get_position()) && (get_orientation() == rhs.get_orientation());
+}
+
+double Pose::similar(const tuw_msgs::Pose &rhs, double threshold_position, double threshold_orientation) const
+{
+  return get_position().similar(rhs.get_position(), threshold_position) && get_orientation().similar(rhs.get_orientation(), threshold_orientation);
+}
+std::string Pose::to_str(tuw_msgs::Format format) const
+{
+  std::string str;
+  return this->to_str(str, format);
+}
+
+std::string &Pose::to_str(std::string &des, tuw_msgs::Format format, bool append) const
+{
+  if (!append)
+    des.clear();
+  des.append("[" + get_position().to_str(format) + ", " + get_orientation().to_str(format) + "]");
+  return des;
+}
+
+Pose &Pose::from_str(const std::string &src)
+{
+  (void) src;
+  return *this;
+}
