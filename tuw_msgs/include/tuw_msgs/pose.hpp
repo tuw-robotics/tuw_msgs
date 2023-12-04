@@ -23,6 +23,10 @@ namespace tuw_msgs
     {
       this->set(px, py, pz, qx, qy, qz, qw);
     };
+    Pose(const std::string &str)
+    {
+      this->from_str(str);
+    };
     Pose &set(double px, double py, double pz, double qx, double qy, double qz, double qw)
     {
       get_position().set(px, py, pz);
@@ -55,6 +59,12 @@ namespace tuw_msgs
     }
     const Quaternion &get_orientation() const {
       return static_cast<const Quaternion&>(this->orientation);
+    }
+    geometry_msgs::msg::Pose &msg(){
+      return static_cast<geometry_msgs::msg::Pose&>(*this);
+    }
+    const geometry_msgs::msg::Pose &msg() const {
+      return static_cast<const geometry_msgs::msg::Pose&>(*this);
     }
     bool operator==(const Pose& rhs) const ;
 

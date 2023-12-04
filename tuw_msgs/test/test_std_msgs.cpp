@@ -198,6 +198,47 @@ TEST(Serialize, pose_to_string)
     ASSERT_STREQ(str.c_str(), "[[3.300000, 1.000000], [0.413010, 0.197120, -0.753504, 0.472016]]");
   }
 }
+
+
+TEST(Serialize, Pose_from_string)
+{
+  tuw_msgs::Point p0(0, 0, 0);
+  tuw_msgs::Quaternion q0(0, 0, 0, 1);
+  tuw_msgs::Point p1(3.3, 2.2, 1.1);
+  tuw_msgs::Quaternion q1(0.413010, 0.197120, -0.753504, 0.472016);
+  tuw_msgs::Pose pose0(p0, q0);
+  tuw_msgs::Pose pose1(p0, q1);
+  tuw_msgs::Pose pose2(p1, q1);
+  {
+    tuw_msgs::Pose des("[[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]");
+    ASSERT_TRUE(pose0.similar(des));
+  }
+  {
+    tuw_msgs::Pose des("[[0.000000, 0.000000, 0.000000], []]");
+    ASSERT_TRUE(pose0.similar(des));
+  }
+  {
+    tuw_msgs::Pose des("[[0.000000, 0.000000], []]");
+    ASSERT_TRUE(pose0.similar(des));
+  }
+  {
+    tuw_msgs::Pose des("[[0.000000, 0.000000], [0.413010, 0.197120, -0.753504, 0.472016]]");
+    ASSERT_TRUE(pose1.similar(des));
+  }
+  {
+    tuw_msgs::Pose des(" [[3.3, 2.2, 1.1], [0.413010, 0.197120, -0.753504, 0.472016]]");
+    ASSERT_TRUE(pose2.similar(des));
+  }
+  {
+    tuw_msgs::Pose des(" [[], [0.413010, 0.197120, -0.753504, 0.472016]]");
+    ASSERT_TRUE(pose1.similar(des));
+  }
+  {
+    tuw_msgs::Pose des("[[3.3, 2.2, 1.1], [0.413010, 0.197120, -0.753504, 0.472016]]");
+    ASSERT_TRUE(pose2.similar(des));
+  }
+}
+
 /*
 TEST(Serialize, decode_encode_pose)
 {

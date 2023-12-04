@@ -3,6 +3,9 @@
 
 namespace tuw_msgs
 {
+
+    using Idx = int64_t;
+
     enum Format{
         COMPACT,
         LOOSE
@@ -18,6 +21,12 @@ namespace tuw_msgs
             }
         }
         return nr_of_spaces;
+    }
+    inline std::string remove_spaces(std::string str){
+        str.erase(std::remove_if(str.begin(), str.end(), [](unsigned char x)
+                            { return std::isspace(x); }),
+             str.end());
+        return str; 
     }
 };
 

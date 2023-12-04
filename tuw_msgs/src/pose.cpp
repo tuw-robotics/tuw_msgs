@@ -33,8 +33,22 @@ std::string &Pose::to_str(std::string &des, tuw_msgs::Format format, bool append
   return des;
 }
 
-Pose &Pose::from_str(const std::string &src)
+Pose &Pose::from_str(const std::string &str)
 {
-  (void) src;
+  size_t offset_position = str.find("[");
+      if (offset_position == std::string::npos)
+        throw std::runtime_error("Failed decode Pose: " + str);
+  offset_position++;
+  std::string str_position = str.substr(offset_position);
+  this->get_position().from_str(str_position);
+  size_t offset_position_end = str_position.find("]");
+      if (offset_position_end == std::string::npos)
+        throw std::runtime_error("Failed decode Pose: " + str);
+  size_t offset_orientation = str_position.find(",", offset_position_end);
+      if (offset_orientation == std::string::npos)
+        throw std::runtime_error("Failed decode Pose: " + str);
+  offset_orientation++;
+  std::string str_orientation = str.substr(offset_orientation);
+  this->get_orientation().from_str(str_orientation);
   return *this;
-}
+};

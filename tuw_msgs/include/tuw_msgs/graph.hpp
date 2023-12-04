@@ -2,7 +2,6 @@
 #define TUW_MSGS__GRAPH_HPP_
 
 #include <tuw_graph_msgs/msg/graph.hpp>
-#include <tuw_msgs/serialize.hpp>
 #include <tuw_msgs/utils.hpp>
 
 namespace tuw_msgs

@@ -47,6 +47,12 @@ namespace tuw_msgs
       double d = std::sqrt( std::pow(x - rhs.x, 2) + std::pow(y - rhs.y, 2) + std::pow(z - rhs.z, 2) + std::pow(w - rhs.w, 2));
       return (fabs(d) < threshold);
     }
+    geometry_msgs::msg::Quaternion &msg(){
+      return static_cast<geometry_msgs::msg::Quaternion&>(*this);
+    }
+    const geometry_msgs::msg::Quaternion &msg() const {
+      return static_cast<const geometry_msgs::msg::Quaternion&>(*this);
+    }
     Quaternion &from_str(const std::string &src);
     std::string to_str(tuw_msgs::Format format = LOOSE) const;
     std::string &to_str(std::string &des, tuw_msgs::Format format = LOOSE, bool append = false) const;

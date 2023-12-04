@@ -6,6 +6,9 @@
 using namespace tuw_msgs;
 
 Node::Node() {}
+Node::Node(tuw_msgs::Idx id) {
+  this->id = id;
+}
 Node::Node(Idx id, const Pose &pose)
 {
   set(id, pose);

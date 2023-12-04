@@ -7,21 +7,21 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(geometry_msgs REQUIRED)
 find_package(tuw_graph_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 
 
-add_library(tuw_msgs src/point.cpp src/quaternion.cpp src/pose.cpp)
+add_library(tuw_msgs src/point.cpp src/quaternion.cpp src/pose.cpp src/node.cpp)
 target_compile_features(tuw_msgs PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 target_include_directories(tuw_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
   tuw_msgs
-  "geometry_msgs"
   "tuw_graph_msgs"
+  "geometry_msgs"
 )
 
 install(TARGETS ${PROJECT_NAME} 
@@ -48,10 +48,26 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 
   find_package(ament_cmake_gtest REQUIRED)
-  ament_add_gtest(unit_tests test/unit_msgs.cpp)  # Need to link .cpp file under test
-  target_include_directories(unit_tests PUBLIC src/)  # Need to specify directories in order to #include from them in the test
-  target_link_libraries(unit_tests ${PROJECT_NAME})
+  ament_add_gtest(test_std_msgs test/test_std_msgs.cpp)  # Need to link .cpp file under test
+  target_include_directories(test_std_msgs PUBLIC src/)  # Need to specify directories in order to #include from them in the test
+  target_link_libraries(test_std_msgs ${PROJECT_NAME})
+
+
+  find_package(ament_cmake_gtest REQUIRED)
+  ament_add_gtest(test_graph_msgs test/test_graph_msgs.cpp)  # Need to link .cpp file under test
+  target_include_directories(test_graph_msgs PUBLIC src/)  # Need to specify directories in order to #include from them in the test
+  target_link_libraries(test_graph_msgs ${PROJECT_NAME})
 
 endif()
+
+ament_export_include_directories(
+  include
+)
+ament_export_libraries(
+  ${PROJECT_NAME}
+)
+ament_export_targets(
+  export_${PROJECT_NAME}
+)
 
 ament_package()

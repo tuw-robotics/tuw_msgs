@@ -54,7 +54,9 @@ std::string &Quaternion::to_str(std::string &des, tuw_msgs::Format format, bool 
 
 tuw_msgs::Quaternion &Quaternion::from_str(const std::string &src)
 {
-  size_t offset = nr_of_leading_spaces(src);
+  size_t offset = src.find("[");
+  if (offset == std::string::npos)
+    throw std::runtime_error("Failed decode Quaternion: " + src);
   int n = sscanf(src.c_str()+offset, "[%lf,%lf,%lf,%lf]%*s", &this->x, &this->y, &this->z, &this->w);
   if (n != 4)
   {
