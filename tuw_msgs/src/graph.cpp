@@ -13,6 +13,11 @@ Node::Node(Idx id, const Pose &pose)
 {
   set(id, pose);
 }
+Node::Node(const std::string &str)
+{
+  this->from_str(str);
+}
+
 void Node::set(Idx id, const Pose &pose)
 {
   this->id = id, this->pose = pose;
@@ -27,7 +32,7 @@ const Pose &Node::get_pose() const
 }
 bool Node::operator==(const Node &rhs) const
 {
-  return (id == rhs.id) && (get_pose() == rhs.get_pose());
+  return (this->id == rhs.id) && (get_pose() == rhs.get_pose());
 }
 
 Edge::Edge() {}

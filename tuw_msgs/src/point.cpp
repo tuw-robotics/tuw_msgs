@@ -4,6 +4,20 @@
 
 using namespace tuw_msgs;
 
+Point::Point(double x, double y, double z) 
+{
+  this->x = x, this->y = y, this->z = z;
+};
+Point::Point(const std::string &src)
+{
+  this->from_str(src);
+};
+Point &Point::set(double x, double y, double z)
+{
+  this->x = x, this->y = y, this->z = z;
+  return *this;
+};
+
 bool Point::operator==(const Point &rhs) const
 {
   return (x == rhs.x) && (y == rhs.y) && (z == rhs.z);
@@ -34,12 +48,14 @@ std::string &Point::to_str(std::string &des, tuw_msgs::Format format, bool appen
   {
     sprintf(txt, "[%f, %f, %f]", this->x, this->y, this->z);
   }
-  if(append) des.append(txt);
-  else des.assign(txt);
+  if (append)
+    des.append(txt);
+  else
+    des.assign(txt);
   return des;
 }
 
-tuw_msgs::Point &Point::from_str(const std::string &src)
+size_t Point::from_str(const std::string &src)
 {
   size_t offset = src.find("[");
   if (offset == std::string::npos)
@@ -56,6 +72,22 @@ tuw_msgs::Point &Point::from_str(const std::string &src)
       this->x = 0, this->y = 0, this->z = 0;
     }
     this->z = 0;
-  }
-  return *this;
+  } 
+  offset = src.find("]");
+  if (offset == std::string::npos)
+    throw std::runtime_error("Failed decode Point: " + src);
+  return offset;
+}
+
+geometry_msgs::msg::Point &Point::msg()
+{
+  return static_cast<geometry_msgs::msg::Point &>(*this);
+}
+const geometry_msgs::msg::Point &Point::msg() const
+{
+  return static_cast<const geometry_msgs::msg::Point &>(*this);
+}
+double Point::similar(const Point &rhs, double epsilon) const
+{
+  return is_similar(this->msg(), rhs.msg(), epsilon);
 }

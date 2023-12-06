@@ -15,9 +15,9 @@ bool Pose::operator==(const tuw_msgs::Pose &rhs) const
   return (get_position() == rhs.get_position()) && (get_orientation() == rhs.get_orientation());
 }
 
-double Pose::similar(const tuw_msgs::Pose &rhs, double threshold_position, double threshold_orientation) const
+bool Pose::similar(const tuw_msgs::Pose &rhs, double epsilon_position, double epsilon_orientation) const
 {
-  return get_position().similar(rhs.get_position(), threshold_position) && get_orientation().similar(rhs.get_orientation(), threshold_orientation);
+  return get_position().similar(rhs.get_position(), epsilon_position) && get_orientation().similar(rhs.get_orientation(), epsilon_orientation);
 }
 std::string Pose::to_str(tuw_msgs::Format format) const
 {
@@ -33,22 +33,21 @@ std::string &Pose::to_str(std::string &des, tuw_msgs::Format format, bool append
   return des;
 }
 
-Pose &Pose::from_str(const std::string &str)
+size_t Pose::from_str(const std::string &str)
 {
-  size_t offset_position = str.find("[");
-      if (offset_position == std::string::npos)
-        throw std::runtime_error("Failed decode Pose: " + str);
-  offset_position++;
-  std::string str_position = str.substr(offset_position);
-  this->get_position().from_str(str_position);
-  size_t offset_position_end = str_position.find("]");
-      if (offset_position_end == std::string::npos)
-        throw std::runtime_error("Failed decode Pose: " + str);
-  size_t offset_orientation = str_position.find(",", offset_position_end);
-      if (offset_orientation == std::string::npos)
-        throw std::runtime_error("Failed decode Pose: " + str);
-  offset_orientation++;
-  std::string str_orientation = str.substr(offset_orientation);
-  this->get_orientation().from_str(str_orientation);
-  return *this;
+  size_t offset = str.find("[");
+  if (offset == std::string::npos)
+    throw std::runtime_error("Failed decode Pose: " + str);
+  offset++;
+  offset = this->get_position().from_str(str.substr(offset)) + offset;
+  offset = str.find(",", offset);
+  if (offset == std::string::npos)
+    throw std::runtime_error("Failed decode Pose: " + str);
+  offset++;
+  offset = this->get_orientation().from_str(str.substr(offset)) + offset;
+  offset = str.find("]", offset);
+  if (offset == std::string::npos)
+    throw std::runtime_error("Failed decode Point: " + str);
+  return offset;
 };
+

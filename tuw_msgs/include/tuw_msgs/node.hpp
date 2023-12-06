@@ -12,9 +12,9 @@ namespace tuw_msgs
     Node();
     Node(Idx id);
     Node(Idx id, const Pose& pose);
+    Node(const std::string &str);
 
     Node &set(Idx id, const Pose &pose);
-
     Pose &get_pose()
     {
       return static_cast<Pose &>(this->pose);
@@ -23,7 +23,6 @@ namespace tuw_msgs
     {
       return static_cast<const Pose &>(this->pose);
     }
-
     tuw_graph_msgs::msg::Node &msg()
     {
       return static_cast<tuw_graph_msgs::msg::Node &>(*this);
@@ -38,7 +37,7 @@ namespace tuw_msgs
 
     std::string to_str(tuw_msgs::Format format = LOOSE) const;
     std::string &to_str(std::string &des, tuw_msgs::Format format = LOOSE, bool append = false) const;
-    Node &from_str(const std::string &src);
+    size_t from_str(const std::string &src);
   };
 }
 #endif // TUW_MSGS__NODE_HPP_

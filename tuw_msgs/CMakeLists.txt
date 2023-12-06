@@ -12,8 +12,16 @@ find_package(geometry_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 
+set(TUW_MSGS_CPP
+  src/utils.cpp
+  src/point.cpp
+  src/quaternion.cpp 
+  src/pose.cpp 
+  src/node.cpp
+  src/edge.cpp
+)
 
-add_library(tuw_msgs src/point.cpp src/quaternion.cpp src/pose.cpp src/node.cpp)
+add_library(tuw_msgs ${TUW_MSGS_CPP} )
 target_compile_features(tuw_msgs PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 target_include_directories(tuw_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -46,6 +54,11 @@ if(BUILD_TESTING)
   # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
+
+  find_package(ament_cmake_gtest REQUIRED)
+  ament_add_gtest(test_utils test/test_utils.cpp )  # Need to link .cpp file under test
+  target_include_directories(test_utils PUBLIC src/)  # Need to specify directories in order to #include from them in the test
+  target_link_libraries(test_utils ${PROJECT_NAME})
 
   find_package(ament_cmake_gtest REQUIRED)
   ament_add_gtest(test_std_msgs test/test_std_msgs.cpp)  # Need to link .cpp file under test

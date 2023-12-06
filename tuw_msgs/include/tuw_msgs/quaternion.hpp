@@ -30,30 +30,14 @@ namespace tuw_msgs
 
     Quaternion &from_rpy(double roll, double pitch, double yaw);
 
-    Quaternion &get_orientation(){
-      return static_cast<Quaternion&>(*this);
-    }
-    const Quaternion &get_orientation() const {
-      return static_cast<const Quaternion&>(*this);
-    }
-    bool operator==(const geometry_msgs::msg::Quaternion &rhs) const
-    {
-      return (x == rhs.x) && (y == rhs.y) && (z == rhs.z) && (w == rhs.w);
-    }
-    bool is_zero() const;
-    
-    double similar(const Quaternion &rhs, double threshold = 0.0001) const
-    {
-      double d = std::sqrt( std::pow(x - rhs.x, 2) + std::pow(y - rhs.y, 2) + std::pow(z - rhs.z, 2) + std::pow(w - rhs.w, 2));
-      return (fabs(d) < threshold);
-    }
-    geometry_msgs::msg::Quaternion &msg(){
-      return static_cast<geometry_msgs::msg::Quaternion&>(*this);
-    }
-    const geometry_msgs::msg::Quaternion &msg() const {
-      return static_cast<const geometry_msgs::msg::Quaternion&>(*this);
-    }
-    Quaternion &from_str(const std::string &src);
+    Quaternion &get_orientation();
+    const Quaternion &get_orientation() const;
+    bool operator==(const geometry_msgs::msg::Quaternion &rhs) const;
+    bool is_zero() const;    
+    bool similar(const Quaternion &rhs, double epsilon = 0.0001) const;
+    geometry_msgs::msg::Quaternion &msg();
+    const geometry_msgs::msg::Quaternion &msg() const;
+    size_t from_str(const std::string &src);
     std::string to_str(tuw_msgs::Format format = LOOSE) const;
     std::string &to_str(std::string &des, tuw_msgs::Format format = LOOSE, bool append = false) const;
   };
