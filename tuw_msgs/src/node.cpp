@@ -48,7 +48,7 @@ std::string Node::to_str(tuw_msgs::Format format) const
 std::string &Node::to_str(std::string &des, tuw_msgs::Format format, bool append) const
 {
     char txt[128];
-    sprintf(txt, "node: %4ld: %s", id, this->get_pose().to_str(format).c_str());
+    sprintf(txt, "%4ld: %s", id, this->get_pose().to_str(format).c_str());
     if (!append)
         des.clear();
     des.append(txt);
@@ -56,13 +56,10 @@ std::string &Node::to_str(std::string &des, tuw_msgs::Format format, bool append
 }
 size_t Node::from_str(const std::string &str)
 {
-    size_t offset = str.find("node:");
-    if (offset == std::string::npos)
-        throw std::runtime_error("Failed decode node: " + str);
-    int n = sscanf(str.c_str(), "node:%4ld:%*s", &this->id);
+    int n = sscanf(str.c_str(), "%4ld:%*s", &this->id);
     if (n != 1)
         throw std::runtime_error("Failed decode Node: " + str);
-    offset = str.rfind(":");
+    size_t offset = str.rfind(":");
     if (offset == std::string::npos)
         throw std::runtime_error("Failed decode node: " + str);
 

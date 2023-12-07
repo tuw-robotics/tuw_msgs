@@ -100,7 +100,7 @@ std::string &Edge::to_str(std::string &des, tuw_msgs::Format format, bool append
     if (!append)
         des.clear();
     char txt[0xFF];
-    sprintf(txt, "edge: %4ld: %s: %s: %8.4lf: [%4ld, %4ld]: ",
+    sprintf(txt, "%4ld: %s: %s: %8.4lf: [%4ld, %4ld]: ",
             this->id, (this->valid ? "  valid" : "invalid"),
             (this->directed ? "  directed" : "undirected"),
             this->weight, this->nodes[0], this->nodes[1]);
@@ -117,19 +117,16 @@ std::string &Edge::to_str(std::string &des, tuw_msgs::Format format, bool append
 }
 size_t Edge::from_str(const std::string &str)
 {
-    size_t offset = str.find("edge:");
-    if (offset == std::string::npos)
-        throw std::runtime_error("Failed decode edge: " + str);
     char str_valid[0xF], str_directed[0xF];
-    int n = sscanf(str.c_str(), "edge:%ld:%16[^:]:%16[^:]:%lf:%*[^[][%ld,%ld]%*s",
+    int n = sscanf(str.c_str(), "%ld:%16[^:]:%16[^:]:%lf:%*[^[][%ld,%ld]%*s",
                    &this->id, str_valid, str_directed, &this->weight, &this->nodes[0], &this->nodes[1]);
     if (n != 6)
         throw std::runtime_error("Failed decode edge header" + str);
 
-    this->valid = (std::string(str_valid).find("valid") != std::string::npos);
-    this->directed = (std::string(str_directed).find("directed") != std::string::npos);
+    this->valid = (std::string(str_valid).find("invalid") == std::string::npos);
+    this->directed = (std::string(str_directed).find("undirected") == std::string::npos);
 
-    offset = str.rfind(":");
+    size_t offset = str.rfind(":");
     if (offset == std::string::npos)
         throw std::runtime_error("Failed decode Edge header ending: " + str);
     offset++;

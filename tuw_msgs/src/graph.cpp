@@ -1,6 +1,8 @@
 #include <stdexcept>
 #include <string>
 #include <cstring>
+#include <fstream>
+#include <iostream>
 #include <tuw_msgs/graph.hpp>
 
 using namespace tuw_msgs;
@@ -98,13 +100,13 @@ std::string &Graph::to_str(std::string &des, tuw_msgs::Format format, bool appen
     ss << "# nodes: id: position" << std::endl;
     for (const auto &node : this->nodes)
     {
-      ss << static_cast<const Node &>(node).to_str(format) << std::endl;
+      ss << "node: " << static_cast<const Node &>(node).to_str(format) << std::endl;
     }
     ss << std::endl;
     ss << "# edges: id: valid: directed: weight: nodes: path" << std::endl;
     for (const auto &edge : this->edges)
     {
-      ss << static_cast<const Edge &>(edge).to_str(format) << std::endl;
+      ss << "edge: " << static_cast<const Edge &>(edge).to_str(format) << std::endl;
     }
   }
   return des.append(ss.str());
@@ -137,15 +139,40 @@ size_t Graph::from_str(const std::string &src)
     else if ((pos = line.find("node:")) != std::string::npos)
     {
       Node node;
-      node.from_str(line);
+      pos = pos + strlen("node:") + 1;
+      node.from_str(line.substr(pos));
       this->nodes.push_back(std::move(node));
     }
     else if ((pos = line.find("edge:")) != std::string::npos)
     {
       Edge edge;
-      edge.from_str(line);
+      pos = pos + strlen("edge:") + 1;
+      edge.from_str(line.substr(pos));
       this->edges.push_back(std::move(edge));
     }
   }
   return line_number;
+}
+
+void Graph::read(std::string filename)
+{
+  std::ifstream file(filename, std::ios_base::binary | std::ios_base::in);
+  if (!file.is_open())
+    throw std::runtime_error("Failed to open " + filename);
+  using Iterator = std::istreambuf_iterator<char>;
+  std::string text(Iterator{file}, Iterator{});
+  if (!file)
+    throw std::runtime_error("Failed to read " + filename);
+  this->from_str(text);
+  file.close();
+}
+
+void Graph::write(std::string filename, tuw_msgs::Format format)
+{
+  std::ofstream file;
+  file.open(filename, std::ios::binary);
+  if (!file.is_open())
+    throw std::runtime_error("Failed to open " + filename);
+  file << this->to_str(format);
+  file.close();
 }

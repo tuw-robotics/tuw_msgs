@@ -44,6 +44,9 @@ namespace tuw_msgs
       }
       return *this;
     }
+
+    void write(std::string filename, tuw_msgs::Format format = LOOSE);
+    void read(std::string filename);
   }; // class Graph
 };
 #endif // TUW_MSGS__GRAPH_HPP_
