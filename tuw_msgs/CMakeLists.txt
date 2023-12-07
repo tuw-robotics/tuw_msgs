@@ -19,6 +19,7 @@ set(TUW_MSGS_CPP
   src/pose.cpp 
   src/node.cpp
   src/edge.cpp
+  src/graph.cpp
 )
 
 add_library(tuw_msgs ${TUW_MSGS_CPP} )
