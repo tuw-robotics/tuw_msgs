@@ -67,23 +67,29 @@ bool Edge::operator==(const Edge &rhs) const
 
 double Edge::similar(const Edge &rhs, double epsilon_position, double epsilon_orientation) const
 {
+    return is_similar(*this, rhs, epsilon_position, epsilon_orientation);
+}
 
-    bool header_eq = (this->id == rhs.id) &&
-                     (this->valid == rhs.valid) &&
-                     (this->directed == rhs.directed) &&
-                     (this->weight == rhs.weight) &&
-                     (this->nodes[0] == rhs.nodes[0]) &&
-                     (this->nodes[1] == rhs.nodes[1]) &&
-                     (this->path.size() == rhs.path.size());
-    auto it_a = this->path.begin();
-    auto it_b = rhs.path.begin();
-    for (; header_eq && it_a != this->path.end(); it_a++, it_b++)
+bool tuw_msgs::is_similar(const tuw_graph_msgs::msg::Edge &a, const tuw_graph_msgs::msg::Edge &b, double epsilon_position, double epsilon_orientation)
+{
+
+    bool header_eq = (a.id == b.id) &&
+                     (a.valid == b.valid) &&
+                     (a.directed == b.directed) &&
+                     (a.weight == b.weight) &&
+                     (a.nodes[0] == b.nodes[0]) &&
+                     (a.nodes[1] == b.nodes[1]) &&
+                     (a.path.size() == b.path.size());
+    auto it_a = a.path.begin();
+    auto it_b = b.path.begin();
+    for (; header_eq && it_a != a.path.end(); it_a++, it_b++)
     {
         if (!is_similar(*it_a, *it_b, epsilon_position, epsilon_orientation))
             return false;
     }
     return header_eq;
 }
+
 std::string Edge::to_str(tuw_msgs::Format format) const
 {
     std::string str;

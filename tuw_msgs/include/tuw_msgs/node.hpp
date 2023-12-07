@@ -33,11 +33,13 @@ namespace tuw_msgs
     }
     bool operator==(const Node &rhs) const;
 
-    double similar(const Node &rhs, double threshold_position = 0.0001, double threshold_orientation = 0.0001) const;
+    bool similar(const Node &rhs, double threshold_position = 0.0001, double threshold_orientation = 0.0001) const;
 
     std::string to_str(tuw_msgs::Format format = LOOSE) const;
     std::string &to_str(std::string &des, tuw_msgs::Format format = LOOSE, bool append = false) const;
-    size_t from_str(const std::string &src);
+    size_t from_str(const std::string &src); 
   };
+  bool is_similar(const tuw_graph_msgs::msg::Node &a, const tuw_graph_msgs::msg::Node &b, double epsilon_position = 0.0001, double epsilon_orientation = 0.0001);
+
 }
 #endif // TUW_MSGS__NODE_HPP_

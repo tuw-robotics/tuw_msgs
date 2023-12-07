@@ -13,7 +13,7 @@ namespace tuw_msgs
     enum Format
     {
         COMPACT,
-        LOOSE
+        LOOSE,
     };
 
     size_t nr_of_leading_spaces(const std::string &inputString);
@@ -23,7 +23,8 @@ namespace tuw_msgs
     void rpy_to_quaternion(double roll, double pitch, double yaw, double &qx, double &qy, double &qz, double &qw);
 
     template <typename T>
-    bool is_similar(const T& a, const T& b, T epsilon){
+    bool is_similar(const T &a, const T &b, T epsilon)
+    {
         return std::abs(a - b) < epsilon;
     }
     bool is_equal(const geometry_msgs::msg::Point &a, const geometry_msgs::msg::Point &b);

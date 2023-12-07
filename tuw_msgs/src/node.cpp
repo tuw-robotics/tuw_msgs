@@ -31,10 +31,14 @@ bool Node::operator==(const Node &rhs) const
     return (this->id == rhs.id) && (get_pose() == rhs.get_pose());
 }
 
-double Node::similar(const Node &rhs, double threshold_position, double threshold_orientation) const
+bool Node::similar(const Node &rhs, double epsilon_position, double epsilon_orientation) const
 {
 
-    return (this->id == rhs.id) && get_pose().similar(rhs.get_pose(), threshold_position, threshold_orientation);
+    return is_similar(*this, rhs, epsilon_position, epsilon_orientation);
+}
+bool tuw_msgs::is_similar(const tuw_graph_msgs::msg::Node &a, const tuw_graph_msgs::msg::Node &b, double epsilon_position, double epsilon_orientation)
+{
+    return (a.id == b.id) && is_similar(a.pose, b.pose, epsilon_position, epsilon_orientation);
 }
 std::string Node::to_str(tuw_msgs::Format format) const
 {
