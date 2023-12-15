@@ -28,6 +28,7 @@ namespace tuw_msgs
       return *this;
     };
 
+    
     Quaternion &from_rpy(double roll, double pitch, double yaw);
 
     Quaternion &get_orientation();
