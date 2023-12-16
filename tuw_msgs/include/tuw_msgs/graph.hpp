@@ -45,6 +45,8 @@ namespace tuw_msgs
       return *this;
     }
 
+    tuw_graph_msgs::msg::Graph &msg();
+    const tuw_graph_msgs::msg::Graph &msg() const;
     void write(std::string filename, tuw_msgs::Format format = LOOSE);
     void read(std::string filename);
   }; // class Graph

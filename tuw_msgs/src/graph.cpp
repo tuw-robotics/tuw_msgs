@@ -176,3 +176,11 @@ void Graph::write(std::string filename, tuw_msgs::Format format)
   file << this->to_str(format);
   file.close();
 }
+tuw_graph_msgs::msg::Graph &Graph::msg()
+{
+  return static_cast<tuw_graph_msgs::msg::Graph &>(*this);
+}
+const tuw_graph_msgs::msg::Graph &Graph::msg() const
+{
+  return static_cast<const tuw_graph_msgs::msg::Graph &>(*this);
+}
