@@ -2,8 +2,8 @@
 
 int main(int argc, char ** argv)
 {
-  (void) argc;
-  (void) argv;
+  (void)argc;
+  (void)argv;
   /*
   std::string filename_in = "res/graph.txt";
   std::cout << "usage: " << argv[0] << " <filename>" << std::endl;

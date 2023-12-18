@@ -1,7 +1,8 @@
-#include "gtest/gtest.h"
-#include <tuw_msgs/node.hpp>
 #include <tuw_msgs/edge.hpp>
 #include <tuw_msgs/graph.hpp>
+#include <tuw_msgs/node.hpp>
+
+#include "gtest/gtest.h"
 
 TEST(Serialize, node_to_string)
 {
@@ -16,7 +17,8 @@ TEST(Serialize, node_to_string)
   {
     tuw_msgs::Node o(3, pose0);
     str = tuw_msgs::remove_spaces(o.to_str(tuw_msgs::Format::LOOSE));
-    ASSERT_STREQ(str.c_str(), "3:[[0.000000,0.000000,0.000000],[0.000000,0.000000,0.000000,1.000000]]");
+    ASSERT_STREQ(
+      str.c_str(), "3:[[0.000000,0.000000,0.000000],[0.000000,0.000000,0.000000,1.000000]]");
   }
   {
     tuw_msgs::Node o(3, pose0);
@@ -40,7 +42,8 @@ TEST(Serialize, node_from_string)
   }
 
   {
-    tuw_msgs::Node o(" 3: [[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]");
+    tuw_msgs::Node o(
+      " 3: [[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]");
     ASSERT_EQ(o, tuw_msgs::Node(3, pose0));
   }
 }
@@ -60,7 +63,8 @@ TEST(Serialize, edge_to_string)
   {
     tuw_msgs::Edge o(3);
     std::string str = o.to_str(tuw_msgs::Format::LOOSE);
-    ASSERT_TRUE(tuw_msgs::is_similar_with_cout(str, "3: invalid: undirected:   0.0000: [   0,    0]:[]"));
+    ASSERT_TRUE(
+      tuw_msgs::is_similar_with_cout(str, "3: invalid: undirected:   0.0000: [   0,    0]:[]"));
   }
   {
     tuw_msgs::Edge o(5, true, true, 0.2, 19, 22);
@@ -71,13 +75,25 @@ TEST(Serialize, edge_to_string)
     tuw_msgs::Edge o(5, false, false, 0.2, 19, 22);
     o.set_path(path);
     std::string str = o.to_str(tuw_msgs::Format::LOOSE);
-    ASSERT_TRUE(tuw_msgs::is_similar_with_cout(str, "  5:   invalid:   undirected:   0.2000: [  19,   22]: [[[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]; [[0.000000, 0.000000, 0.000000], [0.413010, 0.197120, -0.753504, 0.472016]]; [[3.300000, 2.200000, 1.100000], [0.000000, 0.000000, 0.000000, 1.000000]]; [[3.300000, 2.200000, 1.100000], [0.413010, 0.197120, -0.753504, 0.472016]]]"));
+    ASSERT_TRUE(
+      tuw_msgs::is_similar_with_cout(
+        str,
+        "  5:   invalid:   undirected:   0.2000: [  19,   22]: [[[0.000000, 0.000000, 0.000000], "
+        "[0.000000, 0.000000, 0.000000, 1.000000]]; [[0.000000, 0.000000, 0.000000], [0.413010, "
+        "0.197120, -0.753504, 0.472016]]; [[3.300000, 2.200000, 1.100000], [0.000000, 0.000000, "
+        "0.000000, 1.000000]]; [[3.300000, 2.200000, 1.100000], [0.413010, 0.197120, -0.753504, "
+        "0.472016]]]"));
   }
   {
     tuw_msgs::Edge o(5, true, true, 0.2, 19, 22);
     o.set_path(path);
     std::string str = o.to_str(tuw_msgs::Format::COMPACT);
-    ASSERT_TRUE(tuw_msgs::is_similar_with_cout(str, " 5:   valid:   directed:   0.2000: [  19,   22]: [[[], []]; [[], [0.413010, 0.197120, -0.753504, 0.472016]]; [[3.300000, 2.200000, 1.100000], []]; [[3.300000, 2.200000, 1.100000], [0.413010, 0.197120, -0.753504, 0.472016]]]"));
+    ASSERT_TRUE(
+      tuw_msgs::is_similar_with_cout(
+        str,
+        " 5:   valid:   directed:   0.2000: [  19,   22]: [[[], []]; [[], [0.413010, 0.197120, "
+        "-0.753504, 0.472016]]; [[3.300000, 2.200000, 1.100000], []]; [[3.300000, 2.200000, "
+        "1.100000], [0.413010, 0.197120, -0.753504, 0.472016]]]"));
   }
 }
 
@@ -94,7 +110,11 @@ TEST(Serialize, edge_from_string)
   std::vector<tuw_msgs::Pose> path = {pose0, pose1, pose2, pose3};
 
   {
-    std::string src("5: valid: directed: 0.2000: [19, 22]: [[[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]; [[0.000000, 0.000000], [0.413010, 0.197120, -0.753504, 0.472016]]; [[3.3, 2.2, 1.1], []]; [[3.3, 2.2, 1.1], [0.413010, 0.197120, -0.753504, 0.472016]]]");
+    std::string src(
+      "5: valid: directed: 0.2000: [19, 22]: [[[0.000000, 0.000000, 0.000000], [0.000000, "
+      "0.000000, 0.000000, 1.000000]]; [[0.000000, 0.000000], [0.413010, 0.197120, -0.753504, "
+      "0.472016]]; [[3.3, 2.2, 1.1], []]; [[3.3, 2.2, 1.1], [0.413010, 0.197120, -0.753504, "
+      "0.472016]]]");
     tuw_msgs::Edge edge(5, true, true, 0.2, 19, 22);
     edge.set_path(path);
     tuw_msgs::Edge edge_src(src);
@@ -102,7 +122,6 @@ TEST(Serialize, edge_from_string)
     ASSERT_TRUE(test);
   }
 }
-
 
 TEST(Serialize, edge_to_and_from_string)
 {
@@ -145,7 +164,7 @@ TEST(Serialize, graph_to_string)
     tuw_msgs::Edge edge1(1, true, false, 0.2, 0, 1, path);
     tuw_msgs::Node node0(0, pose0);
     tuw_msgs::Node node1(1, pose4);
-    tuw_msgs::Graph src("r0_map", tuw_msgs::Pose(-1,-2, 0));
+    tuw_msgs::Graph src("r0_map", tuw_msgs::Pose(-1, -2, 0));
     src.edges.push_back(edge1);
     src.nodes.push_back(node0);
     src.nodes.push_back(node1);
@@ -159,7 +178,7 @@ TEST(Serialize, graph_to_string)
     tuw_msgs::Edge edge1(1, true, true, 0.2, 0, 1, path);
     tuw_msgs::Node node0(0, pose0);
     tuw_msgs::Node node1(1, pose4);
-    tuw_msgs::Graph src("r0_map", tuw_msgs::Pose(-1,-2, 0));
+    tuw_msgs::Graph src("r0_map", tuw_msgs::Pose(-1, -2, 0));
     src.edges.push_back(edge1);
     src.nodes.push_back(node0);
     src.nodes.push_back(node1);
@@ -174,7 +193,7 @@ TEST(Serialize, graph_to_string)
     tuw_msgs::Edge edge1(1, true, true, 0.2, 0, 1, path);
     tuw_msgs::Node node0(0, pose0);
     tuw_msgs::Node node1(1, pose4);
-    tuw_msgs::Graph src("r0_map", tuw_msgs::Pose(-1,-2, 0));
+    tuw_msgs::Graph src("r0_map", tuw_msgs::Pose(-1, -2, 0));
     src.edges.push_back(edge1);
     src.nodes.push_back(node0);
     src.nodes.push_back(node1);
@@ -187,7 +206,7 @@ TEST(Serialize, graph_to_string)
     tuw_msgs::Edge edge1(1, true, true, 0.2, 0, 1, path);
     tuw_msgs::Node node0(0, pose0);
     tuw_msgs::Node node1(1, pose4);
-    tuw_msgs::Graph src("r0_map", tuw_msgs::Pose(-1,-2, 0));
+    tuw_msgs::Graph src("r0_map", tuw_msgs::Pose(-1, -2, 0));
     src.edges.push_back(edge1);
     src.nodes.push_back(node0);
     src.nodes.push_back(node1);

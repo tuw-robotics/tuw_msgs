@@ -1,9 +1,9 @@
-#include "gtest/gtest.h"
 #include <tuw_msgs/pose.hpp>
+
+#include "gtest/gtest.h"
 
 TEST(Serialize, equal)
 {
-
   tuw_msgs::Point pa(3, 2, 1);
   tuw_msgs::Point pb(3, 2, 1);
   tuw_msgs::Point pc(3, 1, 1);
@@ -98,7 +98,6 @@ TEST(Serialize, point_from_string)
   }
 }
 
-
 TEST(Serialize, quaternion_to_string)
 {
   std::string str;
@@ -111,8 +110,8 @@ TEST(Serialize, quaternion_to_string)
     ASSERT_STREQ(str.c_str(), "[0.000000, 0.000000, 0.000000, 1.000000]");
   }
   {
-    ;
-    str = tuw_msgs::Quaternion(0.413010, 0.197120, -0.753504, 0.472016).to_str(tuw_msgs::Format::LOOSE);
+    str =
+      tuw_msgs::Quaternion(0.413010, 0.197120, -0.753504, 0.472016).to_str(tuw_msgs::Format::LOOSE);
     ASSERT_STREQ(str.c_str(), "[0.413010, 0.197120, -0.753504, 0.472016]");
   }
   {
@@ -120,7 +119,6 @@ TEST(Serialize, quaternion_to_string)
     ASSERT_STREQ(str.c_str(), "[]");
   }
 }
-
 
 TEST(Serialize, Quaternion_from_string)
 {
@@ -142,7 +140,6 @@ TEST(Serialize, Quaternion_from_string)
   }
 }
 
-
 TEST(Serialize, pose_to_string)
 {
   tuw_msgs::Point p0(0, 0, 0);
@@ -152,7 +149,8 @@ TEST(Serialize, pose_to_string)
   {
     tuw_msgs::Pose pose(p0, q0);
     std::string str = pose.to_str(tuw_msgs::Format::LOOSE);
-    ASSERT_STREQ(str.c_str(), "[[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]");
+    ASSERT_STREQ(
+      str.c_str(), "[[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]");
   }
   {
     tuw_msgs::Pose pose(p0, q0);
@@ -171,7 +169,6 @@ TEST(Serialize, pose_to_string)
   }
 }
 
-
 TEST(Serialize, Pose_from_string)
 {
   tuw_msgs::Point p0(0, 0, 0);
@@ -182,7 +179,8 @@ TEST(Serialize, Pose_from_string)
   tuw_msgs::Pose pose1(p0, q1);
   tuw_msgs::Pose pose2(p1, q1);
   {
-    tuw_msgs::Pose des("[[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]");
+    tuw_msgs::Pose des(
+      "[[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]");
     ASSERT_TRUE(pose0.similar(des));
   }
   {
@@ -221,21 +219,30 @@ TEST(Serialize, Pose_vector_from_string)
   tuw_msgs::Pose pose1(p0, q1);
   tuw_msgs::Pose pose2(p1, q1);
   {
-    std::string src("[[[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]; [[0.000000, 0.000000], [0.413010, 0.197120, -0.753504, 0.472016]]; [[3.3, 2.2, 1.1], [0.413010, 0.197120, -0.753504, 0.472016]]]");
+    std::string src(
+      "[[[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]; [[0.000000, "
+      "0.000000], [0.413010, 0.197120, -0.753504, 0.472016]]; [[3.3, 2.2, 1.1], [0.413010, "
+      "0.197120, -0.753504, 0.472016]]]");
     std::vector<tuw_msgs::Pose> vec = {pose0, pose1, pose2};
     std::vector<tuw_msgs::Pose> vec_src;
     tuw_msgs::Pose::from_str(src, vec_src);
     ASSERT_TRUE(vec == vec_src);
   }
   {
-    std::string src("[[[0.000000, 0.100000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]; [[0.000000, 0.000000], [0.413010, 0.197120, -0.753504, 0.472016]]; [[3.3, 2.2, 1.1], [0.413010, 0.197120, -0.753504, 0.472016]]]");
+    std::string src(
+      "[[[0.000000, 0.100000, 0.000000], [0.000000, 0.000000, 0.000000, 1.000000]]; [[0.000000, "
+      "0.000000], [0.413010, 0.197120, -0.753504, 0.472016]]; [[3.3, 2.2, 1.1], [0.413010, "
+      "0.197120, -0.753504, 0.472016]]]");
     std::vector<tuw_msgs::Pose> vec = {pose0, pose1, pose2};
     std::vector<tuw_msgs::Pose> vec_src;
     tuw_msgs::Pose::from_str(src, vec_src);
     ASSERT_FALSE(vec == vec_src);
   }
   {
-    std::string src("[[[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.010000]]; [[0.000000, 0.000000], [0.413010, 0.197120, -0.753504, 0.472016]]; [[3.3, 2.2, 1.1], [0.413010, 0.197120, -0.753504, 0.472016]]]");
+    std::string src(
+      "[[[0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 1.010000]]; [[0.000000, "
+      "0.000000], [0.413010, 0.197120, -0.753504, 0.472016]]; [[3.3, 2.2, 1.1], [0.413010, "
+      "0.197120, -0.753504, 0.472016]]]");
     std::vector<tuw_msgs::Pose> vec = {pose0, pose1, pose2};
     std::vector<tuw_msgs::Pose> vec_src;
     tuw_msgs::Pose::from_str(src, vec_src);
