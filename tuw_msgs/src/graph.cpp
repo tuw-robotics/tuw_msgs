@@ -167,7 +167,7 @@ void Graph::read(std::string filename)
   file.close();
 }
 
-void Graph::write(std::string filename, tuw_msgs::Format format)
+void Graph::write(std::string filename, tuw_msgs::Format format) const
 {
   std::ofstream file;
   file.open(filename, std::ios::binary);

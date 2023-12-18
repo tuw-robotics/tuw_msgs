@@ -47,7 +47,7 @@ namespace tuw_msgs
 
     tuw_graph_msgs::msg::Graph &msg();
     const tuw_graph_msgs::msg::Graph &msg() const;
-    void write(std::string filename, tuw_msgs::Format format = LOOSE);
+    void write(std::string filename, tuw_msgs::Format format = LOOSE)  const;
     void read(std::string filename);
   }; // class Graph
 };
