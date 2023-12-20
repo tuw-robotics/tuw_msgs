@@ -4,7 +4,9 @@
 #include <cmath>
 #include <geometry_msgs/msg/quaternion.hpp>
 #include <tuw_msgs/utils.hpp>
-
+namespace Json{
+  class Value;
+}
 namespace tuw_msgs
 {
 struct Quaternion : public geometry_msgs::msg::Quaternion
@@ -32,6 +34,8 @@ struct Quaternion : public geometry_msgs::msg::Quaternion
   std::string to_str(tuw_msgs::Format format = LOOSE) const;
   std::string & to_str(
     std::string & des, tuw_msgs::Format format = LOOSE, bool append = false) const;
+  int json_get(Json::Value &value);
+  int json_add(const char* key, Json::Value &value);
 };
 }  // namespace tuw_msgs
 #endif  // TUW_MSGS__QUATERNION_HPP_

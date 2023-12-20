@@ -4,7 +4,9 @@
 #include <cmath>
 #include <geometry_msgs/msg/point.hpp>
 #include <tuw_msgs/utils.hpp>
-
+namespace Json{
+  class Value;
+}
 namespace tuw_msgs
 {
 struct Point : public geometry_msgs::msg::Point
@@ -22,6 +24,10 @@ struct Point : public geometry_msgs::msg::Point
   std::string & to_str(
     std::string & des, tuw_msgs::Format format = LOOSE, bool append = false) const;
   size_t from_str(const std::string & src);
+  int json_get(Json::Value &value);
+  int json_add(const char* key, Json::Value &value);
+  Json::Value toJson() const;
+   
 };
 }  // namespace tuw_msgs
 #endif  // TUW_MSGS__POINT_HPP_

@@ -85,3 +85,18 @@ const geometry_msgs::msg::Quaternion & Quaternion::msg() const
 {
   return static_cast<const geometry_msgs::msg::Quaternion &>(*this);
 }
+
+#include <jsoncpp/json/json.h>
+  int Quaternion::json_get(Json::Value &value){
+    value["x"] = this->x;
+    value["y"] = this->y;
+    value["z"] = this->z;
+    value["w"] = this->w;
+    return 0;
+  }
+  int Quaternion::json_add(const char* key, Json::Value &des){
+    Json::Value value;
+    json_get(value);
+    des[key] = value;
+    return 0;
+  }

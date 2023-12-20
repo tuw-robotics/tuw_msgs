@@ -72,3 +72,25 @@ double Point::similar(const Point & rhs, double epsilon) const
 {
   return is_similar(this->msg(), rhs.msg(), epsilon);
 }
+
+
+#include <jsoncpp/json/json.h>
+  int Point::json_get(Json::Value &value){
+    value["x"] = this->x;
+    value["y"] = this->y;
+    value["z"] = this->z;
+    return 0;
+  }
+  int Point::json_add(const char* key, Json::Value &des){
+    Json::Value value;
+    json_get(value);
+    des[key] = value;
+    return 0;
+  }
+  Json::Value Point::toJson() const {
+        Json::Value jsonValue;
+        jsonValue["x"] = this->x;
+        jsonValue["y"] = this->y;
+        jsonValue["z"] = this->z;
+        return jsonValue;
+    }

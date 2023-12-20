@@ -45,3 +45,15 @@ size_t Pose::from_str(const std::string & str)
   if (offset == std::string::npos) {throw std::runtime_error("Failed decode Point: " + str);}
   return offset;
 }
+#include <jsoncpp/json/json.h>
+  int Pose::json_get(Json::Value &value){
+    this->get_position().json_add("position", value);
+    this->get_orientation().json_add("orientation", value);
+    return 0;
+  }
+  int Pose::json_add(const char* key, Json::Value &des){
+    Json::Value value;
+    json_get(value);
+    des[key] = value;
+    return 0;
+  }

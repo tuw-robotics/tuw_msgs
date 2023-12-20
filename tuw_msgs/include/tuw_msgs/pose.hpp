@@ -100,6 +100,8 @@ struct Pose : public geometry_msgs::msg::Pose
     if (offset == std::string::npos) {throw std::runtime_error("Failed decode Point: " + str);}
     return offset;
   }
+  int json_get(Json::Value &value);
+  int json_add(const char* key, Json::Value &value);
 };
 
 }  // namespace tuw_msgs
