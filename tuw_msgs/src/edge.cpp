@@ -45,14 +45,14 @@ bool Edge::operator==(const Edge & rhs) const
     (this->nodes[0] == rhs.nodes[0]) && (this->nodes[1] == rhs.nodes[1]) &&
     (this->path.size() == rhs.path.size());
   if(!header_eq) return false;
-  auto it_a = this->path.begin();
-  auto it_b = rhs.path.begin();
-  for (; it_a != this->path.end(); it_a++, it_b++) {
-    if (!is_equal(*it_a, *it_b)) {return false;}
+  auto it_path_a = this->path.begin();
+  auto it_path_b = rhs.path.begin();
+  for (; it_path_a != this->path.end(); it_path_a++, it_path_b++) {
+    if (!is_equal(*it_path_a, *it_path_b)) {return false;}
   }
   auto it_flags_a = this->flags.begin();
   auto it_flags_b = rhs.flags.begin();
-  for (; it_flags_a != a.flags.end(); it_flags_a++, it_flags_b++) {
+  for (; it_flags_a != this->flags.end(); it_flags_a++, it_flags_b++) {
     if (*it_flags_a != *it_flags_b) return false;
   }
   return true;
@@ -71,14 +71,14 @@ bool tuw_msgs::is_similar(
     (a.weight == b.weight) && (a.nodes[0] == b.nodes[0]) &&
     (a.nodes[1] == b.nodes[1]) && (a.path.size() == b.path.size());
   if(!header_eq) return false;
-  auto it_a = a.path.begin();
-  auto it_b = b.path.begin();
-  for (; it_a != a.path.end(); it_a++, it_b++) {
-    if (!is_similar(*it_a, *it_b, epsilon_position, epsilon_orientation)) {return false;}
+  auto it_path_a = a.path.begin();
+  auto it_path_b = b.path.begin();
+  for (; it_path_a != a.path.end(); it_path_a++, it_path_b++) {
+    if (!is_similar(*it_path_a, *it_path_b, epsilon_position, epsilon_orientation)) {return false;}
   }
  
-  auto it_flags_a = this->flags.begin();
-  auto it_flags_b = rhs.flags.begin();
+  auto it_flags_a = a.flags.begin();
+  auto it_flags_b = b.flags.begin();
   for (; it_flags_a != a.flags.end(); it_flags_a++, it_flags_b++) {
     if (*it_flags_a != *it_flags_b) return false;
   }

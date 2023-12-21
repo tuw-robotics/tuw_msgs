@@ -14,13 +14,13 @@ TEST(json, node_to_string)
     tuw_msgs::Pose pose4(3, 1, 0);
     std::vector<tuw_msgs::Pose> path = {pose1, pose2, pose3};
     tuw_msgs::Edge edge1(1, true, true, 0.2, 0, 1, path);
+    edge1.flags.push_back(tuw_graph_msgs::msg::Edge::FLAG_ONCE);
     tuw_msgs::Node node0(0, pose0);
     tuw_msgs::Node node1(1, pose4);
     tuw_msgs::Graph graph0("r0_map", tuw_msgs::Pose(-1, -2, 0));
     graph0.edges.push_back(edge1);
     graph0.nodes.push_back(node0);
     graph0.nodes.push_back(node1);
-    graph0.flags.push_back()
     graph0.writeJson(filenname);
 
     tuw_msgs::Graph graph1;
