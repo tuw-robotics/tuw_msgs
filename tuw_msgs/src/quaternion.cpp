@@ -87,16 +87,25 @@ const geometry_msgs::msg::Quaternion & Quaternion::msg() const
 }
 
 #include <jsoncpp/json/json.h>
-  int Quaternion::json_get(Json::Value &value){
-    value["x"] = this->x;
-    value["y"] = this->y;
-    value["z"] = this->z;
-    value["w"] = this->w;
-    return 0;
+
+  Json::Value Quaternion::toJson() const {
+    Json::Value json;
+    json["x"] = this->x;
+    json["y"] = this->y;
+    json["z"] = this->z;
+    json["w"] = this->w;
+    return json;
   }
-  int Quaternion::json_add(const char* key, Json::Value &des){
-    Json::Value value;
-    json_get(value);
-    des[key] = value;
-    return 0;
+
+  Quaternion &Quaternion::fromJson(const Json::Value& json, Quaternion &o){
+    o.x = json.get("x", "").asDouble();
+    o.y = json.get("y", "").asDouble();
+    o.z = json.get("z", "").asDouble();
+    o.w = json.get("w", "").asDouble(); 
+    return o;
+  }
+
+  Quaternion Quaternion::fromJson(const Json::Value& json){
+    Quaternion o;
+    return fromJson(json, o);
   }

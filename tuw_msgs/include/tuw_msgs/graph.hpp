@@ -47,6 +47,11 @@ public:
   const tuw_graph_msgs::msg::Graph & msg() const;
   void write(std::string filename, tuw_msgs::Format format = LOOSE) const;
   void read(std::string filename);
+  void writeJson(std::string filename) const;
+  void readJson(std::string filename);
+  Json::Value toJson() const;
+  static Graph fromJson(const Json::Value& jsonValue);
+  static Graph &fromJson(const Json::Value& json, Graph &des);
 };      // class Graph
 }       // namespace tuw_msgs
 #endif  // TUW_MSGS__GRAPH_HPP_

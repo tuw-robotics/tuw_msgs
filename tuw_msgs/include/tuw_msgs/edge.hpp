@@ -46,6 +46,10 @@ struct Edge : public tuw_graph_msgs::msg::Edge
   std::string & to_str(
     std::string & des, tuw_msgs::Format format = LOOSE, bool append = false) const;
   size_t from_str(const std::string & src);
+
+  Json::Value toJson() const;
+  static Edge fromJson(const Json::Value& jsonValue);
+  static Edge &fromJson(const Json::Value& json, Edge &des);
 };
 bool is_similar(
   const tuw_graph_msgs::msg::Edge & a, const tuw_graph_msgs::msg::Edge & b,

@@ -55,3 +55,23 @@ size_t Node::from_str(const std::string & str)
   offset = this->get_pose().from_str(str.substr(offset)) + offset;
   return offset;
 }
+
+#include <jsoncpp/json/json.h>
+Json::Value Node::toJson() const {
+  Json::Value json;
+  json["id"] = this->id;
+  json["valid"] = this->valid;
+  json["pose"] = get_pose().toJson();
+  return json;
+}
+Node &Node::fromJson(const Json::Value& json, Node &o){
+  o.id = json.get("id", "-1").asInt64();
+  o.valid = json.get("valid", "").asBool();
+  Pose::fromJson(json.get("pose", ""), o.get_pose());
+  return o;
+}
+
+Node Node::fromJson(const Json::Value& json){
+  Node o;
+  return fromJson(json, o);
+}

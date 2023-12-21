@@ -34,8 +34,9 @@ struct Quaternion : public geometry_msgs::msg::Quaternion
   std::string to_str(tuw_msgs::Format format = LOOSE) const;
   std::string & to_str(
     std::string & des, tuw_msgs::Format format = LOOSE, bool append = false) const;
-  int json_get(Json::Value &value);
-  int json_add(const char* key, Json::Value &value);
+  Json::Value toJson() const;
+  static Quaternion fromJson(const Json::Value& jsonValue);
+  static Quaternion &fromJson(const Json::Value& json, Quaternion &des);
 };
 }  // namespace tuw_msgs
 #endif  // TUW_MSGS__QUATERNION_HPP_

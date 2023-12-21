@@ -109,4 +109,6 @@ ament_export_targets(
   export_${PROJECT_NAME}
 )
 
+ament_export_dependencies(jsoncpp)
+
 ament_package()

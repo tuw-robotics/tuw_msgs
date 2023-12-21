@@ -5,10 +5,17 @@
 int64 id                   # Edge id
 bool valid                  # True if it can be used for planning
 bool directed               # True if it is a directed edges
-uint8[] flags               # Flags or attributes
 float64 weight              # Weight of the edge
+int32[] flags               # Flags or attributes
 int64[2] nodes              # Ids of the nodes connected with this edge
                             # start node, end node
 geometry_msgs/Pose[] path   # Path between the nodes
                             # - path can be empty 
                             # - path does does not include the nodes locations
+
+
+
+
+int32 FLAG_ONCE = 0                  # can only used once
+int32 FLAG_PRECONDITION = 1          # check for pre conditions
+int32 FLAG_POSTCONDITION = 2         # check for post conditions

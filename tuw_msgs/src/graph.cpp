@@ -153,3 +153,83 @@ const tuw_graph_msgs::msg::Graph & Graph::msg() const
 {
   return static_cast<const tuw_graph_msgs::msg::Graph &>(*this);
 }
+
+#include <jsoncpp/json/json.h>
+Json::Value Graph::toJson() const {
+  Json::Value json;
+  json["frame_id"] = this->header.frame_id;
+  json["origin"] = this->get_origin().toJson();
+  Json::Value json_nodes;
+  for (const auto& n : this->nodes) {
+      json_nodes.append(static_cast<const Node&>(n).toJson());
+  }
+  json["nodes"] = json_nodes;
+  Json::Value json_edges;
+  for (const auto& e : this->edges) {
+      json_edges.append(static_cast<const Edge&>(e).toJson());
+  }
+  json["edges"] = json_edges;
+  return json;
+}
+
+Graph &Graph::fromJson(const Json::Value& json, Graph &des){
+  des.header.frame_id = json.get("frame_id", "-1").asCString();
+  Pose::fromJson(json.get("origin", ""), des.get_origin());
+  if(json.isMember("nodes") && json["nodes"].isArray()) {
+    const Json::Value& jsonArray = json["nodes"];
+    // Iterate through the array
+    for (size_t i = 0; i < jsonArray.size(); ++i) {
+      des.nodes.push_back(Node::fromJson(jsonArray[(int)i]));
+    }
+  }
+  if(json.isMember("edges") && json["edges"].isArray()) {
+    const Json::Value& jsonArray = json["edges"];
+    // Iterate through the array
+    for (size_t i = 0; i < jsonArray.size(); ++i) {
+      des.edges.push_back(Edge::fromJson(jsonArray[(int)i]));
+    }
+  }
+  return des;
+}
+
+Graph Graph::fromJson(const Json::Value& json){
+  Graph o;
+  return fromJson(json, o);
+}
+void Graph::writeJson(std::string filename) const{
+  Json::Value json_data;
+  json_data["graph"] = this->toJson();
+  Json::StreamWriterBuilder writerBuilder;
+  writerBuilder.settings_["indentation"] = " ";  // Disable indentation
+  writerBuilder.settings_["sortKeys"] = false;
+
+  std::string json_str = Json::writeString(writerBuilder, json_data);;
+  std::ofstream json_file(filename);
+  if (json_file.is_open()) {
+      json_file << json_str;
+      json_file.close();
+  } else {
+      throw std::runtime_error("Failed to write json file " + filename);
+  }
+}
+void Graph::readJson(std::string filename){
+  std::ifstream file(filename);
+  if (!file.is_open()) {
+    throw std::runtime_error("Failed to open json file " + filename);
+  }
+  std::string jsonString((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+  file.close();
+
+  // Parse the JSON string
+  Json::Value root;
+  Json::Reader reader;
+
+  if (reader.parse(jsonString, root)) {
+      if(root.isMember("graph")) {
+        const Json::Value& json_graph = root["graph"];
+        fromJson(json_graph, *this);
+      }
+  } else {
+      throw std::runtime_error("Failed to parse json file " + filename);
+  }
+}

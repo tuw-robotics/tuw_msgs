@@ -44,12 +44,18 @@ bool Edge::operator==(const Edge & rhs) const
     (this->directed == rhs.directed) && (this->weight == rhs.weight) &&
     (this->nodes[0] == rhs.nodes[0]) && (this->nodes[1] == rhs.nodes[1]) &&
     (this->path.size() == rhs.path.size());
+  if(!header_eq) return false;
   auto it_a = this->path.begin();
   auto it_b = rhs.path.begin();
-  for (; header_eq && it_a != this->path.end(); it_a++, it_b++) {
+  for (; it_a != this->path.end(); it_a++, it_b++) {
     if (!is_equal(*it_a, *it_b)) {return false;}
   }
-  return header_eq;
+  auto it_flags_a = this->flags.begin();
+  auto it_flags_b = rhs.flags.begin();
+  for (; it_flags_a != a.flags.end(); it_flags_a++, it_flags_b++) {
+    if (*it_flags_a != *it_flags_b) return false;
+  }
+  return true;
 }
 
 double Edge::similar(const Edge & rhs, double epsilon_position, double epsilon_orientation) const
@@ -64,12 +70,20 @@ bool tuw_msgs::is_similar(
   bool header_eq = (a.id == b.id) && (a.valid == b.valid) && (a.directed == b.directed) &&
     (a.weight == b.weight) && (a.nodes[0] == b.nodes[0]) &&
     (a.nodes[1] == b.nodes[1]) && (a.path.size() == b.path.size());
+  if(!header_eq) return false;
   auto it_a = a.path.begin();
   auto it_b = b.path.begin();
-  for (; header_eq && it_a != a.path.end(); it_a++, it_b++) {
+  for (; it_a != a.path.end(); it_a++, it_b++) {
     if (!is_similar(*it_a, *it_b, epsilon_position, epsilon_orientation)) {return false;}
   }
-  return header_eq;
+ 
+  auto it_flags_a = this->flags.begin();
+  auto it_flags_b = rhs.flags.begin();
+  for (; it_flags_a != a.flags.end(); it_flags_a++, it_flags_b++) {
+    if (*it_flags_a != *it_flags_b) return false;
+  }
+  
+  return true;
 }
 
 std::string Edge::to_str(tuw_msgs::Format format) const
@@ -112,4 +126,54 @@ size_t Edge::from_str(const std::string & str)
   offset++;
   offset = tuw_msgs::Pose::from_str(str.substr(offset), this->path) + offset;
   return offset;
+}
+#include <jsoncpp/json/json.h>
+Json::Value Edge::toJson() const {
+  Json::Value json;
+  json["id"] = this->id;
+  json["valid"] = this->valid;
+  json["directed"] = this->directed;
+  json["weight"] = this->weight;
+  json["start"] = nodes[0];
+  json["end"] = nodes[1];
+  Json::Value json_flags;
+  for (const auto& f : this->flags) {
+      json_flags.append(f);
+  }
+  json["flags"] = json_flags;
+  Json::Value json_poses;
+  for (const auto& p : this->path) {
+      json_poses.append(static_cast<const Pose&>(p).toJson());
+  }
+  json["path"] = json_poses;
+  return json;
+}
+
+Edge &Edge::fromJson(const Json::Value& json, Edge &o){
+  o.id = json.get("id", "-1").asInt64();
+  o.valid = json.get("valid", "").asBool();
+  o.directed = json.get("directed", "").asBool();
+  o.weight = json.get("weight", "").asDouble();
+  o.nodes[0] = json.get("start", "-1").asInt64();
+  o.nodes[1] = json.get("end", "-1").asInt64();
+  if(json.isMember("flags") && json["flags"].isArray()) {
+    const Json::Value& jsonArray = json["flags"];
+    // Iterate through the array
+    for (size_t i = 0; i < jsonArray.size(); ++i) {
+      o.flags.push_back(jsonArray[(int) i].asInt());
+    }
+  } 
+  if(json.isMember("path") && json["path"].isArray()) {
+    const Json::Value& jsonArray = json["path"];
+    // Iterate through the array
+    for (size_t i = 0; i < jsonArray.size(); ++i) {
+      o.path.push_back(Pose::fromJson(jsonArray[(int)i]));
+    }
+  }
+  return o;
+}
+
+Edge Edge::fromJson(const Json::Value& json){
+  Edge o;
+  return fromJson(json, o);
 }
