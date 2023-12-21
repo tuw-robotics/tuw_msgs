@@ -28,4 +28,8 @@ TEST(json, node_to_string)
     ASSERT_TRUE(graph0.similar(graph1));
     ASSERT_EQ(graph1.nodes[0].id, node0.id);
     ASSERT_EQ(graph1.nodes[1].id, node1.id);
+    edge1.flags.push_back(2);
+    ASSERT_FALSE(graph0.similar(graph1));
+
+
 }
