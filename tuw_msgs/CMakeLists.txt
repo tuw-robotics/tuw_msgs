@@ -7,6 +7,7 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(tuw_geometry_msgs REQUIRED)
 find_package(tuw_graph_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -31,6 +32,7 @@ target_include_directories(tuw_msgs PUBLIC
 ament_target_dependencies(
   tuw_msgs
   "tuw_graph_msgs"
+  "tuw_geometry_msgs"
   "geometry_msgs"
 )
 target_link_libraries(tuw_msgs jsoncpp_lib)

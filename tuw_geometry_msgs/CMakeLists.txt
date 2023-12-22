@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.5)
-
 project(tuw_geometry_msgs)
 
 # Default to C++14
@@ -29,6 +28,12 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   ADD_LINTER_TESTS
 )
 
+install(DIRECTORY include/
+  DESTINATION include/${PROJECT_NAME}
+)
 ament_export_dependencies(rosidl_default_runtime)
 
+ament_export_include_directories(
+  include
+)
 ament_package()

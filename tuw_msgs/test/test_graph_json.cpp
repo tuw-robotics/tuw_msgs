@@ -1,9 +1,16 @@
 #include <tuw_msgs/edge.hpp>
 #include <tuw_msgs/graph.hpp>
 #include <tuw_msgs/node.hpp>
+#include <tuw_geometry_msgs/msg/line_segments.hpp>
+#include <tuw_geometry_msgs/point.hpp>
+#include <tuw_geometry_msgs/pose_json.hpp>
 
 #include "gtest/gtest.h"
 
+TEST(json, tuw_geometry_msgs)
+{
+
+}
 TEST(json, node_to_string)
 {
   std::string filenname = "/tmp/graph-unittest.json";

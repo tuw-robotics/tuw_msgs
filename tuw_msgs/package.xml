@@ -9,13 +9,14 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <depend>jsoncpp</depend>
   <build_depend>libjsoncpp</build_depend>
-  <depend>tuw_geometry_msgs</depend>
+  <build_depend>tuw_geometry_msgs</build_depend>
+  <build_depend>tuw_graph_msgs</build_depend>
   <depend>tuw_airskin_msgs</depend>
   <depend>tuw_multi_robot_msgs</depend>
   <depend>tuw_nav_msgs</depend>
   <depend>tuw_object_msgs</depend>
-  <build_depend>tuw_graph_msgs</build_depend>
 
   <depend>rclcpp</depend>
   <depend>rclcpp_components</depend>
