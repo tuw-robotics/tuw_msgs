@@ -1,5 +1,5 @@
-#ifndef TUW_GRAPH_MSGS__GRAPH_JSON_HPP_
-#define TUW_GRAPH_MSGS__GRAPH_JSON_HPP_
+#ifndef TUW_JSON__GRAPH_JSON_HPP_
+#define TUW_JSON__GRAPH_JSON_HPP_
 
 #include <fstream>
 #include <iostream>
@@ -8,14 +8,14 @@
 #include <tuw_graph_msgs/msg/graph.hpp>
 
 
-namespace tuw_graph_msgs
+namespace tuw_json
 {
 inline Json::Value toJson(const tuw_graph_msgs::msg::Graph &src)
 {
 
   Json::Value json;
   json["frame_id"] = src.header.frame_id;
-  json["origin"] = tuw_geometry_msgs::toJson(src.origin);
+  json["origin"] = toJson(src.origin);
   Json::Value json_nodes;
   for (const auto & n : src.nodes) {
     json_nodes.append(toJson(n));
@@ -32,7 +32,7 @@ inline Json::Value toJson(const tuw_graph_msgs::msg::Graph &src)
 inline tuw_graph_msgs::msg::Graph &fromJson(const Json::Value & json, tuw_graph_msgs::msg::Graph& des)
 {
   des.header.frame_id = json.get("frame_id", "-1").asCString();
-  tuw_geometry_msgs::fromJson(json.get("origin", ""), des.origin);
+  fromJson(json.get("origin", ""), des.origin);
   if (json.isMember("nodes") && json["nodes"].isArray()) {
     const Json::Value & jsonArray = json["nodes"];
     // Iterate through the array
@@ -53,47 +53,6 @@ inline tuw_graph_msgs::msg::Graph &fromJson(const Json::Value & json, tuw_graph_
   }
   return des;
 }
-
-inline void writeJson(const std::string &filename, const tuw_graph_msgs::msg::Graph &src)
-{
-  Json::Value json_data;
-  json_data["graph"] = toJson(src);
-  Json::StreamWriterBuilder writerBuilder;
-  writerBuilder.settings_["indentation"] = " ";  // Disable indentation
-  writerBuilder.settings_["sortKeys"] = false;
-
-  std::string json_str = Json::writeString(writerBuilder, json_data);
-  std::ofstream json_file(filename);
-  if (json_file.is_open()) {
-    json_file << json_str;
-    json_file.close();
-  } else {
-    throw std::runtime_error("Failed to write json file " + filename);
-  }
 }
 
-inline void readJson(const std::string &filename, tuw_graph_msgs::msg::Graph &des)
-{
-  std::ifstream file(filename);
-  if (!file.is_open()) {
-    throw std::runtime_error("Failed to open json file " + filename);
-  }
-  std::string jsonString((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-  file.close();
-
-  // Parse the JSON string
-  Json::Value root;
-  Json::Reader reader;
-
-  if (reader.parse(jsonString, root)) {
-    if (root.isMember("graph")) {
-      const Json::Value & json_graph = root["graph"];
-      fromJson(json_graph, des);
-    }
-  } else {
-    throw std::runtime_error("Failed to parse json file " + filename);
-  }
-}
-}
-
-#endif  // TUW_GRAPH_MSGS__GRAPH_JSON_HPP_
+#endif  // TUW_JSON__GRAPH_JSON_HPP_

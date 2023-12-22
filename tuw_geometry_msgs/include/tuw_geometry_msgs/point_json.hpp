@@ -1,10 +1,10 @@
-#ifndef TUW_GEOMETRY_MSGS__POINT_JSON_HPP_
-#define TUW_GEOMETRY_MSGS__POINT_JSON_HPP_
+#ifndef TUW_JSON__POINT_JSON_HPP_
+#define TUW_JSON__POINT_JSON_HPP_
 
 #include <geometry_msgs/msg/point.hpp>
 #include <jsoncpp/json/json.h>
 
-namespace tuw_geometry_msgs
+namespace tuw_json
 {
 inline Json::Value toJson(const geometry_msgs::msg::Point &src)
 {
@@ -24,4 +24,4 @@ inline geometry_msgs::msg::Point &fromJson(const Json::Value & json, geometry_ms
 }
 }
 
-#endif  // TUW_GEOMETRY_MSGS__JSON_HPP_
+#endif  // TUW_JSON__POINT_JSON_HPP_

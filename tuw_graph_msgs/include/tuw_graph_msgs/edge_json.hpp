@@ -1,11 +1,11 @@
-#ifndef TUW_GRAPH_MSGS__EDGE_JSON_HPP_
-#define TUW_GRAPH_MSGS__EDGE_JSON_HPP_
+#ifndef TUW_JSON__EDGE_JSON_HPP_
+#define TUW_JSON__EDGE_JSON_HPP_
 
 #include <tuw_graph_msgs/node_json.hpp>
 #include <tuw_graph_msgs/msg/edge.hpp>
 
 
-namespace tuw_graph_msgs
+namespace tuw_json
 {
 inline Json::Value toJson(const tuw_graph_msgs::msg::Edge &src)
 {
@@ -23,7 +23,7 @@ inline Json::Value toJson(const tuw_graph_msgs::msg::Edge &src)
   json["flags"] = json_flags;
   Json::Value json_poses;
   for (const auto & p : src.path) {
-    json_poses.append(tuw_geometry_msgs::toJson(p));
+    json_poses.append(toJson(p));
   }
   json["path"] = json_poses;
   return json;
@@ -49,11 +49,11 @@ inline tuw_graph_msgs::msg::Edge &fromJson(const Json::Value & json, tuw_graph_m
     // Iterate through the array
     for (auto &j: jsonArray) {
       geometry_msgs::msg::Pose p;
-      des.path.push_back(std::move(tuw_geometry_msgs::fromJson(j, p )));
+      des.path.push_back(std::move(tuw_json::fromJson(j, p )));
     }
   }
   return des;
 }
 }
 
-#endif  // TUW_GRAPH_MSGS__EDGE_JSON_HPP_
+#endif  // TUW_JSON__EDGE_JSON_HPP_

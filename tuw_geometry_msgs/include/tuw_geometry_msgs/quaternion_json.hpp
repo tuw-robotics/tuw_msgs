@@ -1,10 +1,10 @@
-#ifndef TUW_GEOMETRY_MSGS__QUATERNION_JSON_HPP_
-#define TUW_GEOMETRY_MSGS__QUATERNION_JSON_HPP_
+#ifndef TUW_JSON__QUATERNION_JSON_HPP_
+#define TUW_JSON__QUATERNION_JSON_HPP_
 
 #include <geometry_msgs/msg/quaternion.hpp>
 #include <jsoncpp/json/json.h>
 
-namespace tuw_geometry_msgs
+namespace tuw_json
 {
 inline Json::Value toJson(const geometry_msgs::msg::Quaternion &src)
 {
@@ -25,4 +25,4 @@ inline geometry_msgs::msg::Quaternion &fromJson(const Json::Value & json, geomet
   return des;
 }
 }
-#endif  // TUW_GEOMETRY_MSGS__QUATERNION_JSON_HPP_
+#endif  // TUW_JSON__QUATERNION_JSON_HPP_
