@@ -24,11 +24,5 @@ inline geometry_msgs::msg::Quaternion &fromJson(const Json::Value & json, geomet
   des.w = json.get("w", "").asDouble();
   return des;
 }
-geometry_msgs::msg::Quaternion fromJsonQuaternion(const Json::Value & json)
-{
-  geometry_msgs::msg::Quaternion o;
-  return fromJson(json, o);
 }
-}  // namespace tuw_geometry_msgs
-
 #endif  // TUW_GEOMETRY_MSGS__QUATERNION_JSON_HPP_

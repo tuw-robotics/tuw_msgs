@@ -22,11 +22,6 @@ inline geometry_msgs::msg::Point &fromJson(const Json::Value & json, geometry_ms
   des.z = json.get("z", "").asDouble();
   return des;
 }
-geometry_msgs::msg::Point fromJsonPoint(const Json::Value & json)
-{
-  geometry_msgs::msg::Point o;
-  return fromJson(json, o);
 }
-}  // namespace tuw_geometry_msgs
 
 #endif  // TUW_GEOMETRY_MSGS__JSON_HPP_

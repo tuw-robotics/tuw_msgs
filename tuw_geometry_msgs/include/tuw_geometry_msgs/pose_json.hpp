@@ -15,17 +15,11 @@ inline Json::Value toJson(const geometry_msgs::msg::Pose &src)
   return json;
 }
 
-inline geometry_msgs::msg::Pose &fromJson(const Json::Value & json, geometry_msgs::msg::Pose & des)
+inline geometry_msgs::msg::Pose &fromJson(const Json::Value &json, geometry_msgs::msg::Pose &des)
 {
   fromJson(json.get("position", ""), des.position);
   fromJson(json.get("orientation", ""), des.orientation); 
   return des;
 }
-geometry_msgs::msg::Pose fromJsonPose(const Json::Value & json)
-{
-  geometry_msgs::msg::Pose o;
-  return fromJson(json, o);
 }
-}  // namespace tuw_geometry_msgs
-
 #endif  // TUW_GEOMETRY_MSGS__POSE_JSON_HPP_

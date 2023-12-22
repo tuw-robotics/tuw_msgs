@@ -30,7 +30,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 )
 
 install(DIRECTORY include/
-  DESTINATION include
+  DESTINATION include/${PROJECT_NAME}
 )
 ament_export_dependencies(rosidl_default_runtime)
 
