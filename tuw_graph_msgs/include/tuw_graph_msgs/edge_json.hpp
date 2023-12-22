@@ -1,13 +1,12 @@
 #ifndef TUW_JSON__EDGE_JSON_HPP_
 #define TUW_JSON__EDGE_JSON_HPP_
 
-#include <tuw_graph_msgs/node_json.hpp>
 #include <tuw_graph_msgs/msg/edge.hpp>
-
+#include <tuw_graph_msgs/node_json.hpp>
 
 namespace tuw_json
 {
-inline Json::Value toJson(const tuw_graph_msgs::msg::Edge &src)
+inline Json::Value toJson(const tuw_graph_msgs::msg::Edge & src)
 {
   Json::Value json;
   json["id"] = src.id;
@@ -29,7 +28,8 @@ inline Json::Value toJson(const tuw_graph_msgs::msg::Edge &src)
   return json;
 }
 
-inline tuw_graph_msgs::msg::Edge &fromJson(const Json::Value & json, tuw_graph_msgs::msg::Edge& des)
+inline tuw_graph_msgs::msg::Edge & fromJson(
+  const Json::Value & json, tuw_graph_msgs::msg::Edge & des)
 {
   des.id = json.get("id", "-1").asInt64();
   des.valid = json.get("valid", "").asBool();
@@ -40,20 +40,20 @@ inline tuw_graph_msgs::msg::Edge &fromJson(const Json::Value & json, tuw_graph_m
   if (json.isMember("flags") && json["flags"].isArray()) {
     const Json::Value & jsonArray = json["flags"];
     // Iterate through the array
-    for (auto &j: jsonArray) {
+    for (auto & j : jsonArray) {
       des.flags.push_back(j.asInt());
     }
   }
   if (json.isMember("path") && json["path"].isArray()) {
     const Json::Value & jsonArray = json["path"];
     // Iterate through the array
-    for (auto &j: jsonArray) {
+    for (auto & j : jsonArray) {
       geometry_msgs::msg::Pose p;
-      des.path.push_back(std::move(tuw_json::fromJson(j, p )));
+      des.path.push_back(std::move(tuw_json::fromJson(j, p)));
     }
   }
   return des;
 }
-}
+}  // namespace tuw_json
 
 #endif  // TUW_JSON__EDGE_JSON_HPP_

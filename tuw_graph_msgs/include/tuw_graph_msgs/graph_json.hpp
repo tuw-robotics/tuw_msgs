@@ -7,12 +7,10 @@
 #include <tuw_graph_msgs/edge_json.hpp>
 #include <tuw_graph_msgs/msg/graph.hpp>
 
-
 namespace tuw_json
 {
-inline Json::Value toJson(const tuw_graph_msgs::msg::Graph &src)
+inline Json::Value toJson(const tuw_graph_msgs::msg::Graph & src)
 {
-
   Json::Value json;
   json["frame_id"] = src.header.frame_id;
   json["origin"] = toJson(src.origin);
@@ -29,30 +27,31 @@ inline Json::Value toJson(const tuw_graph_msgs::msg::Graph &src)
   return json;
 }
 
-inline tuw_graph_msgs::msg::Graph &fromJson(const Json::Value & json, tuw_graph_msgs::msg::Graph& des)
+inline tuw_graph_msgs::msg::Graph & fromJson(
+  const Json::Value & json, tuw_graph_msgs::msg::Graph & des)
 {
   des.header.frame_id = json.get("frame_id", "-1").asCString();
   fromJson(json.get("origin", ""), des.origin);
   if (json.isMember("nodes") && json["nodes"].isArray()) {
     const Json::Value & jsonArray = json["nodes"];
     // Iterate through the array
-    for (auto &j: jsonArray) {
+    for (auto & j : jsonArray) {
       tuw_graph_msgs::msg::Node n;
-      fromJson(j,n);
+      fromJson(j, n);
       des.nodes.push_back(std::move(n));
     }
   }
   if (json.isMember("edges") && json["edges"].isArray()) {
     const Json::Value & jsonArray = json["edges"];
     // Iterate through the array
-    for (auto &j: jsonArray) {
+    for (auto & j : jsonArray) {
       tuw_graph_msgs::msg::Edge e;
-      fromJson(j,e);
+      fromJson(j, e);
       des.edges.push_back(std::move(e));
     }
   }
   return des;
 }
-}
+}  // namespace tuw_json
 
 #endif  // TUW_JSON__GRAPH_JSON_HPP_

@@ -4,10 +4,9 @@
 #include <tuw_geometry_msgs/pose_json.hpp>
 #include <tuw_graph_msgs/msg/node.hpp>
 
-
 namespace tuw_json
 {
-inline Json::Value toJson(const tuw_graph_msgs::msg::Node &src)
+inline Json::Value toJson(const tuw_graph_msgs::msg::Node & src)
 {
   Json::Value json;
   json["id"] = src.id;
@@ -16,12 +15,13 @@ inline Json::Value toJson(const tuw_graph_msgs::msg::Node &src)
   return json;
 }
 
-inline tuw_graph_msgs::msg::Node &fromJson(const Json::Value & json, tuw_graph_msgs::msg::Node& des)
+inline tuw_graph_msgs::msg::Node & fromJson(
+  const Json::Value & json, tuw_graph_msgs::msg::Node & des)
 {
   des.id = json.get("id", "").asInt64();
   des.valid = json.get("valid", "").asBool();
   fromJson(json["pose"], des.pose);
   return des;
 }
-}
+}  // namespace tuw_json
 #endif  // TUW_JSON__NODE_JSON_HPP_

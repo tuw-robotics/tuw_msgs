@@ -1,12 +1,13 @@
 #ifndef TUW_JSON__QUATERNION_JSON_HPP_
 #define TUW_JSON__QUATERNION_JSON_HPP_
 
-#include <geometry_msgs/msg/quaternion.hpp>
 #include <jsoncpp/json/json.h>
+
+#include <geometry_msgs/msg/quaternion.hpp>
 
 namespace tuw_json
 {
-inline Json::Value toJson(const geometry_msgs::msg::Quaternion &src)
+inline Json::Value toJson(const geometry_msgs::msg::Quaternion & src)
 {
   Json::Value json;
   json["x"] = src.x;
@@ -16,7 +17,8 @@ inline Json::Value toJson(const geometry_msgs::msg::Quaternion &src)
   return json;
 }
 
-inline geometry_msgs::msg::Quaternion &fromJson(const Json::Value & json, geometry_msgs::msg::Quaternion & des)
+inline geometry_msgs::msg::Quaternion & fromJson(
+  const Json::Value & json, geometry_msgs::msg::Quaternion & des)
 {
   des.x = json.get("x", "").asDouble();
   des.y = json.get("y", "").asDouble();
@@ -24,5 +26,5 @@ inline geometry_msgs::msg::Quaternion &fromJson(const Json::Value & json, geomet
   des.w = json.get("w", "").asDouble();
   return des;
 }
-}
+}  // namespace tuw_json
 #endif  // TUW_JSON__QUATERNION_JSON_HPP_
