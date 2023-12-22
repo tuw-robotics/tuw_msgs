@@ -21,23 +21,35 @@ const Pose & Graph::get_origin() const {return static_cast<const Pose &>(this->o
 
 bool Graph::operator==(const Graph & rhs) const
 {
-  if (this->header.frame_id != rhs.header.frame_id) {return false;}
-  if (this->origin != rhs.origin) {return false;}
-  if (this->nodes != rhs.nodes) {return false;}
-  if (this->edges != rhs.edges) {return false;}
+  if (this->header.frame_id != rhs.header.frame_id) {
+    return false;
+  }
+  if (this->origin != rhs.origin) {
+    return false;
+  }
+  if (this->nodes != rhs.nodes) {
+    return false;
+  }
+  if (this->edges != rhs.edges) {
+    return false;
+  }
   return true;
 }
 
 bool Graph::similar(const Graph & rhs, double epsilon_position, double epsilon_orientation) const
 {
-  if (this->header.frame_id != rhs.header.frame_id) {return false;}
+  if (this->header.frame_id != rhs.header.frame_id) {
+    return false;
+  }
   if (!this->get_origin().similar(rhs.get_origin(), epsilon_position, epsilon_orientation)) {
     return false;
   }
   {
     auto it_a = this->nodes.begin();
     auto it_b = rhs.nodes.begin();
-    if (this->nodes.size() != rhs.nodes.size()) {return false;}
+    if (this->nodes.size() != rhs.nodes.size()) {
+      return false;
+    }
     while (it_a != this->nodes.end()) {
       if (!static_cast<const Node &>(*it_a).similar(
           static_cast<const Node &>(*it_b), epsilon_position, epsilon_orientation))
@@ -52,7 +64,9 @@ bool Graph::similar(const Graph & rhs, double epsilon_position, double epsilon_o
   {
     auto it_a = this->edges.begin();
     auto it_b = rhs.edges.begin();
-    if (this->edges.size() != this->edges.size()) {return false;}
+    if (this->edges.size() != this->edges.size()) {
+      return false;
+    }
     while (it_a != this->edges.end()) {
       if (!static_cast<const Edge &>(*it_a).similar(
           static_cast<const Edge &>(*it_b), epsilon_position, epsilon_orientation))
@@ -73,7 +87,9 @@ std::string Graph::to_str(tuw_msgs::Format format) const
 }
 std::string & Graph::to_str(std::string & des, tuw_msgs::Format format, bool append) const
 {
-  if (!append) {des.clear();}
+  if (!append) {
+    des.clear();
+  }
   (void)format;
   std::stringstream ss;
   {
@@ -129,10 +145,14 @@ size_t Graph::from_str(const std::string & src)
 void Graph::read(std::string filename)
 {
   std::ifstream file(filename, std::ios_base::binary | std::ios_base::in);
-  if (!file.is_open()) {throw std::runtime_error("Failed to open " + filename);}
+  if (!file.is_open()) {
+    throw std::runtime_error("Failed to open " + filename);
+  }
   using Iterator = std::istreambuf_iterator<char>;
   std::string text(Iterator{file}, Iterator{});
-  if (!file) {throw std::runtime_error("Failed to read " + filename);}
+  if (!file) {
+    throw std::runtime_error("Failed to read " + filename);
+  }
   this->from_str(text);
   file.close();
 }
@@ -141,7 +161,9 @@ void Graph::write(std::string filename, tuw_msgs::Format format) const
 {
   std::ofstream file;
   file.open(filename, std::ios::binary);
-  if (!file.is_open()) {throw std::runtime_error("Failed to open " + filename);}
+  if (!file.is_open()) {
+    throw std::runtime_error("Failed to open " + filename);
+  }
   file << this->to_str(format);
   file.close();
 }
@@ -155,35 +177,37 @@ const tuw_graph_msgs::msg::Graph & Graph::msg() const
 }
 
 #include <jsoncpp/json/json.h>
-Json::Value Graph::toJson() const {
+Json::Value Graph::toJson() const
+{
   Json::Value json;
   json["frame_id"] = this->header.frame_id;
   json["origin"] = this->get_origin().toJson();
   Json::Value json_nodes;
-  for (const auto& n : this->nodes) {
-      json_nodes.append(static_cast<const Node&>(n).toJson());
+  for (const auto & n : this->nodes) {
+    json_nodes.append(static_cast<const Node &>(n).toJson());
   }
   json["nodes"] = json_nodes;
   Json::Value json_edges;
-  for (const auto& e : this->edges) {
-      json_edges.append(static_cast<const Edge&>(e).toJson());
+  for (const auto & e : this->edges) {
+    json_edges.append(static_cast<const Edge &>(e).toJson());
   }
   json["edges"] = json_edges;
   return json;
 }
 
-Graph &Graph::fromJson(const Json::Value& json, Graph &des){
+Graph & Graph::fromJson(const Json::Value & json, Graph & des)
+{
   des.header.frame_id = json.get("frame_id", "-1").asCString();
   Pose::fromJson(json.get("origin", ""), des.get_origin());
-  if(json.isMember("nodes") && json["nodes"].isArray()) {
-    const Json::Value& jsonArray = json["nodes"];
+  if (json.isMember("nodes") && json["nodes"].isArray()) {
+    const Json::Value & jsonArray = json["nodes"];
     // Iterate through the array
     for (size_t i = 0; i < jsonArray.size(); ++i) {
       des.nodes.push_back(Node::fromJson(jsonArray[(int)i]));
     }
   }
-  if(json.isMember("edges") && json["edges"].isArray()) {
-    const Json::Value& jsonArray = json["edges"];
+  if (json.isMember("edges") && json["edges"].isArray()) {
+    const Json::Value & jsonArray = json["edges"];
     // Iterate through the array
     for (size_t i = 0; i < jsonArray.size(); ++i) {
       des.edges.push_back(Edge::fromJson(jsonArray[(int)i]));
@@ -192,27 +216,30 @@ Graph &Graph::fromJson(const Json::Value& json, Graph &des){
   return des;
 }
 
-Graph Graph::fromJson(const Json::Value& json){
+Graph Graph::fromJson(const Json::Value & json)
+{
   Graph o;
   return fromJson(json, o);
 }
-void Graph::writeJson(std::string filename) const{
+void Graph::writeJson(std::string filename) const
+{
   Json::Value json_data;
   json_data["graph"] = this->toJson();
   Json::StreamWriterBuilder writerBuilder;
   writerBuilder.settings_["indentation"] = " ";  // Disable indentation
   writerBuilder.settings_["sortKeys"] = false;
 
-  std::string json_str = Json::writeString(writerBuilder, json_data);;
+  std::string json_str = Json::writeString(writerBuilder, json_data);
   std::ofstream json_file(filename);
   if (json_file.is_open()) {
-      json_file << json_str;
-      json_file.close();
+    json_file << json_str;
+    json_file.close();
   } else {
-      throw std::runtime_error("Failed to write json file " + filename);
+    throw std::runtime_error("Failed to write json file " + filename);
   }
 }
-void Graph::readJson(std::string filename){
+void Graph::readJson(std::string filename)
+{
   std::ifstream file(filename);
   if (!file.is_open()) {
     throw std::runtime_error("Failed to open json file " + filename);
@@ -225,11 +252,11 @@ void Graph::readJson(std::string filename){
   Json::Reader reader;
 
   if (reader.parse(jsonString, root)) {
-      if(root.isMember("graph")) {
-        const Json::Value& json_graph = root["graph"];
-        fromJson(json_graph, *this);
-      }
+    if (root.isMember("graph")) {
+      const Json::Value & json_graph = root["graph"];
+      fromJson(json_graph, *this);
+    }
   } else {
-      throw std::runtime_error("Failed to parse json file " + filename);
+    throw std::runtime_error("Failed to parse json file " + filename);
   }
 }

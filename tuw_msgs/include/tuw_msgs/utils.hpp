@@ -44,6 +44,6 @@ bool is_similar(
 
 bool is_similar(const std::string & a, const std::string & b);
 bool is_similar_with_cout(const std::string & a, const std::string & b);
-}   // namespace tuw_msgs
+}  // namespace tuw_msgs
 
 #endif  // TUW_MSGS__UTILS_HPP_

@@ -33,8 +33,8 @@ struct Node : public tuw_graph_msgs::msg::Node
     std::string & des, tuw_msgs::Format format = LOOSE, bool append = false) const;
   size_t from_str(const std::string & src);
   Json::Value toJson() const;
-  static Node fromJson(const Json::Value& jsonValue);
-  static Node &fromJson(const Json::Value& json, Node &des);
+  static Node fromJson(const Json::Value & jsonValue);
+  static Node & fromJson(const Json::Value & json, Node & des);
 };
 bool is_similar(
   const tuw_graph_msgs::msg::Node & a, const tuw_graph_msgs::msg::Node & b,

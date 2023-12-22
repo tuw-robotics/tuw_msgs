@@ -26,7 +26,9 @@ std::string Pose::to_str(tuw_msgs::Format format) const
 
 std::string & Pose::to_str(std::string & des, tuw_msgs::Format format, bool append) const
 {
-  if (!append) {des.clear();}
+  if (!append) {
+    des.clear();
+  }
   des.append("[" + get_position().to_str(format) + ", " + get_orientation().to_str(format) + "]");
   return des;
 }
@@ -34,32 +36,41 @@ std::string & Pose::to_str(std::string & des, tuw_msgs::Format format, bool appe
 size_t Pose::from_str(const std::string & str)
 {
   size_t offset = str.find("[");
-  if (offset == std::string::npos) {throw std::runtime_error("Failed decode Pose: " + str);}
+  if (offset == std::string::npos) {
+    throw std::runtime_error("Failed decode Pose: " + str);
+  }
   offset++;
   offset = this->get_position().from_str(str.substr(offset)) + offset;
   offset = str.find(",", offset);
-  if (offset == std::string::npos) {throw std::runtime_error("Failed decode Pose: " + str);}
+  if (offset == std::string::npos) {
+    throw std::runtime_error("Failed decode Pose: " + str);
+  }
   offset++;
   offset = this->get_orientation().from_str(str.substr(offset)) + offset;
   offset = str.find("]", offset);
-  if (offset == std::string::npos) {throw std::runtime_error("Failed decode Point: " + str);}
+  if (offset == std::string::npos) {
+    throw std::runtime_error("Failed decode Point: " + str);
+  }
   return offset;
 }
 #include <jsoncpp/json/json.h>
-Json::Value Pose::toJson() const {
+Json::Value Pose::toJson() const
+{
   Json::Value json;
   json["position"] = get_position().toJson();
   json["orientation"] = get_orientation().toJson();
   return json;
 }
 
-Pose &Pose::fromJson(const Json::Value& json, Pose &o){
+Pose & Pose::fromJson(const Json::Value & json, Pose & o)
+{
   Point::fromJson(json.get("position", ""), o.get_position());
   Quaternion::fromJson(json.get("orientation", ""), o.get_orientation());
   return o;
 }
 
-Pose Pose::fromJson(const Json::Value& json){
+Pose Pose::fromJson(const Json::Value & json)
+{
   Pose o;
   return fromJson(json, o);
 }

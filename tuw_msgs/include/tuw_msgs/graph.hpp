@@ -27,7 +27,9 @@ public:
   template<class T>
   Graph & set_nodes(const T & src, bool append = false)
   {
-    if (append == false) {this->nodes.clear();}
+    if (append == false) {
+      this->nodes.clear();
+    }
     for (auto & o : src) {
       this->nodes.push_back(o);
     }
@@ -36,7 +38,9 @@ public:
   template<class T>
   Graph & set_edges(const T & src, bool append = false)
   {
-    if (append == false) {this->edges.clear();}
+    if (append == false) {
+      this->edges.clear();
+    }
     for (auto & o : src) {
       this->edges.push_back(o);
     }
@@ -50,8 +54,8 @@ public:
   void writeJson(std::string filename) const;
   void readJson(std::string filename);
   Json::Value toJson() const;
-  static Graph fromJson(const Json::Value& jsonValue);
-  static Graph &fromJson(const Json::Value& json, Graph &des);
-};      // class Graph
-}       // namespace tuw_msgs
+  static Graph fromJson(const Json::Value & jsonValue);
+  static Graph & fromJson(const Json::Value & json, Graph & des);
+};  // class Graph
+}  // namespace tuw_msgs
 #endif  // TUW_MSGS__GRAPH_HPP_

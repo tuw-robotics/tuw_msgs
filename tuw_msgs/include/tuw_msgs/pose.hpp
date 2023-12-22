@@ -97,12 +97,14 @@ struct Pose : public geometry_msgs::msg::Pose
       }
     }
     offset = str.find("]", offset);
-    if (offset == std::string::npos) {throw std::runtime_error("Failed decode Point: " + str);}
+    if (offset == std::string::npos) {
+      throw std::runtime_error("Failed decode Point: " + str);
+    }
     return offset;
   }
   Json::Value toJson() const;
-  static Pose fromJson(const Json::Value& jsonValue);
-  static Pose &fromJson(const Json::Value& json, Pose &des);
+  static Pose fromJson(const Json::Value & jsonValue);
+  static Pose & fromJson(const Json::Value & json, Pose & des);
 };
 
 }  // namespace tuw_msgs

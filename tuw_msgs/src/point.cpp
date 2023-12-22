@@ -45,7 +45,9 @@ std::string & Point::to_str(std::string & des, tuw_msgs::Format format, bool app
 size_t Point::from_str(const std::string & src)
 {
   size_t offset = src.find("[");
-  if (offset == std::string::npos) {throw std::runtime_error("Failed decode Point: " + src);}
+  if (offset == std::string::npos) {
+    throw std::runtime_error("Failed decode Point: " + src);
+  }
   int n = sscanf(src.c_str() + offset, "[%lf,%lf,%lf]%*s", &this->x, &this->y, &this->z);
   if (n != 3) {
     int n = sscanf(src.c_str() + offset, "[%lf,%lf]%*s", &this->x, &this->y);
@@ -59,7 +61,9 @@ size_t Point::from_str(const std::string & src)
     this->z = 0;
   }
   offset = src.find("]");
-  if (offset == std::string::npos) {throw std::runtime_error("Failed decode Point: " + src);}
+  if (offset == std::string::npos) {
+    throw std::runtime_error("Failed decode Point: " + src);
+  }
   return offset;
 }
 
@@ -73,23 +77,25 @@ double Point::similar(const Point & rhs, double epsilon) const
   return is_similar(this->msg(), rhs.msg(), epsilon);
 }
 
-
 #include <jsoncpp/json/json.h>
-  Json::Value Point::toJson() const {
-    Json::Value json;
-    json["x"] = this->x;
-    json["y"] = this->y;
-    json["z"] = this->z;
-    return json;
-  }
+Json::Value Point::toJson() const
+{
+  Json::Value json;
+  json["x"] = this->x;
+  json["y"] = this->y;
+  json["z"] = this->z;
+  return json;
+}
 
-  Point &Point::fromJson(const Json::Value& json, Point &o){
-    o.x = json.get("x", "").asDouble();
-    o.y = json.get("y", "").asDouble();
-    o.z = json.get("z", "").asDouble();
-    return o;
-  }
-  Point Point::fromJson(const Json::Value& json){
-    Point o;
-    return fromJson(json, o);
-  }
+Point & Point::fromJson(const Json::Value & json, Point & o)
+{
+  o.x = json.get("x", "").asDouble();
+  o.y = json.get("y", "").asDouble();
+  o.z = json.get("z", "").asDouble();
+  return o;
+}
+Point Point::fromJson(const Json::Value & json)
+{
+  Point o;
+  return fromJson(json, o);
+}

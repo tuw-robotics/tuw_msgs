@@ -42,7 +42,9 @@ std::string & Quaternion::to_str(std::string & des, tuw_msgs::Format format, boo
 size_t Quaternion::from_str(const std::string & src)
 {
   size_t offset = src.find("[");
-  if (offset == std::string::npos) {throw std::runtime_error("Failed decode Quaternion: " + src);}
+  if (offset == std::string::npos) {
+    throw std::runtime_error("Failed decode Quaternion: " + src);
+  }
   int n =
     sscanf(src.c_str() + offset, "[%lf,%lf,%lf,%lf]%*s", &this->x, &this->y, &this->z, &this->w);
   if (n != 4) {
@@ -59,7 +61,9 @@ size_t Quaternion::from_str(const std::string & src)
     }
   }
   offset = src.find("]");
-  if (offset == std::string::npos) {throw std::runtime_error("Failed decode Point: " + src);}
+  if (offset == std::string::npos) {
+    throw std::runtime_error("Failed decode Point: " + src);
+  }
   return offset;
 }
 
@@ -88,24 +92,27 @@ const geometry_msgs::msg::Quaternion & Quaternion::msg() const
 
 #include <jsoncpp/json/json.h>
 
-  Json::Value Quaternion::toJson() const {
-    Json::Value json;
-    json["x"] = this->x;
-    json["y"] = this->y;
-    json["z"] = this->z;
-    json["w"] = this->w;
-    return json;
-  }
+Json::Value Quaternion::toJson() const
+{
+  Json::Value json;
+  json["x"] = this->x;
+  json["y"] = this->y;
+  json["z"] = this->z;
+  json["w"] = this->w;
+  return json;
+}
 
-  Quaternion &Quaternion::fromJson(const Json::Value& json, Quaternion &o){
-    o.x = json.get("x", "").asDouble();
-    o.y = json.get("y", "").asDouble();
-    o.z = json.get("z", "").asDouble();
-    o.w = json.get("w", "").asDouble(); 
-    return o;
-  }
+Quaternion & Quaternion::fromJson(const Json::Value & json, Quaternion & o)
+{
+  o.x = json.get("x", "").asDouble();
+  o.y = json.get("y", "").asDouble();
+  o.z = json.get("z", "").asDouble();
+  o.w = json.get("w", "").asDouble();
+  return o;
+}
 
-  Quaternion Quaternion::fromJson(const Json::Value& json){
-    Quaternion o;
-    return fromJson(json, o);
-  }
+Quaternion Quaternion::fromJson(const Json::Value & json)
+{
+  Quaternion o;
+  return fromJson(json, o);
+}

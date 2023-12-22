@@ -97,12 +97,22 @@ bool tuw_msgs::is_similar(const std::string & a, const std::string & b)
   auto it_a = a.begin();
   auto it_b = b.begin();
   while (it_a != a.end() || it_b != b.end()) {
-    while (isspace(static_cast<unsigned char>(*it_a))) {it_a++;}
-    while (isspace(static_cast<unsigned char>(*it_b))) {it_b++;}
-    if (*it_a != *it_b) {return false;}
+    while (isspace(static_cast<unsigned char>(*it_a))) {
+      it_a++;
+    }
+    while (isspace(static_cast<unsigned char>(*it_b))) {
+      it_b++;
+    }
+    if (*it_a != *it_b) {
+      return false;
+    }
     it_a++, it_b++;
-    while (isspace(static_cast<unsigned char>(*it_a))) {it_a++;}
-    while (isspace(static_cast<unsigned char>(*it_b))) {it_b++;}
+    while (isspace(static_cast<unsigned char>(*it_a))) {
+      it_a++;
+    }
+    while (isspace(static_cast<unsigned char>(*it_b))) {
+      it_b++;
+    }
   }
   return true;
 }

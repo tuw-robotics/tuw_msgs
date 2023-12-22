@@ -28,7 +28,9 @@ struct Edge : public tuw_graph_msgs::msg::Edge
   template<class T>
   Edge & set_path(const T & src, bool append = false)
   {
-    if (append == false) {this->path.clear();}
+    if (append == false) {
+      this->path.clear();
+    }
     for (auto & pose : src) {
       this->path.push_back(pose);
     }
@@ -48,8 +50,8 @@ struct Edge : public tuw_graph_msgs::msg::Edge
   size_t from_str(const std::string & src);
 
   Json::Value toJson() const;
-  static Edge fromJson(const Json::Value& jsonValue);
-  static Edge &fromJson(const Json::Value& json, Edge &des);
+  static Edge fromJson(const Json::Value & jsonValue);
+  static Edge & fromJson(const Json::Value & json, Edge & des);
 };
 bool is_similar(
   const tuw_graph_msgs::msg::Edge & a, const tuw_graph_msgs::msg::Edge & b,
