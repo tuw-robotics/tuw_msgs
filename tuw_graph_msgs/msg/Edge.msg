@@ -7,8 +7,8 @@ bool valid                  # True if it can be used for planning
 bool directed               # True if it is a directed edges
 float64 weight              # Weight of the edge
 int32[] flags               # Flags or attributes
-int64[2] nodes              # Ids of the nodes connected with this edge
-                            # start node, end node
+int64 start                 # Ids start node
+int64 end                   # Ids end node
 geometry_msgs/Pose[] path   # Path between the nodes
                             # - path can be empty 
                             # - path does does not include the nodes locations

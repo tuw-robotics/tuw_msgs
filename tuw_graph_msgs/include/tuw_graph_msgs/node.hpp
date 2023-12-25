@@ -9,7 +9,10 @@ namespace tuw_graph_msgs
 struct Node : public tuw_graph_msgs::msg::Node
 {
   Node();
-  Node(int64_t id) { this->id = id; }
+  Node(int64_t id) 
+  { 
+    this->id = id; 
+  }
   Node(int64_t id, const geometry_msgs::msg::Pose & pose)
   {
     this->id = id;

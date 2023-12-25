@@ -13,8 +13,8 @@ inline Json::Value toJson(const tuw_graph_msgs::msg::Edge & src)
   json["valid"] = src.valid;
   json["directed"] = src.directed;
   json["weight"] = src.weight;
-  json["start"] = src.nodes[0];
-  json["end"] = src.nodes[1];
+  json["start"] = src.start;
+  json["end"] = src.end;
   Json::Value json_flags;
   for (const auto & f : src.flags) {
     json_flags.append(f);
@@ -35,8 +35,8 @@ inline tuw_graph_msgs::msg::Edge & fromJson(
   des.valid = json.get("valid", "").asBool();
   des.directed = json.get("directed", "").asBool();
   des.weight = json.get("weight", "").asDouble();
-  des.nodes[0] = json.get("start", "-1").asInt64();
-  des.nodes[1] = json.get("end", "-1").asInt64();
+  des.start = json.get("start", "-1").asInt64();
+  des.end = json.get("end", "-1").asInt64();
   if (json.isMember("flags") && json["flags"].isArray()) {
     const Json::Value & jsonArray = json["flags"];
     // Iterate through the array
