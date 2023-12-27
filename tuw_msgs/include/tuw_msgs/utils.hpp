@@ -10,7 +10,8 @@ namespace tuw_msgs
 
 using Idx = int64_t;
 
-enum Format {
+enum Format
+{
   COMPACT,
   LOOSE,
 };
@@ -22,7 +23,7 @@ std::string remove_spaces(std::string str);
 void rpy_to_quaternion(
   double roll, double pitch, double yaw, double & qx, double & qy, double & qz, double & qw);
 
-template <typename T>
+template<typename T>
 bool is_similar(const T & a, const T & b, T epsilon)
 {
   return std::abs(a - b) < epsilon;

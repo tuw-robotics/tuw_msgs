@@ -20,7 +20,7 @@ size_t tuw_msgs::nr_of_leading_spaces(const std::string & inputString)
 std::string tuw_msgs::remove_spaces(std::string str)
 {
   str.erase(
-    remove_if(str.begin(), str.end(), [](unsigned char x) { return std::isspace(x); }), str.end());
+    remove_if(str.begin(), str.end(), [](unsigned char x) {return std::isspace(x);}), str.end());
   return str;
 }
 
