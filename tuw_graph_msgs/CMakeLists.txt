@@ -21,6 +21,7 @@ set(msg_files
   "msg/Edge.msg"
   "msg/Node.msg"
   "msg/Graph.msg"
+  "msg/State.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
