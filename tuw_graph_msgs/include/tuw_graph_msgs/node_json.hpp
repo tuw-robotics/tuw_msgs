@@ -12,6 +12,11 @@ inline Json::Value toJson(const tuw_graph_msgs::msg::Node & src)
   json["id"] = src.id;
   json["valid"] = src.valid;
   json["pose"] = toJson(src.pose);
+  Json::Value json_flags;
+  for (const auto & f : src.flags) {
+    json_flags.append(f);
+  }
+  json["flags"] = json_flags;
   return json;
 }
 
@@ -21,6 +26,13 @@ inline tuw_graph_msgs::msg::Node & fromJson(
   des.id = json.get("id", "").asInt64();
   des.valid = json.get("valid", "").asBool();
   fromJson(json["pose"], des.pose);
+  if (json.isMember("flags") && json["flags"].isArray()) {
+    const Json::Value & jsonArray = json["flags"];
+    // Iterate through the array
+    for (auto & j : jsonArray) {
+      des.flags.push_back(j.asInt());
+    }
+  }
   return des;
 }
 }  // namespace tuw_json
