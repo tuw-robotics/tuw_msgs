@@ -41,7 +41,7 @@ inline tuw_graph_msgs::msg::Edge & fromJson(
     const Json::Value & jsonArray = json["flags"];
     // Iterate through the array
     for (auto & j : jsonArray) {
-      des.flags.push_back(j.asInt());
+      des.flags.push_back(j.asUInt());
     }
   }
   if (json.isMember("path") && json["path"].isArray()) {
