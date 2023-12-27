@@ -8,7 +8,8 @@ geometry_msgs/Pose pose      # Position
 uint32[] flags                # Flags or attributes
  
 
-uint32 FLAG_OPEN = 0
-uint32 FLAG_CLOSED = 1
-uint32 FLAG_VISITED = 2
-uint32 FLAG_UNTOUCHED = 3
+uint32 FLAG_NA = 0
+uint32 FLAG_UNTOUCHED = 1
+uint32 FLAG_OPEN = 2
+uint32 FLAG_CLOSED = 3
+uint32 FLAG_VISITED = 4

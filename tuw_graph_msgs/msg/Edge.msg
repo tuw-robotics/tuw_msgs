@@ -16,6 +16,8 @@ geometry_msgs/Pose[] path   # Path between the nodes
 
 
 
-uint32 FLAG_ONCE = 0                  # can only used once
-uint32 FLAG_PRECONDITION = 1          # check for pre conditions
-uint32 FLAG_POSTCONDITION = 2         # check for post conditions
+uint32 FLAG_NA = 0
+uint32 FLAG_UNTOUCHED = 1
+uint32 FLAG_OPEN = 2
+uint32 FLAG_CLOSED = 3
+uint32 FLAG_VISITED = 4
