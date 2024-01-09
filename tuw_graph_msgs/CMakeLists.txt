@@ -23,9 +23,13 @@ set(msg_files
   "msg/Graph.msg"
   "msg/State.msg"
 )
+set(srv_files
+  "srv/GetGraph.srv"
+)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
+  ${srv_files}
   DEPENDENCIES builtin_interfaces geometry_msgs std_msgs
   ADD_LINTER_TESTS
 )
