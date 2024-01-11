@@ -5,7 +5,7 @@
 int64 id                   # Edge id
 bool valid                  # True if it can be used for planning
 float64 weight              # Weight of the edge
-uint32[] flags               # Flags or attributes
+uint32[] flags              # Flags or attributes
 int64 start                 # Ids start node
 int64 end                   # Ids end node
 geometry_msgs/Pose[] path   # Path between the nodes
