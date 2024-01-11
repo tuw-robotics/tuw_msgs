@@ -11,7 +11,6 @@ inline Json::Value toJson(const tuw_graph_msgs::msg::Edge & src)
   Json::Value json;
   json["id"] = src.id;
   json["valid"] = src.valid;
-  json["directed"] = src.directed;
   json["weight"] = src.weight;
   json["start"] = src.start;
   json["end"] = src.end;
@@ -33,7 +32,6 @@ inline tuw_graph_msgs::msg::Edge & fromJson(
 {
   des.id = json.get("id", "-1").asInt64();
   des.valid = json.get("valid", "").asBool();
-  des.directed = json.get("directed", "").asBool();
   des.weight = json.get("weight", "").asDouble();
   des.start = json.get("start", "-1").asInt64();
   des.end = json.get("end", "-1").asInt64();
