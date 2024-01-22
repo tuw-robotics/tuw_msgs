@@ -15,7 +15,7 @@ set(TUW_MSGS_CPP
   src/utils.cpp
 )
 
-add_library(tuw_msgs ${TUW_MSGS_CPP} )
+add_library(tuw_msgs ${TUW_MSGS_CPP})
 target_compile_features(tuw_msgs PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 target_include_directories(tuw_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -25,7 +25,7 @@ ament_target_dependencies(
   "geometry_msgs"
 )
 
-install(TARGETS ${PROJECT_NAME} 
+install(TARGETS ${PROJECT_NAME}
   EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib

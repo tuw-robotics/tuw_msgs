@@ -1,8 +1,8 @@
 #ifndef TUW_OBJECT_MAP_MSGS__OBJECT_MAP_JSON_HPP_
 #define TUW_OBJECT_MAP_MSGS__OBJECT_MAP_JSON_HPP_
 
-#include <tuw_object_map_msgs/object_map.hpp>
 #include <tuw_object_map_msgs/object_json.hpp>
+#include <tuw_object_map_msgs/object_map.hpp>
 
 namespace tuw_json
 {
@@ -11,8 +11,9 @@ inline Json::Value toJson(const tuw_object_map_msgs::msg::ObjectMap & src)
   Json::Value json;
   json["frame_id"] = src.header.frame_id;
   Json::Value objects;
-  for (const auto & p : src.objects)
+  for (const auto & p : src.objects) {
     objects.append(toJson(p));
+  }
   json["objects"] = objects;
   return json;
 }

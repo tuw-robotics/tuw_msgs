@@ -2,36 +2,39 @@
 #define TUW_OBJECT_MAP_MSGS__OBJECT_JSON_HPP_
 
 #include <tuw_geometry_msgs/point_json.hpp>
-#include <tuw_object_map_msgs/object.hpp>
 #include <tuw_object_map_msgs/geo_point_json.hpp>
+#include <tuw_object_map_msgs/object.hpp>
 
 namespace tuw_json
 {
 inline Json::Value toJson(const tuw_object_map_msgs::msg::Object & src)
 {
-
   Json::Value json;
   json["id"] = src.id;
   json["type"] = src.type;
 
   Json::Value geo_points;
-  for (const auto & p : src.geo_points)
+  for (const auto & p : src.geo_points) {
     geo_points.append(toJson(p));
+  }
   json["geo_points"] = geo_points;
 
   Json::Value map_points;
-  for (const auto & p : src.map_points)
+  for (const auto & p : src.map_points) {
     map_points.append(toJson(p));
+  }
   json["map_points"] = map_points;
 
   Json::Value enflation_radius;
-  for (const auto & p : src.enflation_radius)
+  for (const auto & p : src.enflation_radius) {
     enflation_radius.append(p);
+  }
   json["enflation_radius"] = enflation_radius;
 
   Json::Value bondary_radius;
-  for (const auto & p : src.bondary_radius)
+  for (const auto & p : src.bondary_radius) {
     bondary_radius.append(p);
+  }
   json["bondary_radius"] = bondary_radius;
 
   return json;
