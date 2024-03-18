@@ -1,7 +1,7 @@
 #ifndef TUW_JSON__QUATERNION_JSON_HPP_
 #define TUW_JSON__QUATERNION_JSON_HPP_
 
-#include <jsoncpp/json/json.h>
+#include <json/json.h>
 
 #include <geometry_msgs/msg/quaternion.hpp>
 
