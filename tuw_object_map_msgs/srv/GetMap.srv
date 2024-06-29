@@ -1,0 +1,3 @@
+# Get the map as a tuw_object_map_msgs/ObjectMap
+---
+tuw_object_map_msgs/ObjectMap map

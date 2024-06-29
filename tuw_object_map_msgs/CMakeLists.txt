@@ -30,6 +30,7 @@ set(msg_files
 )
 
 set(srv_files
+  "srv/GetMap.srv"
   "srv/LoadMap.srv"
   "srv/SaveMap.srv"
 )
