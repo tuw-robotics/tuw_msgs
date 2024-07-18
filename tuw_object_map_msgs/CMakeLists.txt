@@ -22,7 +22,7 @@ find_package(nav_msgs REQUIRED)
 set(msg_files
   "msg/GeoPoint.msg"
   "msg/Object.msg"
-  "msg/ObjectMap.msg"
+  "msg/Objects.msg"
   "msg/GeoJSON.msg"
   "msg/GeoJSONFeature.msg"
   "msg/GeoJSONGeometry.msg"
@@ -30,7 +30,7 @@ set(msg_files
 )
 
 set(srv_files
-  "srv/GetObjectMap.srv"
+  "srv/GetObjects.srv"
   "srv/LoadMap.srv"
   "srv/SaveMap.srv"
 )
