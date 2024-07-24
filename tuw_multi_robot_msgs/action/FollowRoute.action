@@ -1,0 +1,9 @@
+#goal definition
+string behaviour_tree
+tuw_multi_robot_msgs/Route route
+---
+#result definition
+std_msgs/Empty result
+---
+#feedback definition
+tuw_multi_robot_msgs/RouteProgress route_progress
