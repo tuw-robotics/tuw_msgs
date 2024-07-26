@@ -22,4 +22,3 @@ inline tuw_geo_msgs::msg::GeoJSONFeature & fromJson(
 }
 }  // namespace tuw_json
 #endif  // #define TUW_GEO_MSGS_MSGS__GEO_JSON_FEATURE_JSON_HPP_
-
