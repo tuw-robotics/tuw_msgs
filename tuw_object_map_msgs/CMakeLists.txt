@@ -17,6 +17,7 @@ find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(geographic_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(tuw_std_msgs REQUIRED)
 
 
 set(msg_files
@@ -29,7 +30,6 @@ set(msg_files
   "msg/GeoJSONFeature.msg"
   "msg/GeoJSONGeometry.msg"
   "msg/GeoJSONProperties.msg"
-  "msg/Value.msg"
 )
 
 set(srv_files
@@ -41,7 +41,7 @@ set(srv_files
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
   ${srv_files}
-  DEPENDENCIES builtin_interfaces geometry_msgs std_msgs nav_msgs
+  DEPENDENCIES builtin_interfaces geometry_msgs std_msgs nav_msgs tuw_std_msgs
   ADD_LINTER_TESTS
 )
 

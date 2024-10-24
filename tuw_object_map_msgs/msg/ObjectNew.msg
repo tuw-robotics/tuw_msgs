@@ -2,7 +2,7 @@
 int64 id                         # ID
 uint32 type                      # Type
 ObjectPoint[] points                   # Points that describe the object
-Value[] parameters               # Parameters that describe the object
+tuw_std_msgs/ParameterFloat64[] parameters               # Parameters that describe the object
 
 uint32 TYPE_NA = 0
 

@@ -5,7 +5,7 @@
 
 #include <tuw_geometry_msgs/point_json.hpp>
 #include <tuw_object_map_msgs/geo_point_json.hpp>
-#include <tuw_object_map_msgs/value_json.hpp>
+#include <tuw_std_msgs/parameter_float64_json.hpp>
 
 namespace tuw_json
 {
@@ -43,7 +43,7 @@ inline tuw_object_map_msgs::msg::ObjectPoint & fromJson(
   if (json.isMember("parameters") && json["parameters"].isArray()) {
     const Json::Value & jsonArray = json["parameters"];
     for (auto & j : jsonArray) {
-      tuw_object_map_msgs::msg::Value o;
+      tuw_std_msgs::msg::ParameterFloat64 o;
       des.parameters.push_back(std::move(tuw_json::fromJson(j, o)));
     }
   }
