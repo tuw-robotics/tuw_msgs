@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(tuw_object_map_msgs)
+project(tuw_std_msgs)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -14,34 +14,20 @@ find_package(ament_cmake REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(geographic_msgs REQUIRED)
-find_package(nav_msgs REQUIRED)
 
 
 set(msg_files
-  "msg/GeoPoint.msg"
-  "msg/Object.msg"
-  "msg/ObjectNew.msg"
-  "msg/ObjectPoint.msg"
-  "msg/Objects.msg"
-  "msg/GeoJSON.msg"
-  "msg/GeoJSONFeature.msg"
-  "msg/GeoJSONGeometry.msg"
-  "msg/GeoJSONProperties.msg"
-  "msg/Value.msg"
+  "msg/ValueFloat64.msg"
 )
 
 set(srv_files
-  "srv/GetObjects.srv"
-  "srv/LoadMap.srv"
-  "srv/SaveMap.srv"
+  "srv/GetValueFloat64.srv"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
   ${srv_files}
-  DEPENDENCIES builtin_interfaces geometry_msgs std_msgs nav_msgs
+  DEPENDENCIES builtin_interfaces std_msgs
   ADD_LINTER_TESTS
 )
 
