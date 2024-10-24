@@ -17,11 +17,12 @@ find_package(std_msgs REQUIRED)
 
 
 set(msg_files
-  "msg/ValueFloat64.msg"
+  "msg/Parameter.msg"
+  "msg/ParameterFloat64.msg"
 )
 
 set(srv_files
-  "srv/GetValueFloat64.srv"
+  "srv/GetParameterFloat64.srv"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
