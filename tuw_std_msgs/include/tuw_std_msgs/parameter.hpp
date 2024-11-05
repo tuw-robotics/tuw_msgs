@@ -25,6 +25,17 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
     this->name = name;
     this->value = std::to_string(data);
   }
+
+  template<typename T>
+  T get() const
+  {
+    std::stringstream ss(this->value);
+    T result;
+    ss >> result;
+    if (ss.fail())   throw std::runtime_error("Conversion failed.");
+    return result;
+  }
+
   double & get(double & data)
   {
     data = std::stod(this->value);

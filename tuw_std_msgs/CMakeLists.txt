@@ -18,6 +18,7 @@ find_package(std_msgs REQUIRED)
 
 set(msg_files
   "msg/Parameter.msg"
+  "msg/ParameterArray.msg"
   "msg/ParameterFloat64.msg"
 )
 
@@ -32,12 +33,44 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   ADD_LINTER_TESTS
 )
 
-install(DIRECTORY include/
+install(
+  DIRECTORY include/
   DESTINATION include/${PROJECT_NAME}
 )
+
+
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  # the following line skips the linter which checks for copyrights
+  # comment the line when a copyright and license is added to all source files
+  set(ament_cmake_copyright_FOUND TRUE)
+  # the following line skips cpplint (only works in a git repo)
+  # comment the line when this package is in a git repo and when
+  # a copyright and license is added to all source files
+  set(ament_cmake_cpplint_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+
+
+  find_package(ament_cmake_gtest REQUIRED)
+  ament_add_gtest(unittest 
+    tests/test_parameter.cpp
+    tests/test_parameter_array.cpp
+  )
+  target_include_directories(unittest PUBLIC 
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+  )  
+  target_link_libraries(unittest ${PROJECT_NAME}__rosidl_typesupport_cpp)
+
+  ament_target_dependencies(
+    unittest
+  )
+endif()
+
 ament_export_dependencies(rosidl_default_runtime)
 
 ament_export_include_directories(
   include
 )
+
 ament_package()
