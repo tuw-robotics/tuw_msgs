@@ -33,23 +33,27 @@ struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
   /**
    * searches in the array for a parameter name
    * @param name name of the parameter
-   * @return pointer to the parameter or null if it does not exist
+   * @return false if it exited and it was set, true if was newly added
    */
   template<typename T>
-  tuw_std_msgs::Parameter *add(const std::string &name, const T &data){
-    for(size_t i = 0; i < this->data.size(); i++){
-      Parameter *p = (Parameter*) &this->data[i] ;
-      if(p->name == name){
-        return p;
-      }
+  bool add(const std::string &name, const T &data){
+    Parameter *p = get(name);
+    if(p != NULL){
+      p->set(data);
+      return false;
+    } 
+    else {
+      Parameter p(name, data);
+      this->data.push_back(std::move(p));
+      return true;
     }
-    return NULL;
   }
 
   /**
    * searches in the array for a parameter name
    * @param name name of the parameter
    * @return pointer to the parameter or null if it does not exist
+   * @see 
    */
   const Parameter *get(const std::string &name) const{
     for(size_t i = 0; i < this->data.size(); i++){
@@ -59,6 +63,34 @@ struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
       }
     }
     return NULL;
+  }
+  Parameter *get(const std::string &name){
+    return const_cast<Parameter*>(static_cast<const ParameterArray&>(*this).get(name));
+  }
+  const Parameter &operator[](const std::string &name) const{
+    for (const auto& param : this->data) {
+      if (param.name == name) {
+        return static_cast<const Parameter &>(param);
+      }
+    }
+    throw std::out_of_range("Parameter not found");
+  }
+  Parameter &operator[](const std::string &name){
+    return const_cast<Parameter&>(static_cast<const ParameterArray&>(*this)[name]);
+  }
+  template<typename T>
+  T value(const std::string &name) const{
+    for (const auto& param : this->data) {
+      if (param.name == name) {
+        const Parameter &param = static_cast<const Parameter &>(param);
+        return param.get<T>();
+      }
+    }
+    throw std::out_of_range("Parameter not found");
+  }
+  template<typename T>
+  T value(const std::string &name){
+    return const_cast<T>(static_cast<const ParameterArray&>(*this).value<T>(name));
   }
 
   /**
