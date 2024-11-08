@@ -1,5 +1,5 @@
-#ifndef TUW_OBJECT_MAP_MSGS__PARAMETER_FLOAT64_JSON_HPP_
-#define TUW_OBJECT_MAP_MSGS__PARAMETER_FLOAT64_JSON_HPP_
+#ifndef TUW_OBJECT_MAP__PARAMETER_FLOAT64_JSON_HPP_
+#define TUW_OBJECT_MAP__PARAMETER_FLOAT64_JSON_HPP_
 
 #include <tuw_std_msgs/parameter_float64.hpp>
 
@@ -45,4 +45,4 @@ inline std::vector<tuw_std_msgs::msg::ParameterFloat64> & fromJson(
 }
 }  // namespace tuw_json
 
-#endif  // TUW_OBJECT_MAP_MSGS__PARAMETER_FLOAT64_JSON_HPP_
+#endif  // TUW_OBJECT_MAP__PARAMETER_FLOAT64_JSON_HPP_

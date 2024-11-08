@@ -1,5 +1,5 @@
-#ifndef TUW_STD_MSGS_MSGS__PARAMETER_FLOAT64_HPP_
-#define TUW_STD_MSGS_MSGS__PARAMETER_FLOAT64_HPP_
+#ifndef TUW_STD_MSGS__PARAMETER_FLOAT64_HPP_
+#define TUW_STD_MSGS__PARAMETER_FLOAT64_HPP_
 
 #include <limits>
 #include <string>
@@ -28,4 +28,4 @@ struct ParameterFloat64 : public tuw_std_msgs::msg::ParameterFloat64
   double get() const { return this->data; }
 };
 }  // namespace tuw_std_msgs
-#endif  // TUW_STD_MSGS_MSGS__PARAMETER_FLOAT64_HPP_
+#endif  // TUW_STD_MSGS__PARAMETER_FLOAT64_HPP_

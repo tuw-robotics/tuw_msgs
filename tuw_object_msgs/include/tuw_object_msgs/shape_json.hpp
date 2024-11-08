@@ -2,6 +2,7 @@
 #define TUW_OBJECT_MSGS__SHAPE_JSON_HPP_
 
 #include <tuw_object_msgs/shape.hpp>
+#include <tuw_std_msgs/parameter_array_json.hpp>
 #include <tuw_geometry_msgs/point_json.hpp>
 #include <tuw_geo_msgs/geo_point_json.hpp>
 

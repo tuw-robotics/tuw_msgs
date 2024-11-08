@@ -1,5 +1,5 @@
-#ifndef TUW_STD_MSGS_MSGS__PARAMETER__ARRAY_HPP_
-#define TUW_STD_MSGS_MSGS__PARAMETER__ARRAY_HPP_
+#ifndef TUW_STD_MSGS__PARAMETER__ARRAY_HPP_
+#define TUW_STD_MSGS__PARAMETER__ARRAY_HPP_
 
 #include <iomanip>
 #include <limits>
@@ -108,4 +108,4 @@ struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
   }
 };
 }  // namespace tuw_std_msgs
-#endif  // TUW_STD_MSGS_MSGS__PARAMETER__ARRAY_HPP_
+#endif  // TUW_STD_MSGS__PARAMETER__ARRAY_HPP_

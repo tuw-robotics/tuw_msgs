@@ -1,5 +1,5 @@
-#ifndef TUW_STD_MSGS_MSGS__PARAMETER_HPP_
-#define TUW_STD_MSGS_MSGS__PARAMETER_HPP_
+#ifndef TUW_STD_MSGS__PARAMETER_HPP_
+#define TUW_STD_MSGS__PARAMETER_HPP_
 
 #include <iomanip>
 #include <limits>
@@ -213,4 +213,4 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
   }
 };
 }  // namespace tuw_std_msgs
-#endif  // TUW_STD_MSGS_MSGS__PARAMETER_HPP_
+#endif  // TUW_STD_MSGS__PARAMETER_HPP_
