@@ -1,13 +1,13 @@
-#ifndef TUW_MAP_MSGS__OBJECT_JSON_HPP_
-#define TUW_MAP_MSGS__OBJECT_JSON_HPP_
+#ifndef TUW_OBJECT_MSGS__SHAPE_JSON_HPP_
+#define TUW_OBJECT_MSGS__SHAPE_JSON_HPP_
 
-#include <tuw_map_msgs/object.hpp>
+#include <tuw_object_msgs/shape.hpp>
 #include <tuw_geometry_msgs/point_json.hpp>
 #include <tuw_geo_msgs/geo_point_json.hpp>
 
 namespace tuw_json
 {
-inline Json::Value toJson(const tuw_map_msgs::msg::Object & src)
+inline Json::Value toJson(const tuw_object_msgs::msg::Shape & src)
 {
   Json::Value json;
   json["id"] = src.id;
@@ -19,8 +19,8 @@ inline Json::Value toJson(const tuw_map_msgs::msg::Object & src)
   return json;
 }
 
-inline tuw_map_msgs::msg::Object & fromJson(
-  const Json::Value & json, tuw_map_msgs::msg::Object & des)
+inline tuw_object_msgs::msg::Shape & fromJson(
+  const Json::Value & json, tuw_object_msgs::msg::Shape & des)
 {
   des.id = json.get("id", "-1").asInt64();
   des.type = json.get("type", "").asUInt();
@@ -30,7 +30,7 @@ inline tuw_map_msgs::msg::Object & fromJson(
   fromJson(json.get("params", ""), des.params);
   return des;
 }
-inline Json::Value toJson(const std::vector<tuw_map_msgs::msg::Object> & src)
+inline Json::Value toJson(const std::vector<tuw_object_msgs::msg::Shape> & src)
 {
   Json::Value des;
   for (const auto & o : src) {
@@ -39,14 +39,14 @@ inline Json::Value toJson(const std::vector<tuw_map_msgs::msg::Object> & src)
   return des;
 }
 
-inline std::vector<tuw_map_msgs::msg::Object> & fromJson(
+inline std::vector<tuw_object_msgs::msg::Shape> & fromJson(
   const Json::Value & json, const std::string & key,
-  std::vector<tuw_map_msgs::msg::Object> & des)
+  std::vector<tuw_object_msgs::msg::Shape> & des)
 {
   if (json.isMember(key) && json[key].isArray()) {
     const Json::Value & jsonArray = json[key];
     for (auto & j : jsonArray) {
-      tuw_map_msgs::msg::Object o;
+      tuw_object_msgs::msg::Shape o;
       des.push_back(std::move(tuw_json::fromJson(j, o)));
     }
   }
@@ -54,4 +54,4 @@ inline std::vector<tuw_map_msgs::msg::Object> & fromJson(
 }
 }  // namespace tuw_json
 
-#endif  // TUW_MAP_MSGS__OBJECT_JSON_HPP_
+#endif  // TUW_OBJECT_MSGS__SHAPE_JSON_HPP_

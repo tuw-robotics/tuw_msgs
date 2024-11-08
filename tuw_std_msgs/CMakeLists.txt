@@ -38,7 +38,6 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
-
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -67,7 +66,7 @@ if(BUILD_TESTING)
   )
 endif()
 
-ament_export_dependencies(rosidl_default_runtime)
+ament_export_dependencies(rosidl_default_runtime std_msgs)
 
 ament_export_include_directories(
   include

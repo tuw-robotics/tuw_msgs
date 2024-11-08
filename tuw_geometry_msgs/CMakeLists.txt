@@ -31,7 +31,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 install(DIRECTORY include/
   DESTINATION include/${PROJECT_NAME}
 )
-ament_export_dependencies(rosidl_default_runtime)
+ament_export_dependencies(rosidl_default_runtime geometry_msgs std_msgs)
 
 ament_export_include_directories(
   include

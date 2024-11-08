@@ -1,2 +1,2 @@
 std_msgs/Header header      # Header for Timestamp
-Object[] objects            # Map Objects
+Shape[] shapes              # Map Objects
