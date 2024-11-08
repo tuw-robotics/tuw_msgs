@@ -2,7 +2,8 @@
 #define TUW_MAP_MSGS__OBJECT_JSON_HPP_
 
 #include <tuw_map_msgs/object.hpp>
-#include <tuw_map_msgs/object_point_json.hpp>
+#include <tuw_geometry_msgs/point_json.hpp>
+#include <tuw_geo_msgs/geo_point_json.hpp>
 
 namespace tuw_json
 {
@@ -11,8 +12,10 @@ inline Json::Value toJson(const tuw_map_msgs::msg::Object & src)
   Json::Value json;
   json["id"] = src.id;
   json["type"] = src.type;
-  json["points"] = tuw_json::toJson(src.points);
-  json["parameters"] = tuw_json::toJson(src.parameters);
+  json["wgs84"] = toJson(src.wgs84);
+  json["points"] = toJson(src.points);
+  json["params_points"] = toJson(src.params_points);
+  json["params"] = toJson(src.params);
   return json;
 }
 
@@ -21,8 +24,10 @@ inline tuw_map_msgs::msg::Object & fromJson(
 {
   des.id = json.get("id", "-1").asInt64();
   des.type = json.get("type", "").asUInt();
-  tuw_json::fromJson(json, "points", des.points);
-  tuw_json::fromJson(json, "parameters", des.parameters);
+  fromJson(json, "wgs84", des.wgs84);
+  fromJson(json, "points", des.points);
+  fromJson(json, "params_points", des.params_points);
+  fromJson(json.get("params", ""), des.params);
   return des;
 }
 inline Json::Value toJson(const std::vector<tuw_map_msgs::msg::Object> & src)

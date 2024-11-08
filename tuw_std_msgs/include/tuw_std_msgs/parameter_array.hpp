@@ -23,7 +23,6 @@ struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
   template<typename T>
   ParameterArray(int id, const std::vector<std::string> &names, const std::vector<T> &values) {
     this->id = id;
-    this->data.resize(names.size());
     for(size_t i = 0; i < names.size(); i++){
       Parameter p(names[i], values[i]);
       this->data.push_back(std::move(p));
@@ -80,17 +79,16 @@ struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
   }
   template<typename T>
   T value(const std::string &name) const{
-    for (const auto& param : this->data) {
-      if (param.name == name) {
-        const Parameter &param = static_cast<const Parameter &>(param);
-        return param.get<T>();
+    for (const auto& p : this->data) {
+      if (p.name == name) {
+        return static_cast<const Parameter &>(p).get<T>();
       }
     }
     throw std::out_of_range("Parameter not found");
   }
   template<typename T>
   T value(const std::string &name){
-    return const_cast<T>(static_cast<const ParameterArray&>(*this).value<T>(name));
+    return static_cast<const ParameterArray&>(*this).value<T>(name);
   }
 
   /**

@@ -27,7 +27,7 @@ TEST(json, ParameterArray_double)
   ASSERT_NEAR(parameters.get("list")->get< std::vector<double> >()[0], l1, tolerance);
   ASSERT_NEAR(parameters.get("list")->get< std::vector<double> >()[1], l2, tolerance);
   ASSERT_NEAR(parameters.get("list")->at<double>(1), l2, tolerance);
-  ASSERT_EQ(parameters.value("border"), border);
+  ASSERT_EQ(parameters.value<double>("border"), border);
 }
 
 
@@ -57,5 +57,5 @@ TEST(json, ParameterArray_int)
   ASSERT_EQ(parameters.get("list")->get< std::vector<int> >()[1], l2);
   ASSERT_EQ(parameters.get("list")->at<int>(1), l2);
   ASSERT_EQ(parameters["list"].at<int>(1), l2);
-  ASSERT_EQ(parameters.value("border"), border);
+  ASSERT_EQ(parameters.value<int>("border"), border);
 }

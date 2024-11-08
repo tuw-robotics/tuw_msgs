@@ -7,6 +7,7 @@ namespace tuw_map_msgs
 {
 struct Object : public tuw_map_msgs::msg::Object
 {
+  Object() { this->id = -1; }
   Object(int64_t id) { this->id = id; }
   Object(int64_t id, uint32_t type) { this->id = id, this->type = type; }
 };

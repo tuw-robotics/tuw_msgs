@@ -18,11 +18,11 @@ find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(geographic_msgs REQUIRED)
 find_package(tuw_std_msgs REQUIRED)
+find_package(tuw_geo_msgs REQUIRED)
 
 
 set(msg_files
   "msg/Object.msg"
-  "msg/ObjectPoint.msg"
   "msg/ObjectMap.msg"
 )
 
@@ -35,7 +35,7 @@ set(srv_files
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
   ${srv_files}
-  DEPENDENCIES builtin_interfaces geometry_msgs std_msgs nav_msgs tuw_std_msgs geographic_msgs
+  DEPENDENCIES builtin_interfaces geometry_msgs std_msgs nav_msgs tuw_std_msgs geographic_msgs tuw_geo_msgs
   ADD_LINTER_TESTS
 )
 
