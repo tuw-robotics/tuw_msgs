@@ -1,8 +1,8 @@
 #ifndef TUW_OBJECT_MSGS__SHAPE_ARRAY_JSON_HPP_
 #define TUW_OBJECT_MSGS__SHAPE_ARRAY_JSON_HPP_
 
-#include <tuw_object_msgs/shape_json.hpp>
 #include <tuw_object_msgs/shape_array.hpp>
+#include <tuw_object_msgs/shape_json.hpp>
 
 namespace tuw_json
 {

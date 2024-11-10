@@ -1,8 +1,8 @@
 #ifndef TUW_STD_MSGS__PARAMETER_ARRAY_JSON_HPP_
 #define TUW_STD_MSGS__PARAMETER_ARRAY_JSON_HPP_
 
-#include <tuw_std_msgs/parameter_array.hpp>
 #include <tuw_std_msgs/parameter_json.hpp>
+#include <tuw_std_msgs/parameter_array.hpp>
 #include <vector>
 
 namespace tuw_json
