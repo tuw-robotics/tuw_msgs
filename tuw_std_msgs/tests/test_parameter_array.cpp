@@ -11,7 +11,7 @@ TEST(json, ParameterArray_double)
   ASSERT_EQ(values[0], des);
   ASSERT_EQ(parameters.get(names[0], des), true);
   ASSERT_EQ(parameters.get("border", des), false);
-  const tuw_std_msgs::Parameter *p = parameters.get(names[1]);
+  const tuw_std_msgs::Parameter * p = parameters.get(names[1]);
   ASSERT_EQ(values[1], p->get<double>());
   double v1 = 120.;
   double border = 10.;
@@ -24,12 +24,11 @@ TEST(json, ParameterArray_double)
   double tolerance = 0.001;
   std::vector<double> list_values = {l1, l2};
   ASSERT_EQ(parameters.add("list", list_values), true);
-  ASSERT_NEAR(parameters.get("list")->get< std::vector<double> >()[0], l1, tolerance);
-  ASSERT_NEAR(parameters.get("list")->get< std::vector<double> >()[1], l2, tolerance);
+  ASSERT_NEAR(parameters.get("list")->get<std::vector<double>>()[0], l1, tolerance);
+  ASSERT_NEAR(parameters.get("list")->get<std::vector<double>>()[1], l2, tolerance);
   ASSERT_NEAR(parameters.get("list")->at<double>(1), l2, tolerance);
   ASSERT_EQ(parameters.value<double>("border"), border);
 }
-
 
 TEST(json, ParameterArray_int)
 {
@@ -41,7 +40,7 @@ TEST(json, ParameterArray_int)
   ASSERT_EQ(values[0], des);
   ASSERT_EQ(parameters.get(names[0], des), true);
   ASSERT_EQ(parameters.get("border", des), false);
-  const tuw_std_msgs::Parameter *p = parameters.get(names[1]);
+  const tuw_std_msgs::Parameter * p = parameters.get(names[1]);
   ASSERT_EQ(values[1], p->get<double>());
   int v1 = 120;
   int border = 10;
@@ -53,8 +52,8 @@ TEST(json, ParameterArray_int)
   int l2 = 2;
   std::vector<int> list_values = {l1, l2};
   ASSERT_EQ(parameters.add("list", list_values), true);
-  ASSERT_EQ(parameters.get("list")->get< std::vector<int> >()[0], l1);
-  ASSERT_EQ(parameters.get("list")->get< std::vector<int> >()[1], l2);
+  ASSERT_EQ(parameters.get("list")->get<std::vector<int>>()[0], l1);
+  ASSERT_EQ(parameters.get("list")->get<std::vector<int>>()[1], l2);
   ASSERT_EQ(parameters.get("list")->at<int>(1), l2);
   ASSERT_EQ(parameters["list"].at<int>(1), l2);
   ASSERT_EQ(parameters.value<int>("border"), border);

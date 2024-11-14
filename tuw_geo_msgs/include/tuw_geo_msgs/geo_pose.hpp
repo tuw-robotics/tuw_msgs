@@ -21,8 +21,7 @@ struct GeoPose : public geometric_msgs::msg::GeoPose
     this->orientation.w = 1;
   }
   GeoPose(
-    double latitude, double longitude, double altitude, double qx, double qy, double qz,
-    double qw)
+    double latitude, double longitude, double altitude, double qx, double qy, double qz, double qw)
   {
     this->position.latitude = latitude, this->position.longitude = longitude,
     this->position.altitude = altitude;

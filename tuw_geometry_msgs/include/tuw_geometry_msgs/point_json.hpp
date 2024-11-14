@@ -35,8 +35,7 @@ inline Json::Value toJson(const std::vector<geometry_msgs::msg::Point> & src)
 }
 
 inline std::vector<geometry_msgs::msg::Point> & fromJson(
-  const Json::Value & json, const std::string & key,
-  std::vector<geometry_msgs::msg::Point> & des)
+  const Json::Value & json, const std::string & key, std::vector<geometry_msgs::msg::Point> & des)
 {
   if (json.isMember(key) && json[key].isArray()) {
     const Json::Value & jsonArray = json[key];

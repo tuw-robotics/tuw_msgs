@@ -12,25 +12,21 @@ namespace tuw_std_msgs
 {
 struct Parameter : public tuw_std_msgs::msg::Parameter
 {
-  Parameter() {
-
-  }
+  Parameter() {}
   Parameter(const std::string & name)
   {
     this->name = name;
     this->value = "";
   }
-  Parameter(const std::string & name, const double & value)
-  {
-    this->set(name, value);
-  }
+  Parameter(const std::string & name, const double & value) {this->set(name, value);}
   /**
    * set the name and the value entry and retuns the created string
    * @param name name to set
    * @param value value to set
    * @return string crated
    */
-  const std::string& set(const std::string & name, const double & value){
+  const std::string & set(const std::string & name, const double & value)
+  {
     this->name = name;
     return this->set(value);
   }
@@ -39,10 +35,11 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
    * @param values value to set
    * @return string crated
    */
-  const std::string& set(const double & value){
+  const std::string & set(const double & value)
+  {
     this->value = std::to_string(value);
     return this->value;
-  } 
+  }
 
   template<typename T>
   T get() const
@@ -57,17 +54,15 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
     data = std::stod(this->value);
     return data;
   }
-  Parameter(const std::string & name, const int & value)
-  {
-    this->set(name, value);
-  }
+  Parameter(const std::string & name, const int & value) {this->set(name, value);}
   /**
    * set the name and the value entry and retuns the created string
    * @param name name to set
    * @param value value to set
    * @return string crated
    */
-  const std::string& set(const std::string & name, const int & value){
+  const std::string & set(const std::string & name, const int & value)
+  {
     this->name = name;
     return this->set(value);
   }
@@ -76,26 +71,25 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
    * @param values value to set
    * @return string crated
    */
-  const std::string& set(int & value){
+  const std::string & set(int & value)
+  {
     this->value = std::to_string(value);
     return this->value;
-  } 
+  }
   int & get(int & data) const
   {
     data = std::stoi(this->value);
     return data;
   }
-  Parameter(const std::string & name, const std::string & value)
-  {
-    this->set(name, value);
-  }
+  Parameter(const std::string & name, const std::string & value) {this->set(name, value);}
   /**
    * set the name and the value entry and retuns the created string
    * @param name name to set
    * @param value value to set
    * @return string crated
    */
-  const std::string& set(const std::string & name, const std::string & value){
+  const std::string & set(const std::string & name, const std::string & value)
+  {
     this->name = name;
     return this->set(value);
   }
@@ -104,10 +98,11 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
    * @param values value to set
    * @return string crated
    */
-  const std::string& set(const std::string & value){
+  const std::string & set(const std::string & value)
+  {
     this->value = value;
     return this->value;
-  } 
+  }
   std::string & get(std::string & data) const
   {
     data = this->value;
@@ -123,7 +118,9 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
    * @param values values to set
    * @return string crated
    */
-  const std::string& set(const std::string & name, const std::vector<double> & values, int precision = 10){
+  const std::string & set(
+    const std::string & name, const std::vector<double> & values, int precision = 10)
+  {
     this->name = name;
     return this->set(values, precision);
   }
@@ -132,7 +129,8 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
    * @param values values to set
    * @return string crated
    */
-  const std::string& set(const std::vector<double> & values, int precision = 10){
+  const std::string & set(const std::vector<double> & values, int precision = 10)
+  {
     std::ostringstream oss;
     oss << std::fixed << std::setprecision(precision);
     for (size_t i = 0; i < values.size(); ++i) {
@@ -143,7 +141,7 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
     }
     this->value = oss.str();
     return this->value;
-  } 
+  }
 
   std::vector<double> & get(std::vector<double> & data) const
   {
@@ -156,10 +154,7 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
     return data;
   }
 
-  Parameter(const std::string & name, const std::vector<int> & values)
-  {
-    this->set(name, values);
-  }
+  Parameter(const std::string & name, const std::vector<int> & values) {this->set(name, values);}
 
   /**
    * set the name and the value entry and retuns the created string
@@ -167,7 +162,8 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
    * @param values values to set
    * @return string crated
    */
-  const std::string& set(const std::string & name, const std::vector<int> & values){
+  const std::string & set(const std::string & name, const std::vector<int> & values)
+  {
     this->name = name;
     return this->set(values);
   }
@@ -176,7 +172,8 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
    * @param values values to set
    * @return string crated
    */
-  const std::string& set(const std::vector<int> & values){
+  const std::string & set(const std::vector<int> & values)
+  {
     std::ostringstream oss;
     for (size_t i = 0; i < values.size(); ++i) {
       oss << values[i];
@@ -186,9 +183,9 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
     }
     this->value = oss.str();
     return this->value;
-  } 
+  }
 
-  std::vector<int> & get(std::vector<int> & data) const 
+  std::vector<int> & get(std::vector<int> & data) const
   {
     data.clear();
     std::istringstream ss(this->value);
@@ -206,7 +203,8 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
    * @note it is slow
    */
   template<typename T>
-  T at(size_t index) {
+  T at(size_t index)
+  {
     std::vector<T> v;
     this->get(v);
     return v[index];

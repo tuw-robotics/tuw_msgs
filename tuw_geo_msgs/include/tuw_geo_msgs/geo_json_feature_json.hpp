@@ -1,7 +1,6 @@
 #ifndef TUW_GEO_MSGS_MSGS__GEO_JSON_FEATURE_JSON_HPP_
 #define TUW_GEO_MSGS_MSGS__GEO_JSON_FEATURE_JSON_HPP_
 
-
 #include <json/json.h>
 
 #include "tuw_geo_msgs/geo_json_geometry_json.hpp"

@@ -1,10 +1,10 @@
 #ifndef TUW_OBJECT_MSGS__SHAPE_JSON_HPP_
 #define TUW_OBJECT_MSGS__SHAPE_JSON_HPP_
 
+#include <tuw_geo_msgs/geo_point_json.hpp>
+#include <tuw_geometry_msgs/point_json.hpp>
 #include <tuw_object_msgs/shape.hpp>
 #include <tuw_std_msgs/parameter_array_json.hpp>
-#include <tuw_geometry_msgs/point_json.hpp>
-#include <tuw_geo_msgs/geo_point_json.hpp>
 
 namespace tuw_json
 {
@@ -41,8 +41,7 @@ inline Json::Value toJson(const std::vector<tuw_object_msgs::msg::Shape> & src)
 }
 
 inline std::vector<tuw_object_msgs::msg::Shape> & fromJson(
-  const Json::Value & json, const std::string & key,
-  std::vector<tuw_object_msgs::msg::Shape> & des)
+  const Json::Value & json, const std::string & key, std::vector<tuw_object_msgs::msg::Shape> & des)
 {
   if (json.isMember(key) && json[key].isArray()) {
     const Json::Value & jsonArray = json[key];

@@ -9,7 +9,7 @@ namespace tuw_std_msgs
 {
 struct ParameterFloat64 : public tuw_std_msgs::msg::ParameterFloat64
 {
-  ParameterFloat64() { this->data = std::numeric_limits<double>::quiet_NaN(); }
+  ParameterFloat64() {this->data = std::numeric_limits<double>::quiet_NaN();}
   ParameterFloat64(const std::string & name)
   {
     this->name.data = name;
@@ -25,7 +25,7 @@ struct ParameterFloat64 : public tuw_std_msgs::msg::ParameterFloat64
     data = this->data;
     return data;
   }
-  double get() const { return this->data; }
+  double get() const {return this->data;}
 };
 }  // namespace tuw_std_msgs
 #endif  // TUW_STD_MSGS__PARAMETER_FLOAT64_HPP_

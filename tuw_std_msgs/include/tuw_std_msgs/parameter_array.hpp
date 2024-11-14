@@ -13,35 +13,32 @@ namespace tuw_std_msgs
 {
 struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
 {
-  ParameterArray() {
-    this->id = -1;
-  }
-  ParameterArray(int id) {
-    this->id = id;
-  }
-  
+  ParameterArray() {this->id = -1;}
+  ParameterArray(int id) {this->id = id;}
+
   template<typename T>
-  ParameterArray(int id, const std::vector<std::string> &names, const std::vector<T> &values) {
+  ParameterArray(int id, const std::vector<std::string> & names, const std::vector<T> & values)
+  {
     this->id = id;
-    for(size_t i = 0; i < names.size(); i++){
+    for (size_t i = 0; i < names.size(); i++) {
       Parameter p(names[i], values[i]);
       this->data.push_back(std::move(p));
     }
   }
-  
+
   /**
    * searches in the array for a parameter name
    * @param name name of the parameter
    * @return false if it exited and it was set, true if was newly added
    */
   template<typename T>
-  bool add(const std::string &name, const T &data){
-    Parameter *p = get(name);
-    if(p != NULL){
+  bool add(const std::string & name, const T & data)
+  {
+    Parameter * p = get(name);
+    if (p != NULL) {
       p->set(data);
       return false;
-    } 
-    else {
+    } else {
       Parameter p(name, data);
       this->data.push_back(std::move(p));
       return true;
@@ -52,34 +49,39 @@ struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
    * searches in the array for a parameter name
    * @param name name of the parameter
    * @return pointer to the parameter or null if it does not exist
-   * @see 
+   * @see
    */
-  const Parameter *get(const std::string &name) const{
-    for(size_t i = 0; i < this->data.size(); i++){
-      const Parameter *p = (Parameter*) &this->data[i] ;
-      if(p->name == name){
+  const Parameter * get(const std::string & name) const
+  {
+    for (size_t i = 0; i < this->data.size(); i++) {
+      const Parameter * p = (Parameter *)&this->data[i];
+      if (p->name == name) {
         return p;
       }
     }
     return NULL;
   }
-  Parameter *get(const std::string &name){
-    return const_cast<Parameter*>(static_cast<const ParameterArray&>(*this).get(name));
+  Parameter * get(const std::string & name)
+  {
+    return const_cast<Parameter *>(static_cast<const ParameterArray &>(*this).get(name));
   }
-  const Parameter &operator[](const std::string &name) const{
-    for (const auto& param : this->data) {
+  const Parameter & operator[](const std::string & name) const
+  {
+    for (const auto & param : this->data) {
       if (param.name == name) {
         return static_cast<const Parameter &>(param);
       }
     }
     throw std::out_of_range("Parameter not found");
   }
-  Parameter &operator[](const std::string &name){
-    return const_cast<Parameter&>(static_cast<const ParameterArray&>(*this)[name]);
+  Parameter & operator[](const std::string & name)
+  {
+    return const_cast<Parameter &>(static_cast<const ParameterArray &>(*this)[name]);
   }
   template<typename T>
-  T value(const std::string &name) const{
-    for (const auto& p : this->data) {
+  T value(const std::string & name) const
+  {
+    for (const auto & p : this->data) {
       if (p.name == name) {
         return static_cast<const Parameter &>(p).get<T>();
       }
@@ -87,8 +89,9 @@ struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
     throw std::out_of_range("Parameter not found");
   }
   template<typename T>
-  T value(const std::string &name){
-    return static_cast<const ParameterArray&>(*this).value<T>(name);
+  T value(const std::string & name)
+  {
+    return static_cast<const ParameterArray &>(*this).value<T>(name);
   }
 
   /**
@@ -98,9 +101,10 @@ struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
    * @return true if the parameter exists
    */
   template<typename T>
-  bool get(const std::string &name, T &des) const{
-    const Parameter *p = get(name);
-    if(p != NULL){
+  bool get(const std::string & name, T & des) const
+  {
+    const Parameter * p = get(name);
+    if (p != NULL) {
       p->get(des);
       return true;
     }
