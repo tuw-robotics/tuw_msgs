@@ -16,7 +16,6 @@
   <depend>tuw_multi_robot_msgs</depend>
   <depend>tuw_nav_msgs</depend>
   <depend>tuw_object_msgs</depend>
-  <depend>tuw_map_msgs</depend>
   <depend>tuw_object_map_msgs</depend>
 
   <depend>rclcpp</depend>
