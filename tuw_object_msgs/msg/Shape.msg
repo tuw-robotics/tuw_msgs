@@ -1,10 +1,17 @@
 
 int64 id                                     # ID
+uint32 shape                                 # Geometric shape
 uint32 type                                  # Type
 geographic_msgs/GeoPoint[] wgs84             # global location in WGS84
 geometry_msgs/Point[]      points            # map location in cartesian space
 tuw_std_msgs/ParameterArray[] params_points  # parameters for each point
 tuw_std_msgs/ParameterArray   params         # parameters for the shape
+
+
+uint32 SHAPE_NA = 0
+uint32 SHAPE_POINT = 1
+uint32 SHAPE_LINE = 2
+uint32 SHAPE_LINE_STRIP = 3
 
 uint32 TYPE_NA = 0
 

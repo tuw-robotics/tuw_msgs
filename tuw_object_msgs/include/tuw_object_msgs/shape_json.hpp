@@ -12,6 +12,7 @@ inline Json::Value toJson(const tuw_object_msgs::msg::Shape & src)
 {
   Json::Value json;
   json["id"] = src.id;
+  json["shape"] = src.shape;
   json["type"] = src.type;
   json["wgs84"] = toJson(src.wgs84);
   json["points"] = toJson(src.points);
@@ -24,6 +25,7 @@ inline tuw_object_msgs::msg::Shape & fromJson(
   const Json::Value & json, tuw_object_msgs::msg::Shape & des)
 {
   des.id = json.get("id", "-1").asInt64();
+  des.shape = json.get("shape", "").asUInt();
   des.type = json.get("type", "").asUInt();
   fromJson(json, "wgs84", des.wgs84);
   fromJson(json, "points", des.points);
