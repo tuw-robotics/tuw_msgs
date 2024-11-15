@@ -2,7 +2,6 @@
 int64 id -1                                  # ID, -1 default
 uint32 shape 0                               # Geometric shape, 0 default
 uint32 type 0                                # Type, 0 default
-geographic_msgs/GeoPoint[] wgs84             # global location in WGS84
 geometry_msgs/Point[]      points            # map location in cartesian space
 tuw_std_msgs/ParameterArray[] params_points  # parameters for each point
 tuw_std_msgs/ParameterArray   params         # parameters for the shape
@@ -14,11 +13,11 @@ uint32 SHAPE_LINE = 2
 uint32 SHAPE_LINE_STRIP = 3
 uint32 SHAPE_CIRCLE = 4
 uint32 SHAPE_POLYGON = 5
+uint32 SHAPE_RECTANGLE = 6
 
 uint32 TYPE_NA = 0
 
-uint32 TYPE_FRAME_ORIGIN = 100   # frame origin
-uint32 TYPE_FRAME_WINDOW = 101   # frame window size, two points top left bottom right
+uint32 TYPE_MAP = 100            # map of shape rectangle, used to define a map frame
 
 uint32 TYPE_PLANT = 200
 uint32 TYPE_PLANT_WINE_ROW = 201

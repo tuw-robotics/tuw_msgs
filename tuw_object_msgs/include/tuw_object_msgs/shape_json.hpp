@@ -1,35 +1,38 @@
 /*
-Copyright (c) 2024, Markus Bader 
-All rights reserved. 
+Copyright (c) 2024, Markus Bader
+All rights reserved.
 
-Redistribution and use in source and binary forms, with or without 
-modification, are permitted provided that the following conditions are met: 
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
- * Redistributions of source code must retain the above copyright notice, 
-   this list of conditions and the following disclaimer. 
- * Redistributions in binary form must reproduce the above copyright 
-   notice, this list of conditions and the following disclaimer in the 
-   documentation and/or other materials provided with the distribution. 
- * Neither the name of TU Wien nor the names of its contributors may be 
-   used to endorse or promote products derived from this software without 
-   specific prior written permission. 
+ * Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+ * Neither the name of TU Wien nor the names of its contributors may be
+   used to endorse or promote products derived from this software without
+   specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-POSSIBILITY OF SUCH DAMAGE. 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
 */
 
 #ifndef TUW_OBJECT_MSGS__SHAPE_JSON_HPP_
 #define TUW_OBJECT_MSGS__SHAPE_JSON_HPP_
 
+#include <string>
+#include <vector>
+#include <utility>
 #include <tuw_geo_msgs/geo_point_json.hpp>
 #include <tuw_geometry_msgs/point_json.hpp>
 #include <tuw_object_msgs/shape.hpp>
@@ -43,7 +46,6 @@ inline Json::Value toJson(const tuw_object_msgs::msg::Shape & src)
   json["id"] = src.id;
   json["shape"] = src.shape;
   json["type"] = src.type;
-  json["wgs84"] = toJson(src.wgs84);
   json["points"] = toJson(src.points);
   json["params_points"] = toJson(src.params_points);
   json["params"] = toJson(src.params);
@@ -56,7 +58,6 @@ inline tuw_object_msgs::msg::Shape & fromJson(
   des.id = json.get("id", "-1").asInt64();
   des.shape = json.get("shape", "").asUInt();
   des.type = json.get("type", "").asUInt();
-  fromJson(json, "wgs84", des.wgs84);
   fromJson(json, "points", des.points);
   fromJson(json, "params_points", des.params_points);
   fromJson(json.get("params", ""), des.params);
