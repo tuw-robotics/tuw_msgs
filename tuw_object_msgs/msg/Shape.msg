@@ -1,7 +1,7 @@
 
-int64 id                                     # ID
-uint32 shape                                 # Geometric shape
-uint32 type                                  # Type
+int64 id -1                                  # ID, -1 default
+uint32 shape 0                               # Geometric shape, 0 default
+uint32 type 0                                # Type, 0 default
 geographic_msgs/GeoPoint[] wgs84             # global location in WGS84
 geometry_msgs/Point[]      points            # map location in cartesian space
 tuw_std_msgs/ParameterArray[] params_points  # parameters for each point
