@@ -13,13 +13,11 @@ namespace tuw_std_msgs
 {
 struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
 {
-  ParameterArray() {this->id = -1;}
-  ParameterArray(int id) {this->id = id;}
+  ParameterArray() {}
 
   template<typename T>
-  ParameterArray(int id, const std::vector<std::string> & names, const std::vector<T> & values)
+  ParameterArray(const std::vector<std::string> & names, const std::vector<T> & values)
   {
-    this->id = id;
     for (size_t i = 0; i < names.size(); i++) {
       Parameter p(names[i], values[i]);
       this->data.push_back(std::move(p));

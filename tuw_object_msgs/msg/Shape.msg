@@ -2,8 +2,8 @@
 int64 id -1                                  # ID, -1 default
 uint32 shape 0                               # Geometric shape, 0 default
 uint32 type 0                                # Type, 0 default
-geometry_msgs/Point[]      points            # map location in cartesian space
-tuw_std_msgs/ParameterArray[] params_points  # parameters for each point
+geometry_msgs/Pose[]          poses          # poses describing the shape
+tuw_std_msgs/ParameterArray[] params_poses   # parameters for each poses
 tuw_std_msgs/ParameterArray   params         # parameters for the shape
 
 

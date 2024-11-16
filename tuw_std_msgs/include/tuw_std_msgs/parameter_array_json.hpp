@@ -10,7 +10,6 @@ namespace tuw_json
 inline Json::Value toJson(const tuw_std_msgs::msg::ParameterArray & src)
 {
   Json::Value json;
-  json["id"] = src.id;
   Json::Value objects;
   for (const auto & o : src.data) {
     objects.append(toJson(o));
@@ -22,7 +21,6 @@ inline Json::Value toJson(const tuw_std_msgs::msg::ParameterArray & src)
 inline tuw_std_msgs::msg::ParameterArray & fromJson(
   const Json::Value & json, tuw_std_msgs::msg::ParameterArray & des)
 {
-  des.id = json.get("id", "-1").asInt64();
   if (json.isMember("data") && json["data"].isArray()) {
     const Json::Value & jsonArray = json["data"];
     for (auto & j : jsonArray) {

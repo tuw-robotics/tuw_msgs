@@ -5,7 +5,7 @@ TEST(json, ParameterArray_double)
 {
   std::vector<std::string> names = {"length", "width"};
   std::vector<double> values = {22.9, 44.3};
-  tuw_std_msgs::ParameterArray parameters(2, names, values);
+  tuw_std_msgs::ParameterArray parameters(names, values);
   double des;
   parameters.get(names[0], des);
   ASSERT_EQ(values[0], des);
@@ -34,7 +34,7 @@ TEST(json, ParameterArray_int)
 {
   std::vector<std::string> names = {"length", "width"};
   std::vector<int> values = {22, 44};
-  tuw_std_msgs::ParameterArray parameters(2, names, values);
+  tuw_std_msgs::ParameterArray parameters(names, values);
   int des;
   parameters.get(names[0], des);
   ASSERT_EQ(values[0], des);

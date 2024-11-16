@@ -33,8 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <vector>
 #include <utility>
-#include <tuw_geo_msgs/geo_point_json.hpp>
-#include <tuw_geometry_msgs/point_json.hpp>
+#include <tuw_geometry_msgs/pose_json.hpp>
 #include <tuw_object_msgs/shape.hpp>
 #include <tuw_std_msgs/parameter_array_json.hpp>
 
@@ -46,8 +45,8 @@ inline Json::Value toJson(const tuw_object_msgs::msg::Shape & src)
   json["id"] = src.id;
   json["shape"] = src.shape;
   json["type"] = src.type;
-  json["points"] = toJson(src.points);
-  json["params_points"] = toJson(src.params_points);
+  json["poses"] = toJson(src.poses);
+  json["params_poses"] = toJson(src.params_poses);
   json["params"] = toJson(src.params);
   return json;
 }
@@ -58,8 +57,8 @@ inline tuw_object_msgs::msg::Shape & fromJson(
   des.id = json.get("id", "-1").asInt64();
   des.shape = json.get("shape", "").asUInt();
   des.type = json.get("type", "").asUInt();
-  fromJson(json, "points", des.points);
-  fromJson(json, "params_points", des.params_points);
+  fromJson(json, "poses", des.poses);
+  fromJson(json, "params_poses", des.params_poses);
   fromJson(json.get("params", ""), des.params);
   return des;
 }

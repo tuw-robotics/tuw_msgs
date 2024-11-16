@@ -2,7 +2,6 @@
 #define TUW_JSON__POINT_JSON_HPP_
 
 #include <json/json.h>
-
 #include <tuw_geometry_msgs/point.hpp>
 
 namespace tuw_json

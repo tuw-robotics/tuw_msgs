@@ -21,5 +21,27 @@ inline geometry_msgs::msg::Pose & fromJson(const Json::Value & json, geometry_ms
   fromJson(json.get("orientation", ""), des.orientation);
   return des;
 }
+
+inline Json::Value toJson(const std::vector<geometry_msgs::msg::Pose> & src)
+{
+  Json::Value des;
+  for (const auto & o : src) {
+    des.append(tuw_json::toJson(o));
+  }
+  return des;
+}
+
+inline std::vector<geometry_msgs::msg::Pose> & fromJson(
+  const Json::Value & json, const std::string & key, std::vector<geometry_msgs::msg::Pose> & des)
+{
+  if (json.isMember(key) && json[key].isArray()) {
+    const Json::Value & jsonArray = json[key];
+    for (auto & j : jsonArray) {
+      geometry_msgs::msg::Pose o;
+      des.push_back(std::move(tuw_json::fromJson(j, o)));
+    }
+  }
+  return des;
+}
 }  // namespace tuw_json
 #endif  // TUW_JSON__POSE_JSON_HPP_
