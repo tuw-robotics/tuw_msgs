@@ -37,6 +37,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <sstream>
 #include <string>
 #include <vector>
+#include <utility>
 
 namespace tuw_std_msgs
 {
@@ -81,7 +82,7 @@ struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
   const Parameter * get(const std::string & name) const
   {
     for (size_t i = 0; i < this->data.size(); i++) {
-      const Parameter * p = (Parameter *)&this->data[i];
+      const Parameter * p = static_cast<const Parameter *>(&this->data[i]);
       if (p->name == name) {
         return p;
       }
