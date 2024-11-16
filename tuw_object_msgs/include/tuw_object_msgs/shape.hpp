@@ -38,7 +38,7 @@ struct Shape : public tuw_object_msgs::msg::Shape
 {
   Shape()
   : msg::Shape() {}
-  Shape(int64_t id) {this->id = id;}
+  explicit Shape(int64_t id) {this->id = id;}
   Shape(int64_t id, uint32_t type) {this->id = id, this->type = type;}
 };
 }  // namespace tuw_object_msgs

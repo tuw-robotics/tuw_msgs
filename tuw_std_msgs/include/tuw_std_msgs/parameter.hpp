@@ -42,7 +42,7 @@ namespace tuw_std_msgs
 struct Parameter : public tuw_std_msgs::msg::Parameter
 {
   Parameter() {}
-  Parameter(const std::string & name)
+  explicit Parameter(const std::string & name)
   {
     this->name = name;
     this->value = "";

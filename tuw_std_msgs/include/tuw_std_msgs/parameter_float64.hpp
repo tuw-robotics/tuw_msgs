@@ -39,7 +39,7 @@ namespace tuw_std_msgs
 struct ParameterFloat64 : public tuw_std_msgs::msg::ParameterFloat64
 {
   ParameterFloat64() {this->data = std::numeric_limits<double>::quiet_NaN();}
-  ParameterFloat64(const std::string & name)
+  explicit ParameterFloat64(const std::string & name)
   {
     this->name.data = name;
     this->data = std::numeric_limits<double>::quiet_NaN();
