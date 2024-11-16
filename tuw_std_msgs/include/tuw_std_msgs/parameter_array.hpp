@@ -30,12 +30,12 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef TUW_STD_MSGS__PARAMETER_ARRAY_HPP_
 #define TUW_STD_MSGS__PARAMETER_ARRAY_HPP_
 
+#include <tuw_std_msgs/msg/parameter_array.hpp>
+#include <tuw_std_msgs/parameter.hpp>
 #include <iomanip>
 #include <limits>
 #include <sstream>
 #include <string>
-#include <tuw_std_msgs/msg/parameter_array.hpp>
-#include <tuw_std_msgs/parameter.hpp>
 #include <vector>
 
 namespace tuw_std_msgs

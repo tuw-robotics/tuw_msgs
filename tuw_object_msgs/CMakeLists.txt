@@ -59,13 +59,13 @@ if(BUILD_TESTING)
 
 
   find_package(ament_cmake_gtest REQUIRED)
-  ament_add_gtest(unittest 
+  ament_add_gtest(unittest
     tests/test_shape.cpp
   )
-  target_include_directories(unittest PUBLIC 
+  target_include_directories(unittest PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
-  )  
+  )
   target_link_libraries(unittest ${PROJECT_NAME}__rosidl_typesupport_cpp)
 
   ament_target_dependencies(
