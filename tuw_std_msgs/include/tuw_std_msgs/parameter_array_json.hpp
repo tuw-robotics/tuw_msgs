@@ -33,6 +33,8 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <tuw_std_msgs/parameter_array.hpp>
 #include <tuw_std_msgs/parameter_json.hpp>
 #include <vector>
+#include <string>
+#include <utility>
 
 namespace tuw_json
 {

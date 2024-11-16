@@ -31,6 +31,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #define TUW_STD_MSGS__PARAMETER_FLOAT64_JSON_HPP_
 
 #include <tuw_std_msgs/parameter_float64.hpp>
+#include <vector>
+#include <string>
+#include <utility>
 
 namespace tuw_json
 {
