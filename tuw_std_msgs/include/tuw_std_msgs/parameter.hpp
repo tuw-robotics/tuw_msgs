@@ -47,26 +47,30 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
     this->name = name;
     this->value = "";
   }
-  Parameter(const std::string & name, const double & value) {this->set(name, value);}
+  Parameter(const std::string & name, const double & value, int precision = 6) {this->set(name, value, precision);}
   /**
    * set the name and the value entry and retuns the created string
    * @param name name to set
    * @param value value to set
+   * @param precision precision used 
    * @return string crated
    */
-  const std::string & set(const std::string & name, const double & value)
+  const std::string & set(const std::string & name, const double & value, int precision = 6)
   {
     this->name = name;
-    return this->set(value);
+    return this->set(value, precision);
   }
   /**
    * set a value entry and retuns the created string
    * @param values value to set
+   * @param precision precision used 
    * @return string crated
    */
-  const std::string & set(const double & value)
+  const std::string & set(const double & value, int precision = 6)
   {
-    this->value = std::to_string(value);
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(precision) << value;
+    this->value = oss.str();
     return this->value;
   }
 
