@@ -47,12 +47,15 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
     this->name = name;
     this->value = "";
   }
-  Parameter(const std::string & name, const double & value, int precision = 6) {this->set(name, value, precision);}
+  Parameter(const std::string & name, const double & value, int precision = 6)
+  {
+    this->set(name, value, precision);
+  }
   /**
    * set the name and the value entry and retuns the created string
    * @param name name to set
    * @param value value to set
-   * @param precision precision used 
+   * @param precision precision used to convert doubles to strings
    * @return string crated
    */
   const std::string & set(const std::string & name, const double & value, int precision = 6)
@@ -63,7 +66,7 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
   /**
    * set a value entry and retuns the created string
    * @param values value to set
-   * @param precision precision used 
+   * @param precision precision used to convert doubles to strings
    * @return string crated
    */
   const std::string & set(const double & value, int precision = 6)
@@ -114,7 +117,10 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
     data = std::stoi(this->value);
     return data;
   }
-  Parameter(const std::string & name, const std::string & value) {this->set(name, value);}
+  Parameter(const std::string & name, const std::string & value)
+  {
+    this->set(name, value);
+  }
   /**
    * set the name and the value entry and retuns the created string
    * @param name name to set
@@ -141,6 +147,12 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
     data = this->value;
     return data;
   }
+  /**
+   * set a value entry and retuns the created string
+   * @param values value to set
+   * @param precision precision used to convert doubles to strings
+   * @return string crated
+   */
   Parameter(const std::string & name, const std::vector<double> & values, int precision = 10)
   {
     this->set(name, values, precision);
@@ -186,9 +198,10 @@ struct Parameter : public tuw_std_msgs::msg::Parameter
     }
     return data;
   }
-
-  Parameter(const std::string & name, const std::vector<int> & values) {this->set(name, values);}
-
+  Parameter(const std::string & name, const std::vector<int> & values)
+  {
+    this->set(name, values);
+  }
   /**
    * set the name and the value entry and retuns the created string
    * @param name values to set
