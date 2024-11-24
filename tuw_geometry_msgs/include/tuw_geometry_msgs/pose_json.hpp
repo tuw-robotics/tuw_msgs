@@ -17,8 +17,27 @@ inline Json::Value toJson(const geometry_msgs::msg::Pose & src)
 
 inline geometry_msgs::msg::Pose & fromJson(const Json::Value & json, geometry_msgs::msg::Pose & des)
 {
-  fromJson(json.get("position", ""), des.position);
-  fromJson(json.get("orientation", ""), des.orientation);
+  if (json.isMember("position"))
+  {
+    fromJson(json.get("position", ""), des.position);
+  }
+  else
+  {
+    des.position.x = 0.;
+    des.position.y = 0.;
+    des.position.z = 0.;
+  }
+  if (json.isMember("orientation"))
+  {
+    fromJson(json.get("orientation", ""), des.orientation);
+  }
+  else
+  {
+    des.orientation.x = 0.;
+    des.orientation.y = 0.;
+    des.orientation.z = 0.;
+    des.orientation.w = 1.;
+  }
   return des;
 }
 

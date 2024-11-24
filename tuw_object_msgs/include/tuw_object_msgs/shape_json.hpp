@@ -55,11 +55,27 @@ inline tuw_object_msgs::msg::Shape & fromJson(
   const Json::Value & json, tuw_object_msgs::msg::Shape & des)
 {
   des.id = json.get("id", "-1").asInt64();
-  des.shape = json.get("shape", "").asUInt();
-  des.type = json.get("type", "").asUInt();
+  if (json.isMember("shape"))
+  {
+    des.shape = json.get("shape", "").asUInt();
+  }
+  else
+  {
+    des.shape = tuw_object_msgs::msg::Shape::SHAPE_NA;
+  }
+  if (json.isMember("type"))
+  {
+    des.type = json.get("type", "").asUInt();
+  }
+  else
+  {
+    des.type = tuw_object_msgs::msg::Shape::TYPE_NA;
+  }
   fromJson(json, "poses", des.poses);
   fromJson(json, "params_poses", des.params_poses);
-  fromJson(json.get("params", ""), des.params);
+  if (json.isMember("params")) {
+    fromJson(json.get("params", ""), des.params);
+  }
   return des;
 }
 inline Json::Value toJson(const std::vector<tuw_object_msgs::msg::Shape> & src)
