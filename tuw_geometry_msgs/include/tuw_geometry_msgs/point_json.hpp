@@ -20,12 +20,9 @@ inline geometry_msgs::msg::Point & fromJson(
 {
   des.x = json.get("x", "").asDouble();
   des.y = json.get("y", "").asDouble();
-  if (json.isMember("z"))
-  {
+  if (json.isMember("z")) {
     des.z = json.get("z", "").asDouble();
-  } 
-  else
-  {
+  } else {
     des.z = 0.0;
   }
   return des;

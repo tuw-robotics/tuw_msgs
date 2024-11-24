@@ -55,20 +55,14 @@ inline tuw_object_msgs::msg::Shape & fromJson(
   const Json::Value & json, tuw_object_msgs::msg::Shape & des)
 {
   des.id = json.get("id", "-1").asInt64();
-  if (json.isMember("shape"))
-  {
+  if (json.isMember("shape")) {
     des.shape = json.get("shape", "").asUInt();
-  }
-  else
-  {
+  } else {
     des.shape = tuw_object_msgs::msg::Shape::SHAPE_NA;
   }
-  if (json.isMember("type"))
-  {
+  if (json.isMember("type")) {
     des.type = json.get("type", "").asUInt();
-  }
-  else
-  {
+  } else {
     des.type = tuw_object_msgs::msg::Shape::TYPE_NA;
   }
   fromJson(json, "poses", des.poses);
