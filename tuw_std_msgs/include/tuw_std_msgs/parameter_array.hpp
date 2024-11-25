@@ -74,13 +74,13 @@ struct ParameterArray : public tuw_std_msgs::msg::ParameterArray
     }
   }
 
- /**
-   * searches in the array for a parameter name
-   * @param name name of the parameter
-   * @param data value to add
-   * @param precision precision used
-   * @return false if it exited and it was set, true if was newly added
-   */
+  /**
+    * searches in the array for a parameter name
+    * @param name name of the parameter
+    * @param data value to add
+    * @param precision precision used
+    * @return false if it exited and it was set, true if was newly added
+    */
   template<typename T>
   bool add(const std::string & name, const T & data, int precision)
   {
