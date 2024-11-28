@@ -2,8 +2,8 @@
 Changelog for package tuw_airskin_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.2 (2024-11-28)
+------------------
 * tuw_msgs update
 * reformated
 * map_msgs orking

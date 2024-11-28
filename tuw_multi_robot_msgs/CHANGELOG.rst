@@ -2,8 +2,8 @@
 Changelog for package tuw_multi_robot_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.2 (2024-11-28)
+------------------
 * tuw_msgs update
 * action added
 * changed <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend> to <test_depend>ament_cmake_cppcheck</test_depend>
