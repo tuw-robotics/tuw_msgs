@@ -4,6 +4,14 @@ Changelog for package tuw_multi_robot_msgs
 
 Forthcoming
 -----------
+* tuw_msgs update
+* action added
+* changed <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend> to <test_depend>ament_cmake_cppcheck</test_depend>
+* slach error fixed at <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend>
+* ament_cmake_cppcheck dependencies added as <buildtool_export_depend>
+* ament_cmake_cppcheck dependencies added
+* Contributors: Markus Bader, MatthiasReicher, markus
+
 * action added
 * changed <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend> to <test_depend>ament_cmake_cppcheck</test_depend>
 * slach error fixed at <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend>
