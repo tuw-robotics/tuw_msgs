@@ -2,5 +2,47 @@
 Changelog for package tuw_object_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* minor
+* json headers updated
+* header order fixed
+* header order fixed
+* shape updated
+* include updates
+* copyright added
+* shape attributed added
+* shape entry added
+* reformated
+* minor
+* minor
+* map removed
+* map_msgs orking
+* changed <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend> to <test_depend>ament_cmake_cppcheck</test_depend>
+* slach error fixed at <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend>
+* ament_cmake_cppcheck dependencies added as <buildtool_export_depend>
+* ament_cmake_cppcheck dependencies added
+* Contributors: Markus Bader, markus
+
+* minor
+* json headers updated
+* header order fixed
+* header order fixed
+* shape updated
+* include updates
+* copyright added
+* shape attributed added
+* shape entry added
+* reformated
+* minor
+* minor
+* map removed
+* map_msgs orking
+* changed <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend> to <test_depend>ament_cmake_cppcheck</test_depend>
+* slach error fixed at <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend>
+* ament_cmake_cppcheck dependencies added as <buildtool_export_depend>
+* ament_cmake_cppcheck dependencies added
+* Contributors: Markus Bader, markus
+
 0.2.1 (2023-06-25)
 ------------------

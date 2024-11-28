@@ -2,5 +2,47 @@
 Changelog for package tuw_geometry_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* minor
+* json headers updated
+* shape updated
+* reformated
+* map removed
+* map_msgs orking
+* Add GeoJSON msgs and Service Calls
+  * Add messages for the upcoming GeoJSON node
+  * Add Service Calls LoadMap and SaveMap for tuw_object_map
+* format updated
+* code formated
+* files removed
+* json headers for msgs added
+* header to subpackages added
+* changed <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend> to <test_depend>ament_cmake_cppcheck</test_depend>
+* slach error fixed at <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend>
+* ament_cmake_cppcheck dependencies added as <buildtool_export_depend>
+* ament_cmake_cppcheck dependencies added
+* Contributors: Alexander Lampalzer, Markus Bader, markus
+
+* minor
+* json headers updated
+* shape updated
+* reformated
+* map removed
+* map_msgs orking
+* Add GeoJSON msgs and Service Calls
+  * Add messages for the upcoming GeoJSON node
+  * Add Service Calls LoadMap and SaveMap for tuw_object_map
+* format updated
+* code formated
+* files removed
+* json headers for msgs added
+* header to subpackages added
+* changed <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend> to <test_depend>ament_cmake_cppcheck</test_depend>
+* slach error fixed at <buildtool_export_depend>ament_cmake_cppcheck</buildtool_export_depend>
+* ament_cmake_cppcheck dependencies added as <buildtool_export_depend>
+* ament_cmake_cppcheck dependencies added
+* Contributors: Alexander Lampalzer, Markus Bader, markus
+
 0.2.1 (2023-06-25)
 ------------------
