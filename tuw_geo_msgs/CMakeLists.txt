@@ -16,7 +16,6 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(geographic_msgs REQUIRED)
-find_package(nav_msgs REQUIRED)
 
 
 set(msg_files
