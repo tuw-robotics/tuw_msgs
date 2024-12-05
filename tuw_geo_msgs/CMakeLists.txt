@@ -31,14 +31,14 @@ set(srv_files
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
   ${srv_files}
-  DEPENDENCIES builtin_interfaces geometry_msgs std_msgs nav_msgs geographic_msgs
+  DEPENDENCIES builtin_interfaces geometry_msgs std_msgs geographic_msgs
   ADD_LINTER_TESTS
 )
 
 install(DIRECTORY include/
   DESTINATION include/${PROJECT_NAME}
 )
-ament_export_dependencies(rosidl_default_runtime geographic_msgs)
+ament_export_dependencies(rosidl_default_runtime geometry_msgs std_msgs geographic_msgs)
 
 ament_export_include_directories(
   include
