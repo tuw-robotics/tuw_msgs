@@ -2,6 +2,9 @@
 Changelog for package tuw_nav_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.2.2 (2024-11-28)
 ------------------
 * tuw_msgs update

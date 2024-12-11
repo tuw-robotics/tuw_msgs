@@ -2,6 +2,14 @@
 Changelog for package tuw_airskin_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'ros2' of github.com:tuw-robotics/tuw_msgs into ros2
+* nav_msgs removed
+* Update CMakeLists.txt
+* dependencies on nav_msgs removed
+* Contributors: Markus Bader
+
 0.2.2 (2024-11-28)
 ------------------
 * tuw_msgs update
