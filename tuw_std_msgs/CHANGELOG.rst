@@ -2,8 +2,8 @@
 Changelog for package tuw_airskin_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.4 (2024-12-16)
+------------------
 * dependencies on ament_lint_auto added
 * Contributors: Markus Bader
 
