@@ -2,6 +2,9 @@
 Changelog for package tuw_airskin_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.2.3 (2024-12-11)
 ------------------
 * Merge branch 'ros2' of github.com:tuw-robotics/tuw_msgs into ros2

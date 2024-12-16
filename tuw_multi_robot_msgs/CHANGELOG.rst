@@ -2,6 +2,9 @@
 Changelog for package tuw_multi_robot_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.2.3 (2024-12-11)
 ------------------
 
