@@ -2,6 +2,11 @@
 Changelog for package tuw_nav_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* ament_lint_auto on build dependency added
+* Contributors: Markus Bader
+
 0.2.4 (2024-12-16)
 ------------------
 
