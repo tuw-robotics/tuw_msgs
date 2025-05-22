@@ -20,9 +20,8 @@ target_compile_features(tuw_msgs PUBLIC c_std_99 cxx_std_17)  # Require C99 and 
 target_include_directories(tuw_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(
-  tuw_msgs
-  "geometry_msgs"
+target_link_libraries(tuw_msgs
+  ${geometry_msgs_TARGETS}
 )
 
 install(TARGETS ${PROJECT_NAME}
