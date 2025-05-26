@@ -67,10 +67,6 @@ if(BUILD_TESTING)
     $<INSTALL_INTERFACE:include>
   )
   target_link_libraries(unittest ${PROJECT_NAME}__rosidl_typesupport_cpp)
-
-  ament_target_dependencies(
-    unittest
-  )
 endif()
 
 ament_export_dependencies(rosidl_default_runtime tuw_std_msgs tuw_geometry_msgs tuw_geo_msgs)
