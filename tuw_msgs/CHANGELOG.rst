@@ -2,8 +2,8 @@
 Changelog for package tuw_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.6 (2025-05-30)
+------------------
 * Merge pull request `#4 <https://github.com/tuw-robotics/tuw_msgs/issues/4>`_ from ahcorde/ahcorde/rolling/replace_ament_target_dependencies
   Replace ament_target_dependencies with target_link_libraries.
 * Replace ament_target_dependencies with target_link_libraries
