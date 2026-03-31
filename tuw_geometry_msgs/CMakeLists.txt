@@ -16,6 +16,9 @@ find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
 set(msg_files
+  "msg/Line2d.msg"
+  "msg/Line2dWithCovariance.msg"
+  "msg/Line2dWithCovarianceArray.msg"
   "msg/LineSegment.msg"
   "msg/LineSegments.msg"
   "msg/WeightedPoseWithCovariance.msg"
