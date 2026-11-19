@@ -8,6 +8,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(geographic_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 
@@ -20,8 +21,9 @@ target_compile_features(tuw_msgs PUBLIC c_std_99 cxx_std_17)  # Require C99 and 
 target_include_directories(tuw_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-target_link_libraries(tuw_msgs
+target_link_libraries(tuw_msgs PUBLIC
   ${geometry_msgs_TARGETS}
+  ${geographic_msgs_TARGETS}
 )
 
 install(TARGETS ${PROJECT_NAME}
@@ -57,6 +59,10 @@ ament_export_libraries(
 )
 ament_export_targets(
   export_${PROJECT_NAME}
+)
+ament_export_dependencies(
+  geometry_msgs
+  geographic_msgs
 )
 
 ament_package()

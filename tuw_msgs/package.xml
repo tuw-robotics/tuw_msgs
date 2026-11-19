@@ -18,6 +18,9 @@
   <depend>tuw_object_msgs</depend>
   <depend>tuw_object_map_msgs</depend>
 
+  <depend>geometry_msgs</depend>
+  <depend>geographic_msgs</depend>
+
   <depend>rclcpp</depend>
   <depend>rclcpp_components</depend>
   
